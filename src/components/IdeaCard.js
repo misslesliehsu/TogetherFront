@@ -5,6 +5,7 @@ const ideaCard = (props) => {
   return (
     <div>
       hey i am an ideaCard
+      <br></br>
       {props.idea.name}
     </div>
   )
