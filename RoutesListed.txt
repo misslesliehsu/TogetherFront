@@ -1,0 +1,29 @@
+GET    /api/v1/users(.:format)                                                         api/v1/users#index
+POST   /api/v1/users(.:format)                                                         api/v1/users#create
+GET    /api/v1/users/:id(.:format)                                                     api/v1/users#show
+PATCH /api/v1/users/:id(.:format)                                                      api/v1/users#update
+PUT /api/v1/users/:id(.:format)                                                        api/v1/users#update
+DELETE /api/v1/users/:id(.:format)                                                     api/v1/users#destroy
+
+GET    /api/v1/users/:user_id/friendships(.:format)                                    api/v1/friendships#index
+POST   /api/v1/users/:user_id/friendships(.:format)                                    api/v1/friendships#create
+DELETE /api/v1/users/:user_id/friendships/:id(.:format)                                api/v1/friendships#destroy
+
+GET    /api/v1/ideas/:idea_id/date_suggestions/:date_suggestion_id/votes(.:format)     api/v1/votes#index
+POST   /api/v1/ideas/:idea_id/date_suggestions/:date_suggestion_id/votes(.:format)     api/v1/votes#create
+DELETE /api/v1/ideas/:idea_id/date_suggestions/:date_suggestion_id/votes/:id(.:format) api/v1/votes#destroy
+GET    /api/v1/ideas/:idea_id/date_suggestions(.:format)                               api/v1/date_suggestions#index
+POST   /api/v1/ideas/:idea_id/date_suggestions(.:format)                               api/v1/date_suggestions#create
+DELETE /api/v1/ideas/:idea_id/date_suggestions/:id(.:format)                           api/v1/date_suggestions#destroy
+GET    /api/v1/ideas/:idea_id/idea_comments(.:format)                                  api/v1/idea_comments#index
+POST   /api/v1/ideas/:idea_id/idea_comments(.:format)                                  api/v1/idea_comments#create
+DELETE /api/v1/ideas/:idea_id/idea_comments/:id(.:format)                              api/v1/idea_comments#destroy
+GET    /api/v1/ideas(.:format)                                                         api/v1/ideas#index
+POST   /api/v1/ideas(.:format)                                                         api/v1/ideas#create
+GET    /api/v1/ideas/:id(.:format)                                                     api/v1/ideas#show
+PATCH  /api/v1/ideas/:id(.:format)                                                     api/v1/ideas#update
+PUT    /api/v1/ideas/:id(.:format)                                                     api/v1/ideas#update
+DELETE /api/v1/ideas/:id(.:format)                                                     api/v1/ideas#destroy
+GET    /api/v1/invitations(.:format)                                                   api/v1/invitations#index
+POST   /api/v1/invitations(.:format)                                                   api/v1/invitations#create
+DELETE /api/v1/invitations/:id(.:format)                                               api/v1/invitations#destroy

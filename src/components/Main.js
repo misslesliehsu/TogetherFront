@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Switch, Route } from 'react-router-dom'
 import Dashboard from './Dashboard'
-import IdeaForm from './IdeaForm'
+import IdeaFormContainer from './IdeaFormContainer'
 
 class Main extends Component {
 
@@ -10,7 +10,7 @@ class Main extends Component {
     return(
       <Switch>
           <Route exact path='/' component={Dashboard}/>
-          <Route exact path='/ideas/new' component={IdeaForm}/>
+          <Route exact path='/ideas/new' component={IdeaFormContainer}/>
       </Switch>
     )
   }

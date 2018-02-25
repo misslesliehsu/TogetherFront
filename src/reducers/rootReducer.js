@@ -5,10 +5,10 @@
 //   other: anotherideasReducer
 // })
 
-const ideasReducer = (state = {ideas: [{name:"testname", location:"testlocation"}], events: [], friends: []}, action) => {
+const ideasReducer = (state = {ideas: [{name:"testname", location:"testlocation"}], events: [], friends: [{first_name:"sam"}, {first_name:"joe"}]}, action) => {
   switch (action.type) {
     case "ADD_IDEA":
-      return {ideas: [...state.ideas, action.idea]}
+      return {...state, ideasWithDates: [...state.ideas, action.ideaWithDates]}
     default: return state
   }
 }
