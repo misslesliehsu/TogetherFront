@@ -18,12 +18,15 @@ DELETE /api/v1/ideas/:idea_id/date_suggestions/:id(.:format)                    
 GET    /api/v1/ideas/:idea_id/idea_comments(.:format)                                  api/v1/idea_comments#index
 POST   /api/v1/ideas/:idea_id/idea_comments(.:format)                                  api/v1/idea_comments#create
 DELETE /api/v1/ideas/:idea_id/idea_comments/:id(.:format)                              api/v1/idea_comments#destroy
-GET    /api/v1/ideas(.:format)                                                         api/v1/ideas#index
-POST   /api/v1/ideas(.:format)                                                         api/v1/ideas#create
-GET    /api/v1/ideas/:id(.:format)                                                     api/v1/ideas#show
-PATCH  /api/v1/ideas/:id(.:format)                                                     api/v1/ideas#update
-PUT    /api/v1/ideas/:id(.:format)                                                     api/v1/ideas#update
-DELETE /api/v1/ideas/:id(.:format)                                                     api/v1/ideas#destroy
+
 GET    /api/v1/invitations(.:format)                                                   api/v1/invitations#index
 POST   /api/v1/invitations(.:format)                                                   api/v1/invitations#create
 DELETE /api/v1/invitations/:id(.:format)                                               api/v1/invitations#destroy
+
+
+GET    /api/v1/users/:user_id/ideas(.:format)                                          api/v1/ideas#index
+POST   /api/v1/users/:user_id/ideas(.:format)                                          api/v1/ideas#create
+GET    /api/v1/users/:user_id/ideas/:id(.:format)                                      api/v1/ideas#show
+PATCH  /api/v1/users/:user_id/ideas/:id(.:format)                                      api/v1/ideas#update
+PUT    /api/v1/users/:user_id/ideas/:id(.:format)                                      api/v1/ideas#update
+DELETE /api/v1/users/:user_id/ideas/:id(.:format)                                      api/v1/ideas#destroy

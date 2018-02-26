@@ -3,12 +3,12 @@ import IdeaForm from './IdeaForm'
 import FriendsList from './FriendsList'
 import URL_ROOT from '../URL.js'
 
-
 export default class IdeaFormContainer extends Component {
   state = {
     user_id: 22,
     invitees: [],
-    nonInvitees: []
+    nonInvitees: [],
+    idea: null
   }
 
   componentDidMount() {
@@ -25,20 +25,21 @@ export default class IdeaFormContainer extends Component {
   }
 
   handleRemoveInvitee = (friend) => {
-    this.setState({nonInvitees: [...this.state.nonInvitees, friend]})
-    const i = this.state.invitees.indexOf(friend)
+    const i = this.state.invitees.findIndex( f => f.id === friend.id)
     const update = this.state.invitees
-    update.splice(i, 0)
-    this.setState({invitees: update })
+    update.splice(i, 1)
+    this.setState((prevState) => {return {...prevState, invitees: update, nonInvitees: [...prevState.nonInvitees, friend]}})
   }
+
 
   render() {
     return (
+      //how come i HAVE to include nonInvitees as props, in order for IdeaForm to re-render?
       <div style={{display:'grid', gridRowColumns:'1fr 1fr'}}>
-        <IdeaForm invitees={this.state.invitees} addInvitee={this.handleAddInvitee} removeInvitee={this.handleRemoveInvitee}/>
+        <IdeaForm history={this.props.history} nonInvitees={this.state.nonInvitees} invitees={this.state.invitees} addInvitee={this.handleAddInvitee} removeInvitee={this.handleRemoveInvitee}/>
         <div>
-          <h3>Invite Friends</h3>
-          <FriendsList friends={this.state.nonInvitees} />
+          <h4>Invite Friends</h4>
+          <FriendsList buttonAction={this.handleAddInvitee} friends={this.state.nonInvitees} />
         </div>
       </div>
 

@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import FriendItem from './FriendItem'
 import URL_ROOT from '../URL.js'
 
-// const x = 4
 class IdeaForm extends Component {
 
   state = {
@@ -11,7 +10,7 @@ class IdeaForm extends Component {
       location: '',
       owner_id: 22,
       description: '',
-      dateSuggestions: [Date.now()]
+      dateSuggestions: ['']
   }
 
 
@@ -24,6 +23,7 @@ class IdeaForm extends Component {
   handleSave = (e) => {
     e.preventDefault()
     this.props.addIdea(this.state)
+    this.setState({...this.state, name:'', location:'', description: '', dateSuggestions: ['01']})
     fetch(`${URL_ROOT}ideas/`, {
           method: 'post',
           headers: {
@@ -42,8 +42,9 @@ class IdeaForm extends Component {
             }
           )
         }).then(res=> res.json())
-        .then(res=>console.log(res)) // what do i do with the errors here
-  }
+        .then(res=> this.props.history.push(`/ideas/${res}`))
+  }// what do i do with the errors here - should not save & should not go to show page
+
 
   handleSetDate = (e) => {
     let i = parseInt(e.target.name, 10)
@@ -54,12 +55,19 @@ class IdeaForm extends Component {
 
 
   handleAddDate = () => {
-    this.setState({dateSuggestions: [...this.state.dateSuggestions, Date.now()]})
+    this.setState({dateSuggestions: [...this.state.dateSuggestions, '']})
   }
 
   handleDrop = (e) => {
     const invitee = JSON.parse(e.dataTransfer.getData('friend'))
     this.props.addInvitee(invitee)
+  }
+
+  handleRemoveDate = (e) => {
+    //remove this from the date suggestions array
+    const updated = this.state.dateSuggestions
+    updated.splice(e.target.name, 1)
+    this.setState({dateSuggestions: updated})
   }
 
   dragOver = (e) => {
@@ -73,7 +81,12 @@ class IdeaForm extends Component {
   renderSuggestions = () => {
     let suggestions = []
     for (let i = 0; i < this.state.dateSuggestions.length; i++) {
-      suggestions.push(<input type='date' key={i} onChange={this.handleSetDate} name={i} value={this.state.dateSuggestions[i]}></input>)
+      suggestions.push(
+        <div key={i}>
+          <input type='date' key={i} onChange={this.handleSetDate} name={i} value={this.state.dateSuggestions[i]}></input>
+          <button name={i} onClick={this.handleRemoveDate}>X</button>
+        </div>
+      )
     }
     return (suggestions)
   }
@@ -83,6 +96,7 @@ class IdeaForm extends Component {
     return(
       <div className='ideaForm' draggable='true' onDrop={this.handleDrop} onDragOver={this.dragOver} onDragEnd={this.dragEnd}>
         <div>
+          Idea Details
           <form >
             <input type='text' name='name' placeholder='Idea Name' value={this.state.name} onChange={this.handleChange}></input>
             <br></br>
@@ -98,7 +112,7 @@ class IdeaForm extends Component {
         </div>
         <div>
           Friends:
-        {this.props.invitees.map( i => <FriendItem key={i.i} friend={i}/>)}
+        {this.props.invitees.map( i => <FriendItem buttonAction={this.props.removeInvitee} key={i.id} friend={i}/>)}
         </div>
         <button onClick={this.handleSave}>Plant The Seed</button>
       </div>

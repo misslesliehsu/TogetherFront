@@ -7,9 +7,11 @@ const friendItem = (props) => {
     e.dataTransfer.setData('friend', friend)
   }
 
+
   return (
     <div className='friendItem' draggable='true' onDragStart={dragstart}>
-      <li>{props.friend.first_name + " " + props.friend.last_name}</li>
+      {props.friend.first_name + " " + props.friend.last_name}
+      {props.buttonAction && <button onClick={() => props.buttonAction(props.friend)}></button>}
     </div>
   )
 }
