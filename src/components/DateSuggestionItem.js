@@ -4,18 +4,21 @@ import { connect } from 'react-redux'
 
 class DateSuggestionItem extends Component {
 
-//if this person votes, then you fetch POST to the date suggestion with the current user (from store) - also reverse the button
+
   handleVoteOrUnvote = () => {
-    const {voters, id} = this.props.d
-    const {user_id, ideaId} = this.props
-    // if this person delete the vote with a fetch delete
+      const {voters, id} = this.props.d
+      const {user_id, ideaId, addVote, removeVote} = this.props
+      //HOW COME I CANT USE PROPS WITHIN THE IF BLOCKS BELOW? HAD TO DECONSTRUCT & DEFINE ABOVE
+
+
+    // if this person is already in the invitees, delete the vote with a fetch delete
     if (voters.some( v => v.id == user_id)) {
       fetch(`${URL_ROOT}votes/${id}/${user_id}`, {
             method: 'delete',
             headers: {
               'Content-Type': 'application/json'
             }
-          }).then(console.log)
+          }).then(removeVote(ideaId, id))
     }
     else {
       //otherwise, add them as a voter
@@ -26,39 +29,41 @@ class DateSuggestionItem extends Component {
             },
             body: JSON.stringify(
             )
-          }).then(res=> res.json())
-          .then(console.log)
+          }).then(addVote(ideaId, id))
     }
-
   }
 
-  // const buttonText = () => {
-  //   //is the current user in the date suggestions voters or no
-  // }
+  buttonText = () => {
+    if (this.props.d.voters.some( v => v.id == this.props.user_id)) {
+      return "Remove Me From This Date"
+    }
+    else {
+      return "Works for Me"
+    }
+  }
 
   render() {
-    console.log(this.props.d)
     return (
       <div>
         {this.props.d.date}
         {this.props.d.voters.map( v => <li key={v.id}>{v.first_name} {v.last_name}</li>)}
-        <button onClick={this.handleVoteOrUnvote}>button here!</button>
+        <button onClick={this.handleVoteOrUnvote}>{this.buttonText()}</button>
       </div>
     )
   }
 
 }
 
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     addVote: (i_id, ds_id) => dispatch({type: 'ADD_VOTE', i_id, ds_id, u_id})
-//     removeVote: (i_id, ds_id) => dispatch({type: 'REMOVE_VOTE', i_id, ds_id, u_id})
-//   }
-// }
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addVote: (i_id, ds_id) => dispatch({type: 'ADD_VOTE', i_id, ds_id}),
+    removeVote: (i_id, ds_id) => dispatch({type: 'REMOVE_VOTE', i_id, ds_id})
+  }
+}
 
 
 const mapStateToProps = (state) => {
   return {user_id: state.user.id}
 }
 
-export default connect(mapStateToProps, null)(DateSuggestionItem)
+export default connect(mapStateToProps, mapDispatchToProps)(DateSuggestionItem)

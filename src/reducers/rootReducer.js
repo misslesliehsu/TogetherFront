@@ -5,34 +5,55 @@
 //   other: anotherideasReducer
 // })
 
-const ideasReducer = (state = {ideas: [], events: [], friends: [], user:{id:22, first_name: "test", last_name: "", email: ""}, action) => {
+const ideasReducer = (state = {ideas: [], events: [], friends: [], user:{id:22, first_name: "test", last_name: "", email: ""}}, action) => {
   switch (action.type) {
     case "ADD_IDEA":
       return {...state, ideas: [...state.ideas, action.idea]}
     case "ADD_FRIEND":
       return {...state, friends: [...state.friends, action.friend]}
     case "ADD_VOTE":
-      //find the idea in question - using the action i_id
-      //find the date suggestion in question - using the action ds_id
-      //add to user to the datesuggestion.voters, based on user info
-      updatedIdeas = this.state.ideas.map( i =>
+      var updatedIdeas = state.ideas.map( i => {
         if (i.id == action.i_id) {
-          i.date_suggestions.map( ds => {
-            if (ds.id == action.ds_id) {
-              
-            }
-          })
+          return {...i, date_suggestions:
+            i.date_suggestions.map( ds => {
+              if (ds.id == action.ds_id) {
+                return {...ds, voters: [...ds.voters, state.user]}
+              }
+              else {
+                return ds
+              }
+            })
+          }
         }
         else {
-          i
+          return i
         }
+      }
       )
-      const ideaIndex = this.state.ideas.findIndex(i => i.id == action.i_id)
-      const dS = this.state.ideas[ideaIndex].date_suggestions.find(x => x.id == action.ds_id)
-
-
+      return {...state, ideas: updatedIdeas}
     case "REMOVE_VOTE":
-      return {...state, friends: [...state.friends, action.friend]}
+      var updatedIdeas = state.ideas.map( i => {
+        if (i.id == action.i_id) {
+          return {...i,date_suggestions:
+            i.date_suggestions.map( ds => {
+              if (ds.id == action.ds_id) {
+                const i = ds.voters.findIndex(v => v.id == state.user.id)
+                let updatedVoters = ds.voters
+                updatedVoters.splice(i, 1)
+                return {...ds, voters: [updatedVoters]}
+              }
+              else {
+                return ds
+              }
+            })
+          }
+        }
+        else {
+          return i
+        }
+      }
+      )
+      return {...state, ideas: updatedIdeas}
     default: return state
   }
 }
