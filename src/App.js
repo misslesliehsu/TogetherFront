@@ -9,23 +9,26 @@ import { connect } from 'react-redux'
 
 class App extends Component {
 
+  //loading database Ideas (owned & invited), Friends, (and later Events) to the store state
+
   componentDidMount() {
     if (this.props.user_id) {
-      console.log("starting fetch")
+      console.log("starting fetch from App.js")
       fetch(`${URL_ROOT}users/${this.props.user_id}/ideas`)
       .then(res => res.json())
-      .then(console.log)
-        // .then(res => res.forEach(r => this.props.addIdea(r)))
-    }
-    //fetch events, fetch friends
-  }
+      .then(res => res.forEach(r => this.props.addIdea(r)))
 
+      fetch(`${URL_ROOT}users/${this.props.user_id}/friendships`)
+      .then(res=> res.json())
+      .then(res => res.forEach(r => this.props.addFriend(r)))
+    }
+  }
 
   render() {
     return (
       <div className="App">
-      {/* <Header/>
-        <Main/>*/}
+        <Header/>
+        <Main/>
       </div>
     );
   }
@@ -34,13 +37,17 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    user_id: state.user_id,
+    user_id: state.user.id
   }
 }
 
 
 const mapDispatchToProps = (dispatch) => {
-  return ({addIdea: (i) => dispatch({type: 'ADD_IDEA', ideaWithDates: i})})
+  return ({
+    addIdea: (i) => dispatch({type: 'ADD_IDEA', idea: i}),
+    addFriend: (f) => dispatch({type: 'ADD_FRIEND', friend: f})
+  })
+
 }
 
 

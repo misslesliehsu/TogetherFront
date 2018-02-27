@@ -33,10 +33,11 @@ export default class IdeaFormContainer extends Component {
 
 
   render() {
+    console.log(this.state.invitees, this.state.nonInvitees)
     return (
       //how come i HAVE to include nonInvitees as props, in order for IdeaForm to re-render?
       <div style={{display:'grid', gridRowColumns:'1fr 1fr'}}>
-        <IdeaForm history={this.props.history} nonInvitees={this.state.nonInvitees} invitees={this.state.invitees} addInvitee={this.handleAddInvitee} removeInvitee={this.handleRemoveInvitee}/>
+        <IdeaForm history={this.props.history} invitees={this.state.invitees} addInvitee={this.handleAddInvitee} removeInvitee={this.handleRemoveInvitee}/>
         <div>
           <h4>Invite Friends</h4>
           <FriendsList buttonAction={this.handleAddInvitee} friends={this.state.nonInvitees} />

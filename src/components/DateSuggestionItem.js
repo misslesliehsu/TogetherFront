@@ -4,26 +4,31 @@ import { connect } from 'react-redux'
 
 class DateSuggestionItem extends Component {
 
-
 //if this person votes, then you fetch POST to the date suggestion with the current user (from store) - also reverse the button
   handleVoteOrUnvote = () => {
-
-    // if this person is already in voters:
-    fetch(`${URL_ROOT}ideas/${this.props.ideaId}/date_suggestions/${this.props.d.id}/votes`, {
-          method: 'post',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(
-            {
-              user_id: this.props.user_id
+    const {voters, id} = this.props.d
+    const {user_id, ideaId} = this.props
+    // if this person delete the vote with a fetch delete
+    if (voters.some( v => v.id == user_id)) {
+      fetch(`${URL_ROOT}votes/${id}/${user_id}`, {
+            method: 'delete',
+            headers: {
+              'Content-Type': 'application/json'
             }
-          )
-        }).then(res=> res.json())
-        .then(console.log)
-        .then()
-
-    //otherwise, delete the vote with a fetch delete
+          }).then(console.log)
+    }
+    else {
+      //otherwise, add them as a voter
+      fetch(`${URL_ROOT}votes/${id}/${user_id}`, {
+            method: 'post',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(
+            )
+          }).then(res=> res.json())
+          .then(console.log)
+    }
 
   }
 
@@ -32,11 +37,11 @@ class DateSuggestionItem extends Component {
   // }
 
   render() {
-    console.log(this.props)
+    console.log(this.props.d)
     return (
       <div>
         {this.props.d.date}
-        {this.props.d.voters.map( v => <li>{v.first_name} {v.last_name}</li>)}
+        {this.props.d.voters.map( v => <li key={v.id}>{v.first_name} {v.last_name}</li>)}
         <button onClick={this.handleVoteOrUnvote}>button here!</button>
       </div>
     )
@@ -44,9 +49,16 @@ class DateSuggestionItem extends Component {
 
 }
 
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     addVote: (i_id, ds_id) => dispatch({type: 'ADD_VOTE', i_id, ds_id, u_id})
+//     removeVote: (i_id, ds_id) => dispatch({type: 'REMOVE_VOTE', i_id, ds_id, u_id})
+//   }
+// }
+
 
 const mapStateToProps = (state) => {
-  return {user_id: state.user_id}
+  return {user_id: state.user.id}
 }
 
 export default connect(mapStateToProps, null)(DateSuggestionItem)
