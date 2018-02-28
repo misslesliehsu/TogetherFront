@@ -83,13 +83,18 @@ input {
   border-radius: 50%;
   height: 100px;
   position: relative;
-  border-color: #ccff99;
-  border-style: double;
-  border-width: 6px;
+  border-color: #88cc00;
+  border-style: solid;
+  border-width: 2px;
 }
 
 .miniIdeaIcon.Owned {
-  border-color: #ffb3cc;
+  border-color: #88cc00;
+  border-style: double;
+  border-width: 6px;
+
+
+
 }
 
 .miniIdeaIcon:hover {

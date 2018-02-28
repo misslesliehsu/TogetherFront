@@ -8,12 +8,16 @@
 
 
 
-const ideasReducer = (state = {ideas: [], events: [], friends: [], user:{id:31, first_name: "hardwired first name", last_name: 'hardwired last name', email: "hardwired email"}}, action) => {
+const ideasReducer = (state = {ideas: ["start"], events: [], friends: ["start"], user:{id:31, first_name: "hardwired first name", last_name: 'hardwired last name', email: "hardwired email"}}, action) => {
   switch (action.type) {
     case "ADD_IDEA":
       return {...state, ideas: [...state.ideas, action.idea]}
+    case "LOAD_IDEAS":
+      return {...state, ideas: action.ideas}
     case "ADD_FRIEND":
       return {...state, friends: [...state.friends, action.friend]}
+    case "LOAD_FRIENDS":
+      return {...state, friends: action.friends}
     case "ADD_VOTE":
       var updatedIdeas = state.ideas.map( i => {
         if (i.id == action.i_id) {

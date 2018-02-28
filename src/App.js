@@ -13,14 +13,13 @@ class App extends Component {
 
   componentDidMount() {
     if (this.props.user_id) {
-      console.log("starting fetch from App.js")
       fetch(`${URL_ROOT}users/${this.props.user_id}/ideas`)
       .then(res => res.json())
-      .then(res => res.forEach(r => this.props.addIdea(r)))
+      .then(res => this.props.loadIdeas(res))
 
       fetch(`${URL_ROOT}users/${this.props.user_id}/friendships`)
       .then(res=> res.json())
-      .then(res => res.forEach(r => this.props.addFriend(r)))
+      .then(res => this.props.loadFriends(res))
     }
   }
 
@@ -44,8 +43,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return ({
-    addIdea: (i) => dispatch({type: 'ADD_IDEA', idea: i}),
-    addFriend: (f) => dispatch({type: 'ADD_FRIEND', friend: f})
+    loadIdeas: (i) => dispatch({type: 'LOAD_IDEAS', ideas: i}),
+    loadFriends: (f) => dispatch({type: 'LOAD_FRIENDS', friends: f})
   })
 
 }
