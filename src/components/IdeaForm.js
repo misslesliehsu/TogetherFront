@@ -11,18 +11,21 @@ class IdeaForm extends Component {
       name: '',
       location: '',
       description: '',
-      dateSuggestions: [''],
+      date_suggestions: [{date: '', id: null, voters: [] }],
       invitees: [],
       owner_id: ''
   }
 
 
+  //for existing ideas; clicked 'edit' from show page
   componentDidMount() {
     if (this.props.edit === true && this.props.ideas[0] !== "start") {
       const ideaToEdit = this.props.ideas.find(i => i.id == this.props.match.params.id)
       this.setState(ideaToEdit)
     }
   }
+
+  //for existing ideas; navigated directly to edit page (i.e. maybe no props avail yet)
   componentWillReceiveProps(nextProps) {
     if (this.props.edit === true && nextProps.ideas[0] !== "start") {
       const ideaToEdit = nextProps.ideas.find(i => i.id == this.props.match.params.id)
@@ -54,6 +57,8 @@ class IdeaForm extends Component {
 
   handleSave = (e) => {
     e.preventDefault()
+
+    //for brand new ideas
     if (this.props.edit === false) {
       fetch(`${URL_ROOT}users/${this.props.user_id}/ideas`, {
             method: 'post',
@@ -68,14 +73,16 @@ class IdeaForm extends Component {
                   owner_id: this.props.user_id,
                   description: this.state.description
                 },
-                dateSuggestions: this.state.dateSuggestions,
-                invitees: this.props.invitees
+                date_suggestions: this.state.date_suggestions,
+                invitees: this.state.invitees
               }
             )
           }).then(res=> res.json())
           .then(res => {this.props.addIdea({...this.state, owner_id: this.props.user_id, id: res}); return res})
-          .then(res=>this.props.history.push(`/ideas/${res}`))
+          .then(res=>this.props.history.push(`/ideas/${res}`)) //note << what you get back (res) is just the idea.id
     }
+
+    //for editing existing ideas
     else {
       fetch(`${URL_ROOT}users/${this.props.user_id}/ideas/${this.props.match.params.id}`, {
             method: 'put',
@@ -90,7 +97,7 @@ class IdeaForm extends Component {
                   owner_id: this.state.user_id,
                   description: this.state.description
                 },
-                dateSuggestions: this.state.dateSuggestions,
+                date_suggestions: this.state.date_suggestions,
                 invitees: this.state.invitees
               }
             )
@@ -104,14 +111,14 @@ class IdeaForm extends Component {
 
   handleSetDate = (e) => {
     let i = parseInt(e.target.name, 10)
-    let dateSuggestions = this.state.dateSuggestions
-    dateSuggestions[i] = e.target.value
-    this.setState({dateSuggestions})
+    let date_suggestions = this.state.date_suggestions
+    date_suggestions[i] = {date: e.target.value, voters: [], id: null}
+    this.setState({date_suggestions})
   }
 
 
   handleAddDate = () => {
-    this.setState({dateSuggestions: [...this.state.dateSuggestions, '']})
+    this.setState({date_suggestions: [...this.state.date_suggestions, {date: '', id: null, voters: [] }]})
   }
 
   handleDrop = (e) => {
@@ -121,9 +128,9 @@ class IdeaForm extends Component {
 
   handleRemoveDate = (e) => {
     //remove this from the date suggestions array
-    const updated = this.state.dateSuggestions
+    const updated = this.state.date_suggestions
     updated.splice(e.target.name, 1)
-    this.setState({dateSuggestions: updated})
+    this.setState({date_suggestions: updated})
   }
 
   dragOver = (e) => {
@@ -136,10 +143,10 @@ class IdeaForm extends Component {
 
   renderSuggestions = () => {
     let suggestions = []
-    for (let i = 0; i < this.state.dateSuggestions.length; i++) {
+    for (let i = 0; i < this.state.date_suggestions.length; i++) {
       suggestions.push(
         <div key={i}>
-          <input type='date' key={i} onChange={this.handleSetDate} name={i} value={this.state.dateSuggestions[i]}></input>
+          <input type='date' key={i} onChange={this.handleSetDate} name={i} value={this.state.date_suggestions[i]}></input>
           <button name={i} onClick={this.handleRemoveDate}>X</button>
         </div>
       )
@@ -149,7 +156,6 @@ class IdeaForm extends Component {
 
 
   render() {
-    console.log(this.state)
     return(
       <div>
         <div className='ideaForm' draggable='true' onDrop={this.handleDrop} onDragOver={this.dragOver} onDragEnd={this.dragEnd}>
@@ -166,9 +172,9 @@ class IdeaForm extends Component {
           <button onClick={this.handleAddDate}>Add Another Date Option</button>
           <br></br>
           Friends:
-        {this.state.invitees.map( i => <FriendItem buttonAction={this.removeInvitee} key={i.id} friend={i}/>)}
+        {this.state.invitees.map( i => <FriendItem buttonAction={this.handleRemoveInvitee} key={i.id} friend={i}/>)}
         <br></br>
-        <button onClick={this.handleSave}>Plant The Seed</button>
+        <button onClick={this.handleSave}>Save Idea</button>
         </div>
       <h4>Invite Friends</h4>
         <FriendsList buttonAction={this.handleAddInvitee} friends={this.calcNoninvitees()} />
