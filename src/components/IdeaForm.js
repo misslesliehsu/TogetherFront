@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import FriendItem from './FriendItem'
 import URL_ROOT from '../URL.js'
+import { withRouter } from 'react-router-dom'
 
 class IdeaForm extends Component {
 
@@ -11,6 +12,14 @@ class IdeaForm extends Component {
       description: '',
       dateSuggestions: ['']
   }
+
+
+  componentDidMount() {
+    console.log(this.props.idea)
+    // this.setState({name: this.props.idea.name, location: location, description: description, dateSuggestions:dateSuggestions})
+    //this.setState({name, location, description, dateSuggestions})
+  }
+
 
 
   handleChange = (e) => {
@@ -128,4 +137,4 @@ const mapStateToProps = (state) => {
     user_id: state.user.id
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(IdeaForm)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(IdeaForm))
