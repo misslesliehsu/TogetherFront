@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import FriendItem from './FriendItem'
 import DateSuggestionItem from './DateSuggestionItem'
 
+//NEED TO CHECK WHY NOT UPDATED RIGHT AWAY, AFTER EDIT
 
 class ideaCard extends Component {
 
