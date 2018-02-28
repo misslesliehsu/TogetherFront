@@ -7,26 +7,37 @@ import DateSuggestionItem from './DateSuggestionItem'
 
 class ideaCard extends Component {
 
-    //WILL NEED TO STORE USER HERE
+  handleCountOut = () => {
+    fetch(`${URL_ROOT}invitations/${this.props.match.params.id}/${this.props.user_id}`, {
+          method: 'delete',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }).then(this.props.countOut(this.props.user_id))
+          .then(this.props.history.push(`/`))
+  }
 
+  //why can't i define getIdea outside a function, on its own?
   render() {
-    const getIdea = this.props.ideas.find( i => i.id == this.props.match.params.id)
-    console.log(this.props)
+    let getIdea = this.props.ideas.find( i => i.id == this.props.match.params.id)
     return (
       <div>
         {getIdea &&
           <div className='ideaCard'>
             <h2>{getIdea.name}</h2>
             <ul style={{listStyle: 'none'}}>
-              <li>Where: {getIdea.location}</li>
-              <li>Description: {getIdea.description}</li>
-              <li>Friends:</li>
+              <li>WHERE: {getIdea.location}</li>
+              <li>DESCRIPTION: {getIdea.description}</li>
+              <li>FRIENDS:</li>
                 {getIdea.invitees.map( f => <FriendItem key={f.id} buttonAction='' friend={f}/>)}
-              {getIdea.date_suggestions.map(d => <DateSuggestionItem key={d.id} d={d} ideaId={getIdea.id}/>)}
+              <li>DATE SUGGESTIONS:</li>
+                {getIdea.date_suggestions.length > 0 ? getIdea.date_suggestions.map(d => <DateSuggestionItem key={d.id} d={d} ideaId={getIdea.id}/>)
+               :
+               <div>There are no date suggestions yet.</div>
+                }
+              </ul>
               {this.props.user_id === getIdea.owner_id && <button>Edit Idea</button>}
-              {this.props.user_id !== getIdea.owner_id && <button>Count Me Out</button>}
-            </ul>
-
+              {this.props.user_id !== getIdea.owner_id && <button onClick={this.handleCountOut}>Count Me Out</button>}
           </div>
         }
       </div>
@@ -42,5 +53,11 @@ const mapStateToProps = (state) => {
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    countOut: (i_id) => dispatch({type: 'REMOVE_INVITEE', i_id})
+  }
+}
 
-export default connect(mapStateToProps, null)(ideaCard)
+
+export default connect(mapStateToProps, mapDispatchToProps)(ideaCard)

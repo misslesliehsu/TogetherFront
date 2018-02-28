@@ -2,19 +2,18 @@ import React, { Component } from 'react'
 import IdeaForm from './IdeaForm'
 import FriendsList from './FriendsList'
 import URL_ROOT from '../URL.js'
+import { connect } from 'react-redux'
 
-export default class IdeaFormContainer extends Component {
+class IdeaFormContainer extends Component {
   state = {
-    user_id: 22,
     invitees: [],
     nonInvitees: [],
     idea: null
   }
 
+  //I THINK TEH BELOW ONLY HAPPENS ONCE WHEN IT NEEDS TO HAPPEN EVERY TIME
   componentDidMount() {
-    fetch(`${URL_ROOT}users/${this.state.user_id}/friendships`)
-    .then(res=> res.json())
-    .then(res => this.setState({nonInvitees: [...res]}))
+    this.setState({nonInvitees: this.props.friends})
   }
 
   handleAddInvitee = (friend) => {
@@ -31,19 +30,30 @@ export default class IdeaFormContainer extends Component {
     this.setState((prevState) => {return {...prevState, invitees: update, nonInvitees: [...prevState.nonInvitees, friend]}})
   }
 
+  calcNoninvitees = () => {
+    return this.props.friends.filter(f => !this.state.invitees.includes(f))
+  }
+
 
   render() {
-    console.log(this.state.invitees, this.state.nonInvitees)
     return (
       //how come i HAVE to include nonInvitees as props, in order for IdeaForm to re-render?
       <div style={{display:'grid', gridRowColumns:'1fr 1fr'}}>
         <IdeaForm history={this.props.history} invitees={this.state.invitees} addInvitee={this.handleAddInvitee} removeInvitee={this.handleRemoveInvitee}/>
         <div>
           <h4>Invite Friends</h4>
-          <FriendsList buttonAction={this.handleAddInvitee} friends={this.state.nonInvitees} />
+          <FriendsList buttonAction={this.handleAddInvitee} friends={this.calcNoninvitees()} />
         </div>
       </div>
 
     )
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    friends: state.friends
+  }
+}
+
+export default connect(mapStateToProps, null)(IdeaFormContainer)

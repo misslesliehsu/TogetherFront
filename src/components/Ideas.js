@@ -6,7 +6,7 @@ import IdeaCard from './IdeaCard'
 const ideas = () => {
   return (
     <div>
-      <h3>Hey I am the ideas triage component!</h3>
+      <h3>Hey I am the ideas triage component! If you only see this, you must be on /ideas/ only, vs. /ideas/#, or /ideas/new, or if you are, you do not have that idea in your state</h3>
       <Switch>
         <Route exact path='/ideas/new' component={IdeaFormContainer}/>
         <Route path='/ideas/:id' component={IdeaCard}/>

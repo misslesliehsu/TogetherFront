@@ -8,7 +8,6 @@ class IdeaForm extends Component {
   state = {
       name: '',
       location: '',
-      owner_id: 22,
       description: '',
       dateSuggestions: ['']
   }
@@ -22,9 +21,7 @@ class IdeaForm extends Component {
 
   handleSave = (e) => {
     e.preventDefault()
-    this.props.addIdea(this.state)
-    this.setState({...this.state, name:'', location:'', description: '', dateSuggestions: ['01']})
-    fetch(`${URL_ROOT}ideas/`, {
+    fetch(`${URL_ROOT}users/${this.props.user_id}/ideas`, {
           method: 'post',
           headers: {
             'Content-Type': 'application/json'
@@ -34,7 +31,7 @@ class IdeaForm extends Component {
               idea:{
                 name: this.state.name,
                 location: this.state.location,
-                owner_id: this.state.owner_id,
+                owner_id: this.props.user_id,
                 description: this.state.description
               },
               dateSuggestions: this.state.dateSuggestions,
@@ -42,7 +39,8 @@ class IdeaForm extends Component {
             }
           )
         }).then(res=> res.json())
-        .then(res=> this.props.history.push(`/ideas/${res}`))
+        .then(res => {this.props.addIdea({...this.state, invitees: this.props.invitees, owner_id: this.props.user_id, id: res}); return res})
+        .then(res=>this.props.history.push(`/ideas/${res}`))
   }// what do i do with the errors here - should not save & should not go to show page
 
 
@@ -122,8 +120,12 @@ class IdeaForm extends Component {
 
 
 const mapDispatchToProps = (dispatch) => {
-  return ({addIdea: (i) => dispatch({type: 'ADD_IDEA', ideaWithDates: i})})
+  return ({addIdea: (i) => dispatch({type: 'ADD_IDEA', idea: i})})
 }
 
-
-export default connect(null, mapDispatchToProps)(IdeaForm)
+const mapStateToProps = (state) => {
+  return {
+    user_id: state.user.id
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(IdeaForm)

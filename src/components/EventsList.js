@@ -3,7 +3,7 @@ import React from 'react'
 const eventsList = () => {
   return (
     <div>
-      Hey eventsList here
+      <p>YOUR EVENTS</p>
     </div>
   )
 }

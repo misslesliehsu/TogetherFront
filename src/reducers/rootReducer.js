@@ -5,7 +5,10 @@
 //   other: anotherideasReducer
 // })
 
-const ideasReducer = (state = {ideas: [], events: [], friends: [], user:{id:22, first_name: "test", last_name: "", email: ""}}, action) => {
+
+
+
+const ideasReducer = (state = {ideas: [], events: [], friends: [], user:{id:31, first_name: "hardwired first name", last_name: 'hardwired last name', email: "hardwired email"}}, action) => {
   switch (action.type) {
     case "ADD_IDEA":
       return {...state, ideas: [...state.ideas, action.idea]}

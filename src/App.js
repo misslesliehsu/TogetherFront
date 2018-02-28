@@ -4,7 +4,7 @@ import Header from './components/Header'
 import Main from './components/Main'
 import URL_ROOT from './URL'
 import { connect } from 'react-redux'
-
+import { withRouter } from 'react-router-dom'
 
 
 class App extends Component {
@@ -52,4 +52,4 @@ const mapDispatchToProps = (dispatch) => {
 
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))
