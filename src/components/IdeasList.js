@@ -2,8 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 const IdeasList = (props) =>  {
-  console.log(props)
-
 
   const handleViewIdea = (e) => {
     props.history.push(`/ideas/${e.currentTarget.id}`)

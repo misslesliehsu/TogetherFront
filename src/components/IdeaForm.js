@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import FriendItem from './FriendItem'
 import URL_ROOT from '../URL.js'
+import { withRouter } from 'react-router-dom'
+import FriendsList from './FriendsList'
 
 class IdeaForm extends Component {
 
@@ -9,9 +11,40 @@ class IdeaForm extends Component {
       name: '',
       location: '',
       description: '',
-      dateSuggestions: ['']
+      dateSuggestions: [''],
+      invitees: [],
+      owner_id: ''
   }
 
+
+  componentDidMount() {
+    if (this.props.edit === true && this.props.ideas[0] !== "start") {
+      const ideaToEdit = this.props.ideas.find(i => i.id == this.props.match.params.id)
+      this.setState(ideaToEdit)
+    }
+  }
+  componentWillReceiveProps(nextProps) {
+    if (this.props.edit === true && nextProps.ideas[0] !== "start") {
+      const ideaToEdit = nextProps.ideas.find(i => i.id == this.props.match.params.id)
+      this.setState(ideaToEdit)
+    }
+  }
+  //NOTES: I had to use both componentWillReceiveProps and componentWillMount because 1) used componentWillReceiveProps to indicate a direct attempt to visit the edit page for an existing item.  in this case, the store ideas may not be available to the component yet, as props, during componentDidMount - therefore need to catch when they DO come down the pike, and are complete (i.e. have ideas that are not in initial state 'start').  2) used componentDidMount for cases when someone is on Show page, then clicks 'edit'.  in this case, the props are already there -- no new influx will trigger a componentWillReceiveProps - thus state should be set during mount, with the ideas which are already available as props
+
+  handleAddInvitee = (friend) => {
+    this.setState({invitees: [...this.state.invitees, friend]})
+  }
+
+  handleRemoveInvitee = (friend) => {
+    const i = this.state.invitees.findIndex( f => f.id === friend.id)
+    const update = this.state.invitees
+    update.splice(i, 1)
+    this.setState({invitees: update})
+  }
+
+  calcNoninvitees = () => {
+    return this.props.friends.filter(f => !this.state.invitees.includes(f))
+  }
 
   handleChange = (e) => {
     this.setState(
@@ -21,27 +54,52 @@ class IdeaForm extends Component {
 
   handleSave = (e) => {
     e.preventDefault()
-    fetch(`${URL_ROOT}users/${this.props.user_id}/ideas`, {
-          method: 'post',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(
-            {
-              idea:{
-                name: this.state.name,
-                location: this.state.location,
-                owner_id: this.props.user_id,
-                description: this.state.description
-              },
-              dateSuggestions: this.state.dateSuggestions,
-              invitees: this.props.invitees
-            }
-          )
-        }).then(res=> res.json())
-        .then(res => {this.props.addIdea({...this.state, invitees: this.props.invitees, owner_id: this.props.user_id, id: res}); return res})
-        .then(res=>this.props.history.push(`/ideas/${res}`))
-  }// what do i do with the errors here - should not save & should not go to show page
+    if (this.props.edit === false) {
+      fetch(`${URL_ROOT}users/${this.props.user_id}/ideas`, {
+            method: 'post',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(
+              {
+                idea:{
+                  name: this.state.name,
+                  location: this.state.location,
+                  owner_id: this.props.user_id,
+                  description: this.state.description
+                },
+                dateSuggestions: this.state.dateSuggestions,
+                invitees: this.props.invitees
+              }
+            )
+          }).then(res=> res.json())
+          .then(res => {this.props.addIdea({...this.state, owner_id: this.props.user_id, id: res}); return res})
+          .then(res=>this.props.history.push(`/ideas/${res}`))
+    }
+    else {
+      fetch(`${URL_ROOT}users/${this.props.user_id}/ideas/${this.props.match.params.id}`, {
+            method: 'put',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(
+              {
+                idea:{
+                  name: this.state.name,
+                  location: this.state.location,
+                  owner_id: this.state.user_id,
+                  description: this.state.description
+                },
+                dateSuggestions: this.state.dateSuggestions,
+                invitees: this.state.invitees
+              }
+            )
+          }).then(res=> res.json())
+          .then(res => {this.props.updateIdea({...this.state, id: this.props.match.params.id}); return res})
+          .then(res=>this.props.history.push(`/ideas/${this.props.match.params.id}`))
+    }
+  }
+  // what do i do with the errors here - should not save & should not go to show page
 
 
   handleSetDate = (e) => {
@@ -91,9 +149,10 @@ class IdeaForm extends Component {
 
 
   render() {
+    console.log(this.state)
     return(
-      <div className='ideaForm' draggable='true' onDrop={this.handleDrop} onDragOver={this.dragOver} onDragEnd={this.dragEnd}>
-        <div>
+      <div>
+        <div className='ideaForm' draggable='true' onDrop={this.handleDrop} onDragOver={this.dragOver} onDragEnd={this.dragEnd}>
           Idea Details
           <form >
             <input type='text' name='name' placeholder='Idea Name' value={this.state.name} onChange={this.handleChange}></input>
@@ -103,16 +162,16 @@ class IdeaForm extends Component {
             <input type='textArea' name='description' placeholder='Description' value={this.state.description} onChange={this.handleChange}></input>
             <br></br>
           </form>
-          <div>
               {this.renderSuggestions()}
-          </div>
           <button onClick={this.handleAddDate}>Add Another Date Option</button>
-        </div>
-        <div>
+          <br></br>
           Friends:
-        {this.props.invitees.map( i => <FriendItem buttonAction={this.props.removeInvitee} key={i.id} friend={i}/>)}
-        </div>
+        {this.state.invitees.map( i => <FriendItem buttonAction={this.removeInvitee} key={i.id} friend={i}/>)}
+        <br></br>
         <button onClick={this.handleSave}>Plant The Seed</button>
+        </div>
+      <h4>Invite Friends</h4>
+        <FriendsList buttonAction={this.handleAddInvitee} friends={this.calcNoninvitees()} />
       </div>
     )
   }
@@ -120,12 +179,18 @@ class IdeaForm extends Component {
 
 
 const mapDispatchToProps = (dispatch) => {
-  return ({addIdea: (i) => dispatch({type: 'ADD_IDEA', idea: i})})
+  return ({
+    addIdea: (i) => dispatch({type: 'ADD_IDEA', idea: i}),
+    updateIdea: (i) => dispatch({type: 'UPDATE_IDEA', idea: i})
+  })
 }
 
 const mapStateToProps = (state) => {
   return {
-    user_id: state.user.id
+    user_id: state.user.id,
+    friends: state.friends,
+    ideas: state.ideas
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(IdeaForm)
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(IdeaForm))
