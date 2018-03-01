@@ -43,7 +43,6 @@ class DateSuggestionItem extends Component {
   }
 
   render() {
-    console.log(this.props.d)
     return (
       <div>
         {this.props.d.date}

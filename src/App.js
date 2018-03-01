@@ -19,7 +19,8 @@ class App extends Component {
 
       fetch(`${URL_ROOT}users/${this.props.user_id}/friendships`)
       .then(res=> res.json())
-      .then(res => this.props.loadFriends(res))
+      .then(res => {this.props.loadFriends(res.friends)
+      this.props.loadNonFriends(res.nonFriends)})
     }
   }
 
@@ -44,7 +45,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return ({
     loadIdeas: (i) => dispatch({type: 'LOAD_IDEAS', ideas: i}),
-    loadFriends: (f) => dispatch({type: 'LOAD_FRIENDS', friends: f})
+    loadFriends: (f) => dispatch({type: 'LOAD_FRIENDS', friends: f}),
+    loadNonFriends: (nf) => dispatch({type: 'LOAD_NONFRIENDS', nonFriends: nf})
   })
 
 }

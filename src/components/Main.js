@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Switch, Route, withRouter } from 'react-router-dom'
 import Dashboard from './Dashboard'
 import Ideas from './Ideas'
+import FriendsPage from './FriendsPage'
 
 class Main extends Component {
 
@@ -30,6 +31,7 @@ class Main extends Component {
         <Switch>
           <Route exact path='/' component={Dashboard}/>
           <Route path='/ideas/' component={Ideas}/>
+          <Route exact path='/friends' component={FriendsPage}/>
         </Switch>
     )
   }

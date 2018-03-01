@@ -8,14 +8,20 @@
 
 
 
-const ideasReducer = (state = {ideas: ["start"], events: [], friends: ["start"], user:{id:31, first_name: "hardwired first name", last_name: 'hardwired last name', email: "hardwired email"}}, action) => {
+const ideasReducer = (state = {ideas: ["start"], events: [], friends: ["start"], user:{id:82, first_name: "hardwired first name", last_name: 'hardwired last name', email: "hardwired email"}, nonFriends: []}, action) => {
   switch (action.type) {
+    case "LOAD_NONFRIENDS":
+      return {...state, nonFriends: action.nonFriends}
     case "LOAD_FRIENDS":
       return {...state, friends: action.friends}
     case "LOAD_IDEAS":
       return {...state, ideas: action.ideas}
     case "ADD_FRIEND":
-      return {...state, friends: [...state.friends, action.friend]}
+      var updatedNonFriends = state.nonFriends.filter( nF => {nF.id != action.friend.id})
+      return {...state, nonFriends: updatedNonFriends, friends: [...state.friends, action.friend]}
+    case "REMOVE_FRIEND":
+      var updatedFriends = state.friends.filter( f => f.id != action.friend.id)
+      return {...state, friends: updatedFriends, nonFriend: [...state.nonFriends, action.friend]}
     case "ADD_IDEA":
       return {...state, ideas: [...state.ideas, action.idea]}
     case "UPDATE_IDEA":
@@ -70,6 +76,9 @@ const ideasReducer = (state = {ideas: ["start"], events: [], friends: ["start"],
         }
       }
       )
+      return {...state, ideas: updatedIdeas}
+    case "REMOVE_IDEA_FROM_STORE":
+      var updatedIdeas = state.ideas.filter( i => i.id != action.idea_id)
       return {...state, ideas: updatedIdeas}
     default: return state
   }

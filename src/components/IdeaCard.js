@@ -14,7 +14,7 @@ class ideaCard extends Component {
           headers: {
             'Content-Type': 'application/json'
           }
-        }).then(this.props.countOut(this.props.user_id))
+        }).then(this.props.removeIdeaFromStore(this.props.match.params.id))
           .then(this.props.history.push(`/`))
   }
 
@@ -60,7 +60,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    countOut: (i_id) => dispatch({type: 'REMOVE_INVITEE', i_id})
+    removeIdeaFromStore: (i_id) => dispatch({type: 'REMOVE_IDEA_FROM_STORE', idea_id: (i_id)})
   }
 }
 

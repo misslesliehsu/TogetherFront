@@ -10,6 +10,7 @@ const IdeasList = (props) =>  {
   const handleNewIdea = () => {
     props.history.push(`/ideas/new`)
   }
+  console.log(props)
 
   return (
     <div>

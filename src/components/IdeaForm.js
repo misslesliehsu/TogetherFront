@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import FriendItem from './FriendItem'
 import URL_ROOT from '../URL.js'
 import { withRouter } from 'react-router-dom'
-import FriendsList from './FriendsList'
 
 class IdeaForm extends Component {
 
@@ -146,7 +145,7 @@ class IdeaForm extends Component {
     for (let i = 0; i < this.state.date_suggestions.length; i++) {
       suggestions.push(
         <div key={i}>
-          <input type='date' key={i} onChange={this.handleSetDate} name={i} value={this.state.date_suggestions[i]}></input>
+          <input type='date' key={i} onChange={this.handleSetDate} name={i} value={this.state.date_suggestions[i].date}></input>
           <button name={i} onClick={this.handleRemoveDate}>X</button>
         </div>
       )
@@ -177,7 +176,7 @@ class IdeaForm extends Component {
         <button onClick={this.handleSave}>Save Idea</button>
         </div>
       <h4>Invite Friends</h4>
-        <FriendsList buttonAction={this.handleAddInvitee} friends={this.calcNoninvitees()} />
+        {this.calcNoninvitees().map( nI => <FriendItem key={nI.id} buttonAction={this.handleAddInvitee} friend={nI}/>)}
       </div>
     )
   }
