@@ -71,11 +71,11 @@ class IdeaForm extends Component {
                   name: this.state.name,
                   location: this.state.location,
                   owner_id: this.props.user_id,
-                  description: this.state.description
+                  description: this.state.description,
+                  scheduled_date: this.state.scheduled_date
                 },
                 date_suggestions: this.state.date_suggestions,
-                invitees: this.state.invitees,
-                scheduled_date: this.state.scheduled_date
+                invitees: this.state.invitees
               }
             )
           }).then(res=> res.json())

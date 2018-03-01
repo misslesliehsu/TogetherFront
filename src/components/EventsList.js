@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 const eventsList = (props) => {
   return (
     <div>
-      <p>YOUR EVENTS</p>
+      <p>YOUR SCHEDULED EVENTS</p>
       {props.events.map( e => <li>{e.name}</li>)}
     </div>
   )

@@ -58,28 +58,32 @@ class IdeaForm extends Component {
 
   handleSchedule = (e) => {
     e.preventDefault()
-
-    fetch(`${URL_ROOT}users/${this.props.user_id}/ideas/${this.props.match.params.id}`, {
-          method: 'put',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(
-            {
-              idea:{
-                name: this.state.name,
-                location: this.state.location,
-                owner_id: this.state.user_id,
-                description: this.state.description
-              },
-              date_suggestions: this.state.date_suggestions,
-              invitees: this.state.invitees,
-              scheduled_date: this.state.scheduled_date
-            }
-          )
-        }).then(res=> res.json())
-        .then(res => {this.props.updateIdea({...this.state, id: this.props.match.params.id}); return res})
-        .then(res=>this.props.history.push(`/ideas/${this.props.match.params.id}`))
+    if (this.state.scheduled_date === '') {
+      console.log(Error("Must have a Final Date!"))
+    }
+    else {
+      fetch(`${URL_ROOT}users/${this.props.user_id}/ideas/${this.props.match.params.id}`, {
+            method: 'put',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(
+              {
+                idea:{
+                  name: this.state.name,
+                  location: this.state.location,
+                  owner_id: this.state.user_id,
+                  description: this.state.description,
+                  scheduled_date: this.state.scheduled_date
+                },
+                date_suggestions: this.state.date_suggestions,
+                invitees: this.state.invitees
+              }
+            )
+          }).then(res=> res.json())
+          .then(res => {this.props.updateIdea({...this.state, id: this.props.match.params.id}); return res})
+          .then(res=>this.props.history.push(`/events/${this.props.match.params.id}`))
+      }
   }
   // what do i do with the errors here - should not save & should not go to show page
 
@@ -98,6 +102,7 @@ class IdeaForm extends Component {
 
 
   render() {
+    console.log(this.state)
     const ideaToSchedule = (this.props.ideas[0] !== "start") ? this.props.ideas.find(i => i.id == this.props.match.params.id) : {date_suggestions: []}
     return(
       <div>
@@ -122,7 +127,7 @@ class IdeaForm extends Component {
           Friends:
         {this.state.invitees.map( i => <FriendItem buttonAction={this.handleRemoveInvitee} key={i.id} friend={i}/>)}
         <br></br>
-        <button onClick={this.handleSchedule}>Save Idea</button>
+        <button onClick={this.handleSchedule}>Schedule It!</button>
         </div>
       <h4>Invite Friends</h4>
         {this.calcNoninvitees().map( nI => <FriendItem key={nI.id} buttonAction={this.handleAddInvitee} friend={nI}/>)}
