@@ -12,13 +12,14 @@ class IdeaForm extends Component {
       description: '',
       date_suggestions: [{date: '', id: null, voters: [] }],
       invitees: [],
-      owner_id: ''
+      owner_id: '',
+      scheduled_date: ''
   }
 
 
   //for existing ideas; clicked 'edit' from show page
   componentDidMount() {
-    if (this.props.edit === true && this.props.ideas[0] !== "start") {
+    if (this.props.purpose === 'edit' && this.props.ideas[0] !== "start") {
       const ideaToEdit = this.props.ideas.find(i => i.id == this.props.match.params.id)
       this.setState(ideaToEdit)
     }
@@ -26,12 +27,12 @@ class IdeaForm extends Component {
 
   //for existing ideas; navigated directly to edit page (i.e. maybe no props avail yet)
   componentWillReceiveProps(nextProps) {
-    if (this.props.edit === true && nextProps.ideas[0] !== "start") {
+    if (this.props.purpose === 'edit' && nextProps.ideas[0] !== "start") {
       const ideaToEdit = nextProps.ideas.find(i => i.id == this.props.match.params.id)
       this.setState(ideaToEdit)
     }
   }
-  //NOTES: I had to use both componentWillReceiveProps and componentWillMount because 1) used componentWillReceiveProps to indicate a direct attempt to visit the edit page for an existing item.  in this case, the store ideas may not be available to the component yet, as props, during componentDidMount - therefore need to catch when they DO come down the pike, and are complete (i.e. have ideas that are not in initial state 'start').  2) used componentDidMount for cases when someone is on Show page, then clicks 'edit'.  in this case, the props are already there -- no new influx will trigger a componentWillReceiveProps - thus state should be set during mount, with the ideas which are already available as props
+  //NOTES: I had to use both componentWillReceiveProps and componentDidMount because 1) used componentWillReceiveProps to indicate a direct attempt to visit the edit page for an existing item.  in this case, the store ideas may not be available to the component yet, as props, during componentDidMount - therefore need to catch when they DO come down the pike, and are complete (i.e. have ideas that are not in initial state 'start').  2) used componentDidMount for cases when someone is on Show page, then clicks 'edit'.  in this case, the props are already there -- no new influx will trigger a componentWillReceiveProps - thus state should be set during mount, with the ideas which are already available as props
 
   handleAddInvitee = (friend) => {
     this.setState({invitees: [...this.state.invitees, friend]})
@@ -58,7 +59,7 @@ class IdeaForm extends Component {
     e.preventDefault()
 
     //for brand new ideas
-    if (this.props.edit === false) {
+    if (this.props.purpose === 'new') {
       fetch(`${URL_ROOT}users/${this.props.user_id}/ideas`, {
             method: 'post',
             headers: {
@@ -73,7 +74,8 @@ class IdeaForm extends Component {
                   description: this.state.description
                 },
                 date_suggestions: this.state.date_suggestions,
-                invitees: this.state.invitees
+                invitees: this.state.invitees,
+                scheduled_date: this.state.scheduled_date
               }
             )
           }).then(res=> res.json())
@@ -97,7 +99,8 @@ class IdeaForm extends Component {
                   description: this.state.description
                 },
                 date_suggestions: this.state.date_suggestions,
-                invitees: this.state.invitees
+                invitees: this.state.invitees,
+                scheduled_date: this.state.scheduled_date
               }
             )
           }).then(res=> res.json())

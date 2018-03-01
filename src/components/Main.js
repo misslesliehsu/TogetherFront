@@ -38,12 +38,6 @@ class Main extends Component {
 }
 
 
-const mapStateToProps = (state) => {
-  return {
-    ideas: state.ideas,
-    friends: state.friends
-  }
-}
 
 
-export default withRouter(connect(mapStateToProps, null)(Main))
+export default withRouter(connect(null, null)(Main))

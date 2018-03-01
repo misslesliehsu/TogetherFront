@@ -10,7 +10,6 @@ const IdeasList = (props) =>  {
   const handleNewIdea = () => {
     props.history.push(`/ideas/new`)
   }
-  console.log(props)
 
   return (
     <div>
@@ -36,8 +35,9 @@ const IdeasList = (props) =>  {
 
 const mapStateToProps = (state) => {
   return {
-    ideas: state.ideas,
+    ideas: state.ideas.filter( i => i.scheduled_date === ''),
     user_id: state.user.id
+
   }
 }
 

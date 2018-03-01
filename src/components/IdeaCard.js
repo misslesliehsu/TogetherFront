@@ -22,6 +22,10 @@ class ideaCard extends Component {
     this.props.history.push(`/ideas/${this.props.match.params.id}/edit`)
   }
 
+  handleSchedule = () => {
+    this.props.history.push(`/ideas/${this.props.match.params.id}/schedule`)
+  }
+
   //why can't i define getIdea outside a function, on its own?
   render() {
     let getIdea = this.props.ideas.find( i => i.id == this.props.match.params.id)
@@ -42,6 +46,8 @@ class ideaCard extends Component {
                 }
               </ul>
               {this.props.user_id === getIdea.owner_id && <button onClick={this.handleEdit}>Edit Idea</button>}
+              <br></br>
+              {this.props.user_id === getIdea.owner_id && <button onClick={this.handleSchedule}>Schedule It!</button>}
               {this.props.user_id !== getIdea.owner_id && <button onClick={this.handleCountOut}>Count Me Out</button>}
           </div>
         }

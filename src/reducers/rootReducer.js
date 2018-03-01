@@ -8,7 +8,7 @@
 
 
 
-const ideasReducer = (state = {ideas: ["start"], events: ['start'], friends: ["start"], user:{id:284, first_name: "hardwired first name", last_name: 'hardwired last name', email: "hardwired email"}, nonFriends: ['start']}, action) => {
+const ideasReducer = (state = {ideas: ["start"], events: ['start'], friends: ["start"], user:{id:300, first_name: "hardwired first name", last_name: 'hardwired last name', email: "hardwired email"}, nonFriends: ['start']}, action) => {
   switch (action.type) {
     case "LOAD_NONFRIENDS":
       return {...state, nonFriends: action.nonFriends}
