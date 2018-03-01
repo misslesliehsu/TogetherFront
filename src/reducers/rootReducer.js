@@ -80,12 +80,12 @@ const ideasReducer = (state = {ideas: ["start"], events: ['start'], friends: ["s
     case "REMOVE_IDEA_FROM_STORE":
       var updatedIdeas = state.ideas.filter( i => i.id != action.idea_id)
       return {...state, ideas: updatedIdeas}
+    case "LOGIN":
+      return {...state, user: action.user}
     default: return state
   }
 }
-// const anotherideasReducer = (state = {ideas: ["1", "2"], events: [], friends: []}, action) => {
-//   return state
-// }
+
 
 
 export default ideasReducer

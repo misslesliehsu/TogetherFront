@@ -4,7 +4,7 @@ import { Switch, Route, withRouter } from 'react-router-dom'
 import Dashboard from './Dashboard'
 import Ideas from './Ideas'
 import FriendsPage from './FriendsPage'
-import Login from './Login'
+import LoginSignup from './LoginSignup'
 import Profile from './Profile'
 import authorize from '../AuthHOC'
 
@@ -17,14 +17,17 @@ class Main extends Component {
     const AuthFriendsPage = authorize(FriendsPage)
     const AuthProfile = authorize(Profile)
     return(
+      <div>
+        Hey I'm Main page
         <Switch>
-          <Route exact path='/login' component={Login}/>
+          <Route exact path='/login' component={LoginSignup}/>
           <Route exact path='/dashboard' component={AuthDashboard}/>
           <Route path='/ideas' component={AuthIdeas}/>
           <Route path='/events' component={AuthIdeas}/>
           <Route exact path='/friends' component={AuthFriendsPage}/>
           <Route exact path='/MyProfile' component={AuthProfile}/>
         </Switch>
+      </div>
     )
   }
 }
