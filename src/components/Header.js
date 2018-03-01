@@ -10,7 +10,7 @@ const header = () => {
         TOGETHER
       </div>
       <div className='headerLeft'>
-        <Link to='/'>Dashboard</Link>
+        <Link to='/dashboard'>Dashboard</Link>
         <Link to='/Profile'>Profile</Link>
         <Link to='/Friends'>Friends</Link>
       </div>

@@ -4,40 +4,30 @@ import { Switch, Route, withRouter } from 'react-router-dom'
 import Dashboard from './Dashboard'
 import Ideas from './Ideas'
 import FriendsPage from './FriendsPage'
+import Login from './Login'
+import Profile from './Profile'
+import authorize from '../AuthHOC'
+
 
 class Main extends Component {
 
-/*the Main\ page could either be:
-1) login/logout,
-2) dashboard
-3) Idea:
-  create idea
-  show idea
-  update idea
-4) Event:
-  create events
-  show event
-  update event
-5) my friends
-6) Profile
-  other's Profile
-7) Edit my Profile
-
-*/
-
-
   render() {
+    const AuthDashboard = authorize(Dashboard)
+    const AuthIdeas = authorize(Ideas)
+    const AuthFriendsPage = authorize(FriendsPage)
+    const AuthProfile = authorize(Profile)
     return(
         <Switch>
-          <Route exact path='/' component={Dashboard}/>
-          <Route path='/ideas/' component={Ideas}/>
-          <Route exact path='/friends' component={FriendsPage}/>
+          <Route exact path='/login' component={Login}/>
+          <Route exact path='/dashboard' component={AuthDashboard}/>
+          <Route path='/ideas' component={AuthIdeas}/>
+          <Route path='/events' component={AuthIdeas}/>
+          <Route exact path='/friends' component={AuthFriendsPage}/>
+          <Route exact path='/MyProfile' component={AuthProfile}/>
         </Switch>
     )
   }
 }
-
-
 
 
 export default withRouter(connect(null, null)(Main))
