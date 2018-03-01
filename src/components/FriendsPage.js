@@ -55,7 +55,7 @@ class FriendsPage extends Component {
 const mapStateToProps = (state) => {
   return {
     friends: state.friends, nonFriends: state.nonFriends,
-    user_id: state.user.id 
+    user_id: state.user.id
   }
 }
 
