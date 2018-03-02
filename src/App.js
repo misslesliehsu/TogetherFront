@@ -9,18 +9,24 @@ import { withRouter } from 'react-router-dom'
 
 class App extends Component {
 
-  //loading database Ideas (owned & invited), Friends, (and later Events) to the store state
-
   componentDidMount() {
-    if (this.props.user_id) {
-      fetch(`${URL_ROOT}users/${this.props.user_id}/ideas`)
-      .then(res => res.json())
-      .then(res => this.props.loadIdeas(res))
-
-      fetch(`${URL_ROOT}users/${this.props.user_id}/friendships`)
-      .then(res=> res.json())
-      .then(res => {this.props.loadFriends(res.friends)
-      this.props.loadNonFriends(res.nonFriends)})
+    const token = localStorage.getItem('token');
+    if (token) {
+      fetch(`http://localhost:3001/current_user`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token
+        }
+      }).then(res => res.json())
+      .then(res => {
+        if (res.user) {
+          this.props.login(res.user)
+        }
+        else {this.props.logout()}
+      })
+    }
+    else {
+      this.props.logout()
     }
   }
 
@@ -46,7 +52,9 @@ const mapDispatchToProps = (dispatch) => {
   return ({
     loadIdeas: (i) => dispatch({type: 'LOAD_IDEAS', ideas: i}),
     loadFriends: (f) => dispatch({type: 'LOAD_FRIENDS', friends: f}),
-    loadNonFriends: (nf) => dispatch({type: 'LOAD_NONFRIENDS', nonFriends: nf})
+    loadNonFriends: (nf) => dispatch({type: 'LOAD_NONFRIENDS', nonFriends: nf}),
+    login: (u) => dispatch({type: "LOGIN", user: u}),
+    logout: () => dispatch({type:'LOGOUT'})
   })
 
 }

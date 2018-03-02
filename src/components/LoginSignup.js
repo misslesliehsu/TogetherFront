@@ -36,9 +36,9 @@ class LoginSignup extends Component {
       }).then(res => res.json())
       .then(res => {
         this.props.login(res.user),
-        localStorage.setItem('token', res.token),
-        this.props.history.push('/dashboard')
+        localStorage.setItem('token', res.token)
       })
+      .then(this.props.history.push('/dashboard'))
     }
     else {
       if (this.state.signup_password !== this.state.signup_password_confirmation) {
@@ -76,7 +76,6 @@ class LoginSignup extends Component {
   }
 
   render() {
-    console.log(this.state)
     return (
       <div>
         <p>Login Page </p>

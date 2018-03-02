@@ -102,7 +102,6 @@ class IdeaForm extends Component {
 
 
   render() {
-    console.log(this.state)
     const ideaToSchedule = (this.props.ideas[0] !== "start") ? this.props.ideas.find(i => i.id == this.props.match.params.id) : {date_suggestions: []}
     return(
       <div>

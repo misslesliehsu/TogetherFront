@@ -41,7 +41,7 @@ class FriendsPage extends Component {
     return (
       <div>
         FRIENDS HERE!
-        {this.props.friends && this.props.friends.map(f => <FriendItem key={f.id} buttonAction={this.handleRemoveFriend} friend={f}/>)}
+        {this.props.friends[0] !=='start' && this.props.friends.map(f => <FriendItem key={f.id} buttonAction={this.handleRemoveFriend} friend={f}/>)}
 
         Search for more Friends:
         <input type='text' value={this.props.input} onChange={this.handleChange} placeholder='Search for more Friends'></input>

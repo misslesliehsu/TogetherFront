@@ -1,17 +1,64 @@
-import React from 'react'
+import React, { Component } from 'react'
 import IdeasList from './IdeasList'
 import EventsList from './EventsList'
 import { Route } from 'react-router-dom'
+import { connect } from 'react-redux'
+import URL_ROOT from '../URL'
 
 
-const Dashboard = (props) => {
-  return (
-    <div style={{display:'grid', gridTemplateColumns:'2fr 1fr'}}>
-      <IdeasList history={props.history}/>
-      <EventsList/>
-    </div>
-  )
+class Dashboard extends Component {
+
+  //loading database Ideas (owned & invited), Friends, (and later Events) to the store state
+
+  componentDidMount() {
+    if (this.props.user_id !=='start') {
+      fetch(`${URL_ROOT}users/${this.props.user_id}/ideas`)
+      .then(res => res.json())
+      .then(res => this.props.loadIdeas(res))
+
+      fetch(`${URL_ROOT}users/${this.props.user_id}/friendships`)
+      .then(res=> res.json())
+      .then(res => {this.props.loadFriends(res.friends)
+      this.props.loadNonFriends(res.nonFriends)})
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.user_id ==='start' && nextProps.user_id !== "start") {
+      fetch(`${URL_ROOT}users/${nextProps.user_id}/ideas`)
+      .then(res => res.json())
+      .then(res => this.props.loadIdeas(res))
+
+      fetch(`${URL_ROOT}users/${nextProps.user_id}/friendships`)
+      .then(res=> res.json())
+      .then(res => {this.props.loadFriends(res.friends)
+      this.props.loadNonFriends(res.nonFriends)})
+    }
+  }
+
+  render() {
+    return (
+      <div style={{display:'grid', gridTemplateColumns:'2fr 1fr'}}>
+        <IdeasList history={this.props.history}/>
+        <EventsList/>
+      </div>
+    )
+  }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    user_id: state.user.id
+  }
+}
 
-export default Dashboard
+const mapDispatchToProps = (dispatch) => {
+  return ({
+    loadIdeas: (i) => dispatch({type: 'LOAD_IDEAS', ideas: i}),
+    loadFriends: (f) => dispatch({type: 'LOAD_FRIENDS', friends: f}),
+    loadNonFriends: (nf) => dispatch({type: 'LOAD_NONFRIENDS', nonFriends: nf})
+  })
+
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)

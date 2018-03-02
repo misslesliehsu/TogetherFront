@@ -18,7 +18,6 @@ class Main extends Component {
     const AuthProfile = authorize(Profile)
     return(
       <div>
-        Hey I'm Main page
         <Switch>
           <Route exact path='/login' component={LoginSignup}/>
           <Route exact path='/dashboard' component={AuthDashboard}/>
