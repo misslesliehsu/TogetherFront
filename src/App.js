@@ -27,7 +27,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Header/>
+        <Header history={this.props.history}/>
         <Main/>
       </div>
     );

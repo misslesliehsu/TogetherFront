@@ -35,9 +35,9 @@ const IdeasList = (props) =>  {
 
 const mapStateToProps = (state) => {
   return {
+    debugger
     ideas: state.ideas.filter( i => i.scheduled_date === ''),
     user_id: state.user.id
-
   }
 }
 

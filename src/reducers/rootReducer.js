@@ -8,7 +8,7 @@
 
 
 
-const ideasReducer = (state = {ideas: ["start"], events: ['start'], friends: ["start"], user:{id:343, first_name: "hardwired first name", last_name: 'hardwired last name', email: "hardwired email"}, nonFriends: ['start']}, action) => {
+const ideasReducer = (state = {ideas: ["start"], events: ['start'], friends: ["start"], user:{id:"start"}, nonFriends: ['start']}, action) => {
   switch (action.type) {
     case "LOAD_NONFRIENDS":
       return {...state, nonFriends: action.nonFriends}
@@ -82,6 +82,8 @@ const ideasReducer = (state = {ideas: ["start"], events: ['start'], friends: ["s
       return {...state, ideas: updatedIdeas}
     case "LOGIN":
       return {...state, user: action.user}
+    case "LOGOUT":
+      return {...state, user: {id:'start'}}
     default: return state
   }
 }
