@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import URL_ROOT from '../URL'
 import { connect } from 'react-redux'
+import { loadData, login } from '../actions'
 
 class LoginSignup extends Component {
 
@@ -37,6 +38,7 @@ class LoginSignup extends Component {
       .then(res => {
         this.props.login(res.user),
         localStorage.setItem('token', res.token)
+        this.props.loadData(res.user.id)
       })
       .then(this.props.history.push('/dashboard'))
     }
@@ -80,7 +82,7 @@ class LoginSignup extends Component {
       <div>
         <p>Login Page </p>
           <input type='text' name='login_email' value={this.state.login_email} onChange={this.handleChange} placeholder='Email Address'></input>
-          <input type='text' name='login_password' value={this.state.login_password} onChange={this.handleChange} placeholder='Password'></input>
+          <input type='password' name='login_password' value={this.state.login_password} onChange={this.handleChange} placeholder='Password'></input>
           <br></br><button name='login' onClick={this.handleSubmit}>Login</button>
           <p>Sign Up</p>
           <input type='text' name='signup_email'value={this.state.signup_email} onChange={this.handleChange} placeholder='Email Address'></input>
@@ -95,10 +97,15 @@ class LoginSignup extends Component {
 
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    login: (u) => dispatch({type: "LOGIN", user: u})
-  }
-}
+export default connect(null, {login, loadData})(LoginSignup)
 
-export default connect(null, mapDispatchToProps)(LoginSignup)
+
+//
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     login: (u) => dispatch({type: "LOGIN", user: u}),
+//     loadData
+//   }
+// }
+
+// export default connect(null, mapDispatchToProps)(LoginSignup)

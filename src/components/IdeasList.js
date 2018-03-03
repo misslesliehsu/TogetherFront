@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
+
 const IdeasList = (props) =>  {
 
   const handleViewIdea = (e) => {
@@ -10,6 +11,7 @@ const IdeasList = (props) =>  {
   const handleNewIdea = () => {
     props.history.push(`/ideas/new`)
   }
+
 
   return (
     <div>
@@ -22,7 +24,7 @@ const IdeasList = (props) =>  {
             :
             <img className='miniIdeaIcon' src={require('../threeSeeds.jpg')}></img>
           }
-          <div>{i.name}</div>
+          <div className='miniIdeaCaption'>{i.name}</div>
           <br></br>
         </div>
       )}
@@ -34,7 +36,6 @@ const IdeasList = (props) =>  {
 }
 
 const mapStateToProps = (state) => {
-  
   return {
     ideas: state.ideas.filter( i => i.scheduled_date === ''),
     user_id: state.user.id

@@ -74,7 +74,7 @@ input {
 }*/
 
 .miniIdea {
-  width: 50%;
+  width: 80%;
   margin: 0 auto;
 }
 
@@ -92,9 +92,14 @@ input {
   border-color: #88cc00;
   border-style: double;
   border-width: 6px;
+}
 
-
-
+.miniIdeaCaption {
+  display: block;
+  height: 10%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  /*white-space: nowrap;*/
 }
 
 .miniIdeaIcon:hover {

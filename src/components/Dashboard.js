@@ -10,32 +10,6 @@ class Dashboard extends Component {
 
   //loading database Ideas (owned & invited), Friends, (and later Events) to the store state
 
-  componentDidMount() {
-    if (this.props.user_id !=='start') {
-      fetch(`${URL_ROOT}users/${this.props.user_id}/ideas`)
-      .then(res => res.json())
-      .then(res => this.props.loadIdeas(res))
-
-      fetch(`${URL_ROOT}users/${this.props.user_id}/friendships`)
-      .then(res=> res.json())
-      .then(res => {this.props.loadFriends(res.friends)
-      this.props.loadNonFriends(res.nonFriends)})
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props.user_id ==='start' && nextProps.user_id !== "start") {
-      fetch(`${URL_ROOT}users/${nextProps.user_id}/ideas`)
-      .then(res => res.json())
-      .then(res => this.props.loadIdeas(res))
-
-      fetch(`${URL_ROOT}users/${nextProps.user_id}/friendships`)
-      .then(res=> res.json())
-      .then(res => {this.props.loadFriends(res.friends)
-      this.props.loadNonFriends(res.nonFriends)})
-    }
-  }
-
   render() {
     return (
       <div style={{display:'grid', gridTemplateColumns:'2fr 1fr'}}>

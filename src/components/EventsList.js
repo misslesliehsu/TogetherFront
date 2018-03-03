@@ -5,7 +5,6 @@ const eventsList = (props) => {
   return (
     <div>
       <p>YOUR SCHEDULED EVENTS</p>
-      {props.events.map( e => <li>{e.name}</li>)}
     </div>
   )
 }

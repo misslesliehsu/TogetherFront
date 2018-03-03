@@ -83,7 +83,7 @@ const ideasReducer = (state = {ideas: ["start"], events: ['start'], friends: ["s
     case "LOGIN":
       return {...state, user: action.user}
     case "LOGOUT":
-      return {...state, user: {id:'start'}}
+      return {ideas: ["start"], events: ['start'], friends: ["start"], user:{id:"start"}, nonFriends: ['start']}
     default: return state
   }
 }
