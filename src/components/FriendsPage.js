@@ -38,15 +38,24 @@ class FriendsPage extends Component {
   }
 
   render() {
+
     return (
-      <div>
-        FRIENDS HERE!
-        {this.props.friends[0] !=='start' && this.props.friends.map(f => <FriendItem key={f.id} buttonAction={this.handleRemoveFriend} friend={f}/>)}
+      <div style={{display: 'grid', gridTemplateColumns: '2fr 1fr'}}>
+        <div class='ui six cards'>
+            {this.props.friends[0] !=='start' && this.props.friends.map(f => <FriendItem key={f.id} label='Remove' buttonAction={this.handleRemoveFriend} friend={f}/>)}
+        </div>
 
-        Search for more Friends:
-        <input type='text' value={this.props.input} onChange={this.handleChange} placeholder='Search for more Friends'></input>
+        <div>
+          <h3>Search for more Friends:</h3>
 
-         {this.state.input && this.state.results.map(f => <FriendItem key={f.id} buttonAction={this.handleAddFriend} friend={f}/>)}
+          <div class="ui icon input">
+            <input type="text" value={this.props.input} onChange={this.handleChange} tabindex="0" class="prompt" autoComplete="off" />
+            <i aria-hidden="true" class="search icon"></i>
+          </div>
+
+
+           {this.state.input && this.state.results.map(f => <FriendItem key={f.id} buttonAction={this.handleAddFriend} label='Add Friend' friend={f}/>)}
+        </div>
       </div>
     )
   }

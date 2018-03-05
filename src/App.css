@@ -96,10 +96,10 @@ input {
 
 .miniIdeaCaption {
   display: block;
-  height: 10%;
-  text-overflow: ellipsis;
+  width: 150px;
   overflow: hidden;
-  /*white-space: nowrap;*/
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .miniIdeaIcon:hover {

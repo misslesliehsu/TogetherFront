@@ -16,28 +16,29 @@ const header = (props) => {
 
   return (
 
+    <div>
+      <div className='fullHeader'>
+        <div className='togetherLogo'>
+          TOGETHER
+        </div>
 
-    <div className='fullHeader'>
-      <div class="ui menu">
-        <Link class='item' to='/dashboard'>Dashboard</Link>
-        <Link class='item' to='/Profile'>Profile</Link>
-        <Link class='item' to='/Friends'>Friends</Link>
-      </div>
-
-      <div className='togetherLogo'>
-        TOGETHER
-      </div>
+        <div class="ui menu">
+          <Link class='item' to='/dashboard'>Dashboard</Link>
+          <Link class='item' to='/Profile'>Profile</Link>
+          <Link class='item' to='/Friends'>Friends</Link>
+        </div>
 
 
-      <div className='headerRight'>
-        {props.user_id !== 'start' &&
-        <li onClick={handleLogOut}>Log Out</li>
-      }
+        <div className='headerRight'>
+          {props.user_id !== 'start' &&
+          <li onClick={handleLogOut}>Log Out</li>
+        }
+        </div>
       </div>
     </div>
+
   )
 }
-
 
 
 const mapDispatchToProps = (dispatch) => {
