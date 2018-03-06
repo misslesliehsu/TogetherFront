@@ -1,13 +1,62 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { Form, Segment} from 'semantic-ui-react'
+import { connect } from 'react-redux'
 
-const profilePage = (props) => {
-  return (
-    <div>
-      <p>Profile Page </p>
-    </div>
-  )
+
+class ProfilePage extends Component {
+
+  state = {
+    editting: false,
+    button: "Edit Profile"
+  }
+
+  handleClick = (e) => {
+    e.preventDefault()
+    if (this.state.editting === true) {
+      this.setState({editting: false, button: "Edit Profile"})
+      //FETCH TO SAVE CHANGES TO BACKEND
+    }
+    else {
+      this.setState({editting: true, button: "Save Changes"})
+    }
+  }
+
+  render() {
+    return (
+      <div>
+        <p>Your Profile</p>
+        {this.state.editting === false ?
+
+          <div>
+            <Segment>First name: {this.props.user.first_name}</Segment>
+            <Segment>Last name: {this.props.user.last_name}</Segment>
+            <Segment>Email address: {this.props.user.email}</Segment>
+          </div>
+          :
+
+          <Form>
+           <Form.Group widths='equal'>
+             <Form.Input fluid label='First name' placeholder={this.props.user.first_name} />
+             <Form.Input fluid label='Last name' placeholder={this.props.user.last_name} />
+             <Form.Input fluid label='Last name' placeholder={this.props.user.email} />
+           </Form.Group>
+         </Form>
+      }
+      <br></br><br></br>
+      <Form.Button onClick={this.handleClick}>{this.state.button}</Form.Button><br></br>
+      {this.state.editting === true  && <Form.Button onClick={this.handleClick}>Go Back</Form.Button>}
+      </div>
+    )
+  }
+
 }
 
 
+const mapStateToProps = (state) => {
+  return {
+    user: state.user
+  }
+}
 
-export default profilePage
+
+export default connect(mapStateToProps, null)(ProfilePage)

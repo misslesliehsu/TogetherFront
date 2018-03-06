@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Switch, Route, withRouter } from 'react-router-dom'
+import { Redirect, Switch, Route, withRouter } from 'react-router-dom'
 import Dashboard from './Dashboard'
 import Ideas from './Ideas'
 import FriendsPage from './FriendsPage'
@@ -24,7 +24,8 @@ class Main extends Component {
           <Route path='/ideas' component={AuthIdeas}/>
           <Route path='/events' component={AuthIdeas}/>
           <Route exact path='/friends' component={AuthFriendsPage}/>
-          <Route exact path='/MyProfile' component={AuthProfile}/>
+          <Route exact path='/profile' component={AuthProfile}/>
+          <Redirect to='/Login'/>
         </Switch>
       </div>
     )

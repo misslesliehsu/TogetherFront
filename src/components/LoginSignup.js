@@ -80,10 +80,13 @@ class LoginSignup extends Component {
   render() {
     return (
       <div>
-        <p>Login Page </p>
+        <p>Login</p>
           <input type='text' name='login_email' value={this.state.login_email} onChange={this.handleChange} placeholder='Email Address'></input>
           <input type='password' name='login_password' value={this.state.login_password} onChange={this.handleChange} placeholder='Password'></input>
           <br></br><button name='login' onClick={this.handleSubmit}>Login</button>
+          <br></br>
+          <br></br>
+          <br></br>
           <p>Sign Up</p>
           <input type='text' name='signup_email'value={this.state.signup_email} onChange={this.handleChange} placeholder='Email Address'></input>
           <input type='text' name='signup_first_name' value={this.state.signup_first_name} onChange={this.handleChange} placeholder='First Name'></input>

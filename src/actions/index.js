@@ -16,7 +16,7 @@ export function getCurrentUser() {
       }
     }).then(res => res.json())
     .then(res => {
-      if (res.user) {
+      if (res) {
         dispatch({type: "LOGIN", user: res.user})
       }
       else {

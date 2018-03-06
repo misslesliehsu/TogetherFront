@@ -46,7 +46,7 @@ class DateSuggestionItem extends Component {
     console.log(this.props)
     return (
       <div>
-        {this.props.d.date.date}
+        {this.props.d.date}
         {this.props.d.voters.map( v => <li key={v.id}>{v.first_name} {v.last_name}</li>)}
         <button onClick={this.handleVoteOrUnvote}>{this.buttonText()}</button>
       </div>
