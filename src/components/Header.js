@@ -18,6 +18,9 @@ const header = (props) => {
   return (
 
     <div>
+      <div class="togetherLogo">
+        TOGETHER
+      </div>
         <Menu pointing secondary>
           <Menu.Item><Link class='item' to='/dashboard'>Dashboard</Link></Menu.Item>
           <Menu.Item><Link class='item' to='/Profile'>Profile</Link></Menu.Item>

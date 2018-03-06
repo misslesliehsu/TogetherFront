@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import URL_ROOT from '../URL'
 import { connect } from 'react-redux'
 import { loadData, login } from '../actions'
+import { Image, Button } from 'semantic-ui-react'
+
 
 class LoginSignup extends Component {
 
@@ -12,7 +14,8 @@ class LoginSignup extends Component {
     signup_password: '',
     signup_password_confirmation: '',
     signup_first_name: '',
-    signup_last_name:''
+    signup_last_name:'',
+    mode: 'neutral'
   }
 
   handleChange = (e) => {
@@ -76,24 +79,60 @@ class LoginSignup extends Component {
       }
     }
   }
+  handleClickSetup = () => {
+    if (this.state.mode === 'logging in') {
+      this.setState({mode: 'signing up'})
+    }
+    else if (this.state.mode === 'signing up') {
+      this.setState({mode: 'logging in'})
+    }
+  }
 
-  render() {
-    return (
+  handleClickButton = (e) => {
+    this.setState({mode: e.target.name})
+  }
+
+  handleSetup = () => {
+    if (this.state.mode === 'neutral') {
+      return (
       <div>
-        <p>Login</p>
-          <input type='text' name='login_email' value={this.state.login_email} onChange={this.handleChange} placeholder='Email Address'></input>
-          <input type='password' name='login_password' value={this.state.login_password} onChange={this.handleChange} placeholder='Password'></input>
-          <br></br><button name='login' onClick={this.handleSubmit}>Login</button>
-          <br></br>
-          <br></br>
-          <br></br>
-          <p>Sign Up</p>
+        <Button size='massive' name='signing up' onClick={this.handleClickButton}>Sign Up</Button>
+        <br></br>
+        <br></br>
+        <Button size='massive' name='logging in' onClick={this.handleClickButton}>Login</Button>
+      </div>
+      )
+    }
+    else if (this.state.mode === 'signing up') {
+      return (
+        <div>
           <input type='text' name='signup_email'value={this.state.signup_email} onChange={this.handleChange} placeholder='Email Address'></input>
           <input type='text' name='signup_first_name' value={this.state.signup_first_name} onChange={this.handleChange} placeholder='First Name'></input>
           <input type='text' name='signup_last_name' value={this.state.signup_last_name} onChange={this.handleChange} placeholder='Last Name'></input>
           <input type='password'name='signup_password' value={this.state.signup_password} onChange={this.handleChange} placeholder='Password'></input>
           <input type='password' name='signup_password_confirmation' value={this.state.signup_password_confirmation} onChange={this.handleChange} placeholder='Confirm Password'></input>
           <br></br><button name='signup' onClick={this.handleSubmit}>Sign Up!</button>
+          <p onClick={this.handleClickSetup}>Already Have an Account? Log In</p>
+        </div>
+      )
+    }
+    else if (this.state.mode === 'logging in') {
+      return (
+        <div>
+          <input type='text' name='login_email' value={this.state.login_email} onChange={this.handleChange} placeholder='Email Address'></input>
+          <input type='password' name='login_password' value={this.state.login_password} onChange={this.handleChange} placeholder='Password'></input>
+          <br></br><button name='login' onClick={this.handleSubmit}>Login</button>
+          <p onClick={this.handleClickSetup}>Don't Have an Account? Sign Up</p>
+        </div>
+      )
+    }
+  }
+
+  render() {
+    console.log(this.state)
+    return (
+      <div>
+        {this.handleSetup()}
       </div>
     )
   }
