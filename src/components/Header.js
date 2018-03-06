@@ -21,16 +21,17 @@ const header = (props) => {
       <div class="togetherLogo">
         TOGETHER
       </div>
-        <Menu pointing secondary>
-          <Menu.Item><Link class='item' to='/dashboard'>Dashboard</Link></Menu.Item>
-          <Menu.Item><Link class='item' to='/Profile'>Profile</Link></Menu.Item>
-          <Menu.Item><Link class='item' to='/Friends'>Friends</Link></Menu.Item>
-            {props.user_id !== 'start' &&
-            <Menu.Menu position='right'>
-              <Menu.Item onClick={handleLogOut}>Log Out</Menu.Item>
-            </Menu.Menu>
-            }
-        </Menu>
+      <Menu size='large' pointing secondary>
+        
+        <Menu.Item><Link class='item' to='/dashboard'>Dashboard</Link></Menu.Item>
+        <Menu.Item><Link class='item' to='/Profile'>Profile</Link></Menu.Item>
+        <Menu.Item><Link class='item' to='/Friends'>Friends</Link></Menu.Item>
+          {props.user_id !== 'start' &&
+          <Menu.Menu position='right'>
+            <Menu.Item onClick={handleLogOut}>Log Out</Menu.Item>
+          </Menu.Menu>
+          }
+      </Menu>
 
 
     </div>

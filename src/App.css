@@ -1,3 +1,8 @@
+html * {
+  font-family: 'Boogaloo', cursive;
+}
+
+
 .App {
   text-align: center;
   font-family: 'Boogaloo', cursive;
@@ -61,10 +66,11 @@ input {
 }
 
 .ideaForm {
+  font-size: 20px;
   padding: 20px;
   margin-top: 100px;
-  margin-left: 300px;
-  margin-right: 300px;
+  margin-left: 200px;
+  margin-right: 200px;
   border-style: solid;
   border-color: #0099cc;
 }
@@ -78,22 +84,18 @@ input {
 .miniIdea {
   width: 80%;
   margin: 0 auto;
+  text-align: center;
 }
 
 .miniIdeaIcon {
   animation: bounce infinite 3s;
-  border-radius: 50%;
+  border-radius: 10%;
   height: 100px;
   position: relative;
-  border-color: #88cc00;
-  border-style: solid;
-  border-width: 2px;
 }
 
 .miniIdeaIcon.Owned {
-  border-color: #88cc00;
-  border-style: double;
-  border-width: 6px;
+
 }
 
 .miniIdeaCaption {
@@ -102,6 +104,7 @@ input {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  text-align: center;
 }
 
 .miniIdeaIcon:hover {

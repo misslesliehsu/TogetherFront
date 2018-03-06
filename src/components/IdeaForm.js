@@ -161,15 +161,18 @@ class IdeaForm extends Component {
     return(
       <div>
         <div className='ideaForm' draggable='true' onDrop={this.handleDrop} onDragOver={this.dragOver} onDragEnd={this.dragEnd}>
-          Idea Details
+          IDEA DETAILS
+          <br></br><br></br>
           <form >
-            <input type='text' name='name' placeholder='Idea Name' value={this.state.name} onChange={this.handleChange}></input>
-            <br></br>
-            <input type='text' name='location' placeholder='Location' value={this.state.location} onChange={this.handleChange}></input>
-            <br></br>
-            <input type='textArea' name='description' placeholder='Description' value={this.state.description} onChange={this.handleChange}></input>
-            <br></br>
+            Name:
+            <input type='text' name='name' value={this.state.name} onChange={this.handleChange}></input>
+            <br></br><br></br>
+            Location: <input type='text' name='location' value={this.state.location} onChange={this.handleChange}></input>
+              <br></br><br></br>
+            Description: <input type='textArea' name='description'value={this.state.description} onChange={this.handleChange}></input>
+              <br></br><br></br>
           </form>
+          <p style={{float: 'left'}}>Date Suggestions: </p>
               {this.renderSuggestions()}
           <button onClick={this.handleAddDate}>Add Another Date Option</button>
           <br></br>

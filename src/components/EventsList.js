@@ -5,6 +5,7 @@ const eventsList = (props) => {
   return (
     <div>
       <p>YOUR SCHEDULED EVENTS</p>
+      {props.events.map( e => <div>{e.name}</div>)}
     </div>
   )
 }

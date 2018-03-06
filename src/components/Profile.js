@@ -1,20 +1,25 @@
 import React, { Component } from 'react'
 import { Form, Segment} from 'semantic-ui-react'
 import { connect } from 'react-redux'
+import URL_ROOT from '../URL'
 
 
 class ProfilePage extends Component {
 
   state = {
     editting: false,
-    button: "Edit Profile"
+    button: "Edit Profile",
+    edit: {
+      first_name: '',
+      last_name: '',
+      email: ''
+    }
   }
 
   handleClick = (e) => {
     e.preventDefault()
     if (this.state.editting === true) {
       this.setState({editting: false, button: "Edit Profile"})
-      //FETCH TO SAVE CHANGES TO BACKEND
     }
     else {
       this.setState({editting: true, button: "Save Changes"})

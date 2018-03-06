@@ -9,14 +9,9 @@ const friendItem = (props) => {
 
 
   return (
-    <div class="ui card">
-      <img src="/assets/images/avatar/large/matthew.png" class="ui image" />
-      <div class="content">
-        <div class="header">{props.friend.first_name + " " + props.friend.last_name}</div>
-      </div>
-      <div class="extra content">
-        {props.buttonAction && <a onClick={() => props.buttonAction(props.friend)}>{props.label}</a>}
-      </div>
+    <div>
+      {props.friend.first_name + " " + props.friend.last_name}
+        {props.buttonAction && <button onClick={() => props.buttonAction(props.friend)}>{props.label}</button>}
     </div>
   )
 }
