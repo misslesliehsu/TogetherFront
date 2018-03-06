@@ -39,11 +39,16 @@ class LoginSignup extends Component {
         )
       }).then(res => res.json())
       .then(res => {
-        this.props.login(res.user),
-        localStorage.setItem('token', res.token)
-        this.props.loadData(res.user.id)
+        if (Object.keys(res).includes('error')) {
+          window.alert(res.error)
+        }
+        else {
+          this.props.login(res.user),
+          localStorage.setItem('token', res.token)
+          this.props.loadData(res.user.id)
+          this.props.history.push('/dashboard')
+        }
       })
-      .then(this.props.history.push('/dashboard'))
     }
     else {
       if (this.state.signup_password !== this.state.signup_password_confirmation) {

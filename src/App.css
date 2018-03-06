@@ -9,37 +9,13 @@ html * {
   font-size: 1.5em;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
 
 input {
     width: 90%;
     height: 20px;
 }
 
-
+/*
 .fullHeader {
   color:  #0099cc;
   padding: 10px;
@@ -57,7 +33,7 @@ input {
   top: 0;
   position: absolute;
   padding: 20px;
-}
+}*/
 
 .togetherLogo {
   font-size: 50px;
@@ -88,7 +64,7 @@ input {
 }
 
 .miniIdeaIcon {
-  animation: bounce infinite 3s;
+  animation: rotate infinite 3s;
   border-radius: 10%;
   height: 100px;
   position: relative;
@@ -148,7 +124,7 @@ input {
   }
 }
 
-@-webkit-keyframes bounce {
+@-webkit-keyframes rotate {
  0%{-webkit-transform:rotate(0deg)}
     25%{-webkit-transform:rotate(5deg)}
     75%{-webkit-transform:rotate(-5deg)}

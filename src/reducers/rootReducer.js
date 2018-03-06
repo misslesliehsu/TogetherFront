@@ -84,6 +84,8 @@ const ideasReducer = (state = {ideas: ["start"], events: ['start'], friends: ["s
       return {...state, user: action.user}
     case "LOGOUT":
       return {ideas: ["start"], events: ['start'], friends: ["start"], user:{id:"start"}, nonFriends: ['start']}
+    case "UPDATE_USER":
+      return {...state, user: {...state.user, first_name: action.first_name, last_name: action.last_name, email: action.email}}
     default: return state
   }
 }

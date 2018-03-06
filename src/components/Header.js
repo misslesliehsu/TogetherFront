@@ -21,8 +21,10 @@ const header = (props) => {
       <div class="togetherLogo">
         TOGETHER
       </div>
+
+      {props.user_id !== 'start' &&
+
       <Menu size='large' pointing secondary>
-        
         <Menu.Item><Link class='item' to='/dashboard'>Dashboard</Link></Menu.Item>
         <Menu.Item><Link class='item' to='/Profile'>Profile</Link></Menu.Item>
         <Menu.Item><Link class='item' to='/Friends'>Friends</Link></Menu.Item>
@@ -32,6 +34,7 @@ const header = (props) => {
           </Menu.Menu>
           }
       </Menu>
+      }
 
 
     </div>
