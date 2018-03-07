@@ -16,28 +16,23 @@ const header = (props) => {
 
 
   return (
-
     <div>
-      <div class="togetherLogo">
-        TOGETHER
-      </div>
-
-      {props.user_id !== 'start' &&
-
-      <Menu size='large' pointing secondary>
-        <Menu.Item><Link style={{fontSize:'30px'}}class='item' to='/dashboard'>Dashboard</Link></Menu.Item>
-        <Menu.Item><Link style={{fontSize:'30px'}}class='item' to='/Profile'>Profile</Link></Menu.Item>
-        <Menu.Item><Link style={{fontSize:'30px'}}class='item' to='/Friends'>Friends</Link></Menu.Item>
-          {props.user_id !== 'start' &&
-          <Menu.Menu position='right'>
-            <Menu.Item onClick={handleLogOut} style={{fontSize:'30px', marginBottom: '10px', marginRight: '40px'}}>Log Out</Menu.Item>
-          </Menu.Menu>
-          }
-      </Menu>
-      }
-
-
+      <h1 className='togetherLogo'>TOGETHER</h1>
+        {props.user_id !== 'start' &&
+        <Menu class="menu" size='large' pointing secondary>
+          <Menu.Item><Link style={{fontSize:'30px', color:'white'}}class='item' to='/dashboard'>Dashboard</Link></Menu.Item>
+          <Menu.Item><Link style={{fontSize:'30px', color: 'white'}}class='item' to='/Profile'>Profile</Link></Menu.Item>
+          <Menu.Item><Link style={{fontSize:'30px', color: 'white'}}class='item' to='/Friends'>Friends</Link></Menu.Item>
+            {props.user_id !== 'start' &&
+            <Menu.Menu position='right'>
+              <Menu.Item onClick={handleLogOut} style={{fontSize:'30px', color:'white', marginBottom: '10px', marginRight: '40px'}}>Log Out</Menu.Item>
+            </Menu.Menu>
+            }
+        </Menu>
+        }
     </div>
+
+
 
   )
 }

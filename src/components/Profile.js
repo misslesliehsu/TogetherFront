@@ -52,10 +52,10 @@ class ProfilePage extends Component {
         <p>Your Profile</p>
         {this.state.editting === false ?
 
-          <div>
-            <Segment>First name: {this.props.user.first_name}</Segment>
-            <Segment>Last name: {this.props.user.last_name}</Segment>
-            <Segment>Email address: {this.props.user.email}</Segment>
+          <div className='Profile'>
+            <p>First name: {this.props.user.first_name}</p>
+            <p>Last name: {this.props.user.last_name}</p>
+            <p>Email address: {this.props.user.email}</p>
           </div>
           :
 
@@ -68,8 +68,8 @@ class ProfilePage extends Component {
          </Form>
       }
       <br></br><br></br>
-      <Form.Button onClick={this.handleClick}>{this.state.button}</Form.Button><br></br>
-      {this.state.editting === true  && <Form.Button onClick={this.handleClick}>Go Back</Form.Button>}
+      <button onClick={this.handleClick}>{this.state.button}</button><br></br>
+      {this.state.editting === true  && <button onClick={this.handleClick}>Go Back</button>}
       </div>
     )
   }

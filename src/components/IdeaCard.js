@@ -27,6 +27,10 @@ class ideaCard extends Component {
     this.props.history.push(`/ideas/${this.props.match.params.id}/schedule`)
   }
 
+  handleBackToDash = () => {
+    this.props.history.push(`/dashboard`)
+  }
+
   //why can't i define getIdea outside a function, on its own?
   render() {
     let getIdea = this.props.ideas.find( i => i.id == this.props.match.params.id)
@@ -41,24 +45,31 @@ class ideaCard extends Component {
                 <li>WHERE: {getIdea.location}</li>
                 <li>DATE SUGGESTIONS:</li>
                   {getIdea.date_suggestions.length > 0 ?
-                    <div>
+                    <div style={{marginLeft: '20px'}}>
                     {getIdea.date_suggestions.map(d => <DateSuggestionItem key={d.id} d={d} ideaId={getIdea.id} ownerId={getIdea.owner_id}/>)}
                     </div>
                  :
                  <div style={{fontSize: '20px'}}>There are no date suggestions yet.</div>
                   }
-                  <li>FRIENDS:</li>
+                  <li>INVITED:</li>
+                  </ul>
                   <CardGroup>
                     {getIdea.invitees.map( f => <FriendItem key={f.id} buttonAction='' friend={f}/>)}
                   </CardGroup>
-                </ul>
+
             </div>
+            <br></br><br></br>
 
               {this.props.user_id === getIdea.owner_id && <button onClick={this.handleEdit}>Edit Idea</button>}
               <br></br><br></br>
 
               {this.props.user_id === getIdea.owner_id && <button className='scheduleItButton' onClick={this.handleSchedule}>Schedule It!</button>}
               {this.props.user_id !== getIdea.owner_id && <button className='countOutButton' onClick={this.handleCountOut}>Count Me Out</button>}
+
+              <br></br><br></br><br></br>
+
+
+            <div style={{textDecoration: 'underline', float: 'left'}} onClick={this.handleBackToDash}>Back To Dashboard</div><br></br>
           </div>
         }
       </div>

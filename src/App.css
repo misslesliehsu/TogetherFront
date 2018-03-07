@@ -4,7 +4,10 @@ html * {
 
 
 body {
-  /*background-color: #52afe5*/
+  background-color: #42c8f4;
+  /*background-image: url("Background2.jpg");*/
+  background-size: 100%;
+
 }
 
 .App {
@@ -39,20 +42,41 @@ input {
   padding: 20px;
 }*/
 
+.header {
+}
+
+.menu {
+  text-shadow:
+   -1px -1px 0 #000,
+   1px -1px 0 #000,
+   -1px 1px 0 #000,
+   1px 1px 0 #000;
+}
 .togetherLogo {
-  font-size: 50px;
-  margin: 20px;
-  padding: 20px;
+  font-size: 100px;
+  float: left;
+  margin-left: 20px;
+  margin-right: 25px;
+  height: 100px;
+  color: white;
+  text-shadow:
+   -1px -1px 0 #000,
+   1px -1px 0 #000,
+   -1px 1px 0 #000,
+   1px 1px 0 #000;
 }
 
 .ideaForm {
+  border-radius: 30px;
+  background-color: white;
   font-size: 25px;
   padding: 20px;
+  margin: 0 auto;
   margin-top: 100px;
-  margin-left: 200px;
-  margin-right: 200px;
   border-style: solid;
   border-color: #0099cc;
+  width: 1200px;
+
 }
 
 /* calendar */
@@ -68,7 +92,7 @@ input {
   height:40px;
 }
 
-/*.ideaCardImage {
+/*.ardImage {
   opacity: .5;
   margin: 0 auto;
   position: relative;
@@ -93,7 +117,14 @@ input {
   border-radius: 10px;
   font-size: 30px;
   padding: 10px;
+  border-width: 10px;
+  border-color: #5de5ef;
 }
+
+.createIdeaButton:hover {
+  background-color: yellow;
+}
+
 .scheduleItButton {
   border-radius: 10px;
   font-size: 30px;
@@ -103,7 +134,9 @@ input {
 
 .miniIdeaCaption {
   display: block;
-  width: 250px;
+  width: 300px;
+  height: 50px;
+  font-size: 30px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -123,19 +156,23 @@ input {
 }*/
 
 .ideaCard {
+  border-radius: 30px;
+  background-color: #cceeff;
   text-align: center;
+  width: 1200px;
   /*border-radius: 15%;*/
   font-size: 20px;
   padding: 20px;
-  margin: 50px;
-  border-style: solid;
-  border-color: #0099cc;
+  margin: 0 auto;
+  margin-top: 50px;
+  border-style: double;
+  border-width: 8px;
+  border-color: yellow;
 }
 
 .ideaCard .ideaData {
   font-size: 30px;
   line-height: 2;
-
 }
 
 .ideaCard h1 {
@@ -144,11 +181,12 @@ input {
 
 .ideaData {
   text-align: left;
-  line-height: 1.5;
+  line-height: 2;
 }
 
 .countOutButton {
   font-size: 20px;
+  background-color: red;
 }
 
 @keyframes shake {
@@ -180,8 +218,9 @@ input {
   border: solid;
   border-radius: 25px;
   margin: 20px;
-  padding: 10px;
-  border-width: 2px;
+  padding: 5px;
+  border-width: 1px;
+  border-color: #3a7691;
 }
 
 .friendArea {
@@ -204,8 +243,14 @@ input {
 
 }
 
+.profile Segment {
+  width: 50%;
+}
+
 .profilePic {
   border-radius: 10px;
+  margin: 0 auto;
+  position: relative;
 }
 
 .voteCheckbox {
@@ -214,4 +259,14 @@ input {
 }
 .voterPhoto {
   margin-left: 10px;
+}
+
+.addMoreFriends {
+  background-color: white;
+  border-radius: 25px;
+  margin: 0 auto;
+  margin-top: 100px;
+  width: 300px;
+  overflow: scroll;
+
 }

@@ -184,16 +184,16 @@ class IdeaForm extends Component {
             Name:
             <input type='text' name='name' value={this.state.name} onChange={this.handleChange}></input>
             <br></br><br></br>
-            Location: <input type='text' name='location' value={this.state.location} onChange={this.handleChange}></input>
-              <br></br><br></br>
             Description: <input type='textArea' name='description'value={this.state.description} onChange={this.handleChange}></input>
-              <br></br><br></br>
+            <br></br><br></br>
+            Location: <input type='text' name='location' value={this.state.location} onChange={this.handleChange}></input>
+            <br></br><br></br>
           </form>
-          <div>Date Suggestions: <button style={{fontSize:'15px'}} onClick={this.handleAddDate}>Add Another Date Option</button></div>
+          <div>Date Suggestions: <button style={{fontSize:'20px'}} onClick={this.handleAddDate}>Add Another Date Option</button></div>
               {this.renderSuggestions()}
           <br></br>
           <hr></hr>
-          Friends:
+          Invited:
           <br></br><br></br>
 
             <Card.Group>
@@ -204,12 +204,14 @@ class IdeaForm extends Component {
           <hr></hr>
 
         <button style={{marginTop: '50px'}} onClick={this.handleSave}>Save Idea</button><br></br>
-        <h4 style={{fontSize:'15px', textDecoration:'underline'}} onClick={this.handleDelete}>Delete Idea</h4>
+        <h3 style={{fontSize:'20px', textDecoration:'underline'}} onClick={this.handleDelete}>Delete Idea</h3>
         </div>
-      <h1>Invite More Friends</h1>
-      <Card.Group>
-        {this.calcNoninvitees().map( nI => <FriendItem key={nI.id} buttonAction={this.handleAddInvitee} friend={nI}/>)}
-      </Card.Group>
+        <div className='addMoreFriends'>
+          <h1>Invite More Friends</h1>
+            <Card.Group>
+              {this.calcNoninvitees().map( nI => <FriendItem key={nI.id} buttonAction={this.handleAddInvitee} friend={nI}/>)}
+            </Card.Group>
+        </div>
       </div>
     )
   }
