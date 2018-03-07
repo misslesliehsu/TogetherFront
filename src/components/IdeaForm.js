@@ -194,7 +194,8 @@ class IdeaForm extends Component {
           <br></br>
           <hr></hr>
           Friends:
-          <br></br>
+          <br></br><br></br>
+
             <Card.Group>
         {this.state.invitees.map( i => <FriendItem buttonAction={this.handleRemoveInvitee} key={i.id} friend={i}/>)}
       </Card.Group>
@@ -203,7 +204,7 @@ class IdeaForm extends Component {
           <hr></hr>
 
         <button style={{marginTop: '50px'}} onClick={this.handleSave}>Save Idea</button><br></br>
-        <button style={{fontSize:'15px'}} onClick={this.handleDelete}>Delete Idea</button>
+        <h4 style={{fontSize:'15px', textDecoration:'underline'}} onClick={this.handleDelete}>Delete Idea</h4>
         </div>
       <h1>Invite More Friends</h1>
       <Card.Group>

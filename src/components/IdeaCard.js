@@ -3,6 +3,7 @@ import URL_ROOT from '../URL'
 import { connect } from 'react-redux'
 import FriendItem from './FriendItem'
 import DateSuggestionItem from './DateSuggestionItem'
+import { CardGroup } from 'semantic-ui-react'
 
 //NEED TO CHECK WHY NOT UPDATED RIGHT AWAY, AFTER EDIT
 
@@ -36,24 +37,27 @@ class ideaCard extends Component {
             <h1>{getIdea.name}</h1>
             <div className='ideaData'>
               <ul style={{listStyle: 'none'}}>
-                <li>WHERE: {getIdea.location}</li>
                 <li>DESCRIPTION: {getIdea.description}</li>
-                <li>FRIENDS:</li>
-                  {getIdea.invitees.map( f => <FriendItem key={f.id} buttonAction='' friend={f}/>)}
+                <li>WHERE: {getIdea.location}</li>
                 <li>DATE SUGGESTIONS:</li>
                   {getIdea.date_suggestions.length > 0 ?
-                    <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr 1fr'}}>
+                    <div>
                     {getIdea.date_suggestions.map(d => <DateSuggestionItem key={d.id} d={d} ideaId={getIdea.id} ownerId={getIdea.owner_id}/>)}
                     </div>
                  :
-                 <div>There are no date suggestions yet.</div>
+                 <div style={{fontSize: '20px'}}>There are no date suggestions yet.</div>
                   }
+                  <li>FRIENDS:</li>
+                  <CardGroup>
+                    {getIdea.invitees.map( f => <FriendItem key={f.id} buttonAction='' friend={f}/>)}
+                  </CardGroup>
                 </ul>
             </div>
 
               {this.props.user_id === getIdea.owner_id && <button onClick={this.handleEdit}>Edit Idea</button>}
-              <br></br>
-              {this.props.user_id === getIdea.owner_id && <button onClick={this.handleSchedule}>Schedule It!</button>}
+              <br></br><br></br>
+
+              {this.props.user_id === getIdea.owner_id && <button className='scheduleItButton' onClick={this.handleSchedule}>Schedule It!</button>}
               {this.props.user_id !== getIdea.owner_id && <button className='countOutButton' onClick={this.handleCountOut}>Count Me Out</button>}
           </div>
         }

@@ -10,11 +10,17 @@ const friendItem = (props) => {
 
   return (
     <div>
+      {props.buttonAction ?
       <div className='friendCard' onClick={() => props.buttonAction(props.friend)}>
         <img className='profilePic' src={props.friend.profile_pic}></img><br></br>
         {props.friend.first_name + " " + props.friend.last_name}
-
       </div>
+      :
+      <div className='friendCard' >
+        <img className='profilePic' src={props.friend.profile_pic}></img><br></br>
+        {props.friend.first_name + " " + props.friend.last_name}
+      </div>
+    }
     </div>
   )
 }

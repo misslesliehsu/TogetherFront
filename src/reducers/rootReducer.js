@@ -63,7 +63,7 @@ const ideasReducer = (state = {ideas: ["start"], events: ['start'], friends: ["s
                 const i = ds.voters.findIndex(v => v.id == state.user.id)
                 let updatedVoters = ds.voters
                 updatedVoters.splice(i, 1)
-                return {...ds, voters: [updatedVoters]}
+                return {...ds, voters: updatedVoters}
               }
               else {
                 return ds

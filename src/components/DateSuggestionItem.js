@@ -35,10 +35,10 @@ class DateSuggestionItem extends Component {
 
   buttonText = () => {
     if (this.props.d.voters.some( v => v.id == this.props.user_id)) {
-      return "Doesn't Work For Me"
+      return true
     }
     else {
-      return "Works for Me"
+      return false
     }
   }
 
@@ -46,12 +46,13 @@ class DateSuggestionItem extends Component {
     return (
       <div>
         {this.props.ownerId !== this.props.user_id &&
-          <button onClick={this.handleVoteOrUnvote}>{this.buttonText()}</button>
+          <input className='voteCheckbox' type='checkbox' checked={this.buttonText()} onClick={this.handleVoteOrUnvote}></input>
           }
-        <br></br>
-        {this.props.d.date}
-        {this.props.d.voters.map( v => <li key={v.id}>{v.first_name} {v.last_name}</li>)}
-
+          {this.props.d.date}:
+        {this.props.d.voters.map( v =>
+            <img className='voterPhoto' src={v.profile_pic}></img>
+          )}
+        {this.props.d.voters.length > 0 && "(" + this.props.d.voters.length + ")"}
       </div>
     )
   }
