@@ -46,7 +46,7 @@ class FriendsPage extends Component {
         </div>
 
 
-        <div>
+        <div className='searchBar'>
           <h3>Search for more Friends:</h3>
           <div >
             <input type="text" value={this.props.input} onChange={this.handleChange} tabindex="0" class="prompt" autoComplete="off" />

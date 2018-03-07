@@ -59,7 +59,7 @@ class IdeaForm extends Component {
   handleSchedule = (e) => {
     e.preventDefault()
     if (this.state.scheduled_date === '') {
-      console.log(Error("Must have a Final Date!"))
+      window.alert("Must have a Final Date!")
     }
     else {
       fetch(`${URL_ROOT}users/${this.props.user_id}/ideas/${this.props.match.params.id}`, {

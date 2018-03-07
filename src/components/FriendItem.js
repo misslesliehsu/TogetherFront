@@ -9,10 +9,13 @@ const friendItem = (props) => {
 
 
   return (
-    <div className='friendCard'>
-      <h1>{props.friend.first_name + " " + props.friend.last_name}</h1>
-      <br></br>
+    <div>
+      <div className='friendCard'>
+        {props.friend.first_name + " " + props.friend.last_name}
+        <br></br>
+        <br></br>
         {props.buttonAction && <button onClick={() => props.buttonAction(props.friend)}>{props.label}</button>}
+      </div>
     </div>
   )
 }

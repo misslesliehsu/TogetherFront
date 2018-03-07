@@ -35,7 +35,7 @@ class DateSuggestionItem extends Component {
 
   buttonText = () => {
     if (this.props.d.voters.some( v => v.id == this.props.user_id)) {
-      return "Remove Me From This Date"
+      return "Doesn't Work For Me"
     }
     else {
       return "Works for Me"
@@ -46,11 +46,13 @@ class DateSuggestionItem extends Component {
     console.log(this.props)
     return (
       <div>
-        {this.props.d.date}
-        {this.props.d.voters.map( v => <li key={v.id}>{v.first_name} {v.last_name}</li>)}
         {this.props.ownerId !== this.props.user_id &&
           <button onClick={this.handleVoteOrUnvote}>{this.buttonText()}</button>
           }
+        <br></br>
+        {this.props.d.date}
+        {this.props.d.voters.map( v => <li key={v.id}>{v.first_name} {v.last_name}</li>)}
+
       </div>
     )
   }

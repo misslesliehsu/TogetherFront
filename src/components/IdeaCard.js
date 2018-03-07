@@ -41,7 +41,10 @@ class ideaCard extends Component {
                 <li>FRIENDS:</li>
                   {getIdea.invitees.map( f => <FriendItem key={f.id} buttonAction='' friend={f}/>)}
                 <li>DATE SUGGESTIONS:</li>
-                  {getIdea.date_suggestions.length > 0 ? getIdea.date_suggestions.map(d => <DateSuggestionItem key={d.id} d={d} ideaId={getIdea.id} ownerId={getIdea.owner_id}/>)
+                  {getIdea.date_suggestions.length > 0 ?
+                    <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr 1fr'}}>
+                    {getIdea.date_suggestions.map(d => <DateSuggestionItem key={d.id} d={d} ideaId={getIdea.id} ownerId={getIdea.owner_id}/>)}
+                    </div>
                  :
                  <div>There are no date suggestions yet.</div>
                   }

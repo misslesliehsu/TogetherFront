@@ -56,6 +56,17 @@ input {
   border-color: #0099cc;
 }
 
+/* calendar */
+.dateInputField {
+  width: 200px;
+  float: left;
+  margin-left: 10px; 
+}
+
+.ideaFormForm input {
+  height:40px;
+}
+
 /*.ideaCardImage {
   opacity: .5;
   margin: 0 auto;
@@ -71,12 +82,18 @@ input {
 .miniIdeaIcon {
   animation: rotate infinite 3s;
   border-radius: 10%;
-  height: 100px;
+  height: 150px;
   position: relative;
 }
 
 .miniIdeaIcon.Owned {
 
+}
+
+.createIdeaButton {
+  border-radius: 10px;
+  font-size: 30px;
+  padding: 10px;
 }
 
 .miniIdeaCaption {
@@ -154,9 +171,27 @@ input {
 
 .friendCard {
   border: solid;
+  border-radius: 25px;
   margin: 20px;
+  padding: 10px;
 }
 
 .friendArea {
   margin-top: 50px;
+}
+
+.searchBar {
+  border-radius: 25px;
+  border: solid;
+  margin: 50px;
+  padding: 20px;
+}
+
+.eventsList {
+  margin: 50px;
+  padding: 10px;
+  padding-right: 20px;
+  border: solid;
+  border-radius: 10px;
+
 }

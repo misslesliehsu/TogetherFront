@@ -25,12 +25,12 @@ const header = (props) => {
       {props.user_id !== 'start' &&
 
       <Menu size='large' pointing secondary>
-        <Menu.Item><Link class='item' to='/dashboard'>Dashboard</Link></Menu.Item>
-        <Menu.Item><Link class='item' to='/Profile'>Profile</Link></Menu.Item>
-        <Menu.Item><Link class='item' to='/Friends'>Friends</Link></Menu.Item>
+        <Menu.Item><Link style={{fontSize:'30px'}}class='item' to='/dashboard'>Dashboard</Link></Menu.Item>
+        <Menu.Item><Link style={{fontSize:'30px'}}class='item' to='/Profile'>Profile</Link></Menu.Item>
+        <Menu.Item><Link style={{fontSize:'30px'}}class='item' to='/Friends'>Friends</Link></Menu.Item>
           {props.user_id !== 'start' &&
           <Menu.Menu position='right'>
-            <Menu.Item onClick={handleLogOut}>Log Out</Menu.Item>
+            <Menu.Item onClick={handleLogOut} style={{fontSize:'30px', marginBottom: '10px'}}>Log Out</Menu.Item>
           </Menu.Menu>
           }
       </Menu>
@@ -51,7 +51,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   return {
-    user_id: state.user
+    user_id: state.user.id
   }
 }
 

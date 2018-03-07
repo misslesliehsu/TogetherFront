@@ -121,7 +121,8 @@ class LoginSignup extends Component {
           <input type='text' name='signup_last_name' value={this.state.signup_last_name} onChange={this.handleChange} placeholder='Last Name'></input>
           <input type='password'name='signup_password' value={this.state.signup_password} onChange={this.handleChange} placeholder='Password'></input>
           <input type='password' name='signup_password_confirmation' value={this.state.signup_password_confirmation} onChange={this.handleChange} placeholder='Confirm Password'></input>
-          <br></br><button name='signup' onClick={this.handleSubmit}>Sign Up!</button>
+          <br></br><br></br><button name='signup' onClick={this.handleSubmit}>Sign Up!</button>
+          <br></br><br></br><br></br>
           <p onClick={this.handleClickSetup}>Already Have an Account? Log In</p>
         </div>
       )
@@ -131,7 +132,8 @@ class LoginSignup extends Component {
         <div>
           <input type='text' name='login_email' value={this.state.login_email} onChange={this.handleChange} placeholder='Email Address'></input>
           <input type='password' name='login_password' value={this.state.login_password} onChange={this.handleChange} placeholder='Password'></input>
-          <br></br><button name='login' onClick={this.handleSubmit}>Login</button>
+          <br></br><br></br><button name='login' onClick={this.handleSubmit}>Login</button>
+          <br></br><br></br><br></br>
           <p onClick={this.handleClickSetup}>Don't Have an Account? Sign Up</p>
         </div>
       )
@@ -147,6 +149,8 @@ class LoginSignup extends Component {
 
 
         {this.handleSetup()}
+        <br></br><br></br><br></br>
+
       </div>
     )
   }

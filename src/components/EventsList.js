@@ -3,9 +3,21 @@ import { connect } from 'react-redux'
 
 const eventsList = (props) => {
   return (
-    <div>
-      <p>YOUR SCHEDULED EVENTS</p>
-      {props.events.map( e => <div>{e.name}</div>)}
+    <div className='eventsList'>
+      <h2>Your Scheduled Events</h2>
+      <br></br>
+      {props.events.map( e =>
+        <div key={e.name} style={{display:'grid', gridTemplateColumns:'1fr 3fr'}}>
+          <div>
+            {e.scheduled_date}
+          </div>
+          <div>
+            {e.name}
+            <hr></hr>
+
+          </div>
+          <hr></hr>
+        </div>)}
     </div>
   )
 }

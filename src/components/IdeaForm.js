@@ -164,7 +164,7 @@ class IdeaForm extends Component {
     for (let i = 0; i < this.state.date_suggestions.length; i++) {
       suggestions.push(
         <div key={i}>
-          <input type='date' key={i} onChange={this.handleSetDate} name={i} value={this.state.date_suggestions[i].date}></input>
+          <input className='dateInputField' type='date' key={i} onChange={this.handleSetDate} name={i} value={this.state.date_suggestions[i].date}></input>
           <button name={i} onClick={this.handleRemoveDate}>X</button>
         </div>
       )
@@ -179,7 +179,7 @@ class IdeaForm extends Component {
         <div className='ideaForm' draggable='true' onDrop={this.handleDrop} onDragOver={this.dragOver} onDragEnd={this.dragEnd}>
           IDEA DETAILS
           <br></br><br></br>
-          <form >
+          <form className='ideaFormForm'>
             Name:
             <input type='text' name='name' value={this.state.name} onChange={this.handleChange}></input>
             <br></br><br></br>
