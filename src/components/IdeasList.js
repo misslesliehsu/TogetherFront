@@ -20,7 +20,7 @@ const IdeasList = (props) =>  {
       {props.ideas.map( i =>
         <div className='miniIdea' id={i.id} key={i.id} onClick={handleViewIdea}>
           {i.owner_id === props.user_id ?
-            <img className='miniIdeaIcon Owned' src={require('../blueThought.png')}></img>
+            <img className='miniIdeaIcon Owned' src={require('../blueThoughtOwn.png')}></img>
             :
             <img className='miniIdeaIcon' src={require('../blueThought.png')}></img>
           }

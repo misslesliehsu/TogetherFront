@@ -134,9 +134,13 @@ class LoginSignup extends Component {
   }
 
   render() {
-    console.log(this.state)
     return (
-      <div>
+      <div style={{backgroundColor: '#52afe5'}}>
+          <br></br><br></br><br></br>
+          <h1>Brainstorm, plan, and schedule events with friends.</h1>
+          <br></br><br></br><br></br>
+
+
         {this.handleSetup()}
       </div>
     )

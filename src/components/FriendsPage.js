@@ -41,14 +41,14 @@ class FriendsPage extends Component {
 
     return (
       <div style={{display: 'grid', gridTemplateColumns: '2fr 1fr'}}>
-        <div class='ui six cards'>
+        <div className='friendArea' style={{display: 'grid', gridTemplateColumns: '1fr 1fr 1fr'}}>
             {this.props.friends[0] !=='start' && this.props.friends.map(f => <FriendItem key={f.id} label='Remove' buttonAction={this.handleRemoveFriend} friend={f}/>)}
         </div>
 
+
         <div>
           <h3>Search for more Friends:</h3>
-
-          <div class="ui icon input">
+          <div >
             <input type="text" value={this.props.input} onChange={this.handleChange} tabindex="0" class="prompt" autoComplete="off" />
             <i aria-hidden="true" class="search icon"></i>
           </div>

@@ -78,6 +78,7 @@ const ideasReducer = (state = {ideas: ["start"], events: ['start'], friends: ["s
       )
       return {...state, ideas: updatedIdeas}
     case "REMOVE_IDEA_FROM_STORE":
+
       var updatedIdeas = state.ideas.filter( i => i.id != action.idea_id)
       return {...state, ideas: updatedIdeas}
     case "LOGIN":

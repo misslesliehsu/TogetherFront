@@ -15,7 +15,7 @@ class ideaCard extends Component {
             'Content-Type': 'application/json'
           }
         }).then(this.props.removeIdeaFromStore(this.props.match.params.id))
-          .then(this.props.history.push(`/`))
+          .then(this.props.history.push(`/dashboard`))
   }
 
   handleEdit = () => {
@@ -33,22 +33,25 @@ class ideaCard extends Component {
       <div>
         {getIdea &&
           <div className='ideaCard'>
-            <h2>{getIdea.name}</h2>
-            <ul style={{listStyle: 'none'}}>
-              <li>WHERE: {getIdea.location}</li>
-              <li>DESCRIPTION: {getIdea.description}</li>
-              <li>FRIENDS:</li>
-                {getIdea.invitees.map( f => <FriendItem key={f.id} buttonAction='' friend={f}/>)}
-              <li>DATE SUGGESTIONS:</li>
-                {getIdea.date_suggestions.length > 0 ? getIdea.date_suggestions.map(d => <DateSuggestionItem key={d.id} d={d} ideaId={getIdea.id}/>)
-               :
-               <div>There are no date suggestions yet.</div>
-                }
-              </ul>
+            <h1>{getIdea.name}</h1>
+            <div className='ideaData'>
+              <ul style={{listStyle: 'none'}}>
+                <li>WHERE: {getIdea.location}</li>
+                <li>DESCRIPTION: {getIdea.description}</li>
+                <li>FRIENDS:</li>
+                  {getIdea.invitees.map( f => <FriendItem key={f.id} buttonAction='' friend={f}/>)}
+                <li>DATE SUGGESTIONS:</li>
+                  {getIdea.date_suggestions.length > 0 ? getIdea.date_suggestions.map(d => <DateSuggestionItem key={d.id} d={d} ideaId={getIdea.id} ownerId={getIdea.owner_id}/>)
+                 :
+                 <div>There are no date suggestions yet.</div>
+                  }
+                </ul>
+            </div>
+
               {this.props.user_id === getIdea.owner_id && <button onClick={this.handleEdit}>Edit Idea</button>}
               <br></br>
               {this.props.user_id === getIdea.owner_id && <button onClick={this.handleSchedule}>Schedule It!</button>}
-              {this.props.user_id !== getIdea.owner_id && <button onClick={this.handleCountOut}>Count Me Out</button>}
+              {this.props.user_id !== getIdea.owner_id && <button className='countOutButton' onClick={this.handleCountOut}>Count Me Out</button>}
           </div>
         }
       </div>

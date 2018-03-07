@@ -116,7 +116,7 @@ class IdeaForm extends Component {
             <br></br>
           </form>
           <li>DATE SUGGESTIONS:</li>
-            {ideaToSchedule.date_suggestions.length > 0 ? ideaToSchedule.date_suggestions.map(d => <DateSuggestionItem key={d.id} d={d} ideaId={ideaToSchedule.id}/>)
+            {ideaToSchedule.date_suggestions.length > 0 ? ideaToSchedule.date_suggestions.map(d => <DateSuggestionItem key={d.id} d={d} ideaId={ideaToSchedule.id} ownerId={ideaToSchedule.owner_id}/>)
            :
            <div>There are no date suggestions yet.</div>
             }

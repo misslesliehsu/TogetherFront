@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import FriendItem from './FriendItem'
 import URL_ROOT from '../URL.js'
 import { withRouter } from 'react-router-dom'
+import { Card } from 'semantic-ui-react'
 
 class IdeaForm extends Component {
 
@@ -54,6 +55,15 @@ class IdeaForm extends Component {
       {[e.target.name]: e.target.value}
     )
   }
+  handleDelete = () => {
+    fetch(`${URL_ROOT}users/${this.props.user_id}/ideas/${this.props.match.params.id}`, {
+      method: 'delete',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(this.props.removeIdea(this.props.match.params.id))
+    .then(this.props.history.push('/dashboard'))
+  }
 
   handleSave = (e) => {
     e.preventDefault()
@@ -79,7 +89,10 @@ class IdeaForm extends Component {
               }
             )
           }).then(res=> res.json())
-          .then(res => {this.props.addIdea({...this.state, owner_id: this.props.user_id, id: res}); return res})
+          .then(res => {
+            var updatedDS = this.state.date_suggestions.filter(ds => ds.date !== "")
+            this.setState({date_suggestions: updatedDS})
+            this.props.addIdea({...this.state, owner_id: this.props.user_id, id: res}); return res})
           .then(res=>this.props.history.push(`/ideas/${res}`)) //note << what you get back (res) is just the idea.id
     }
 
@@ -104,7 +117,10 @@ class IdeaForm extends Component {
               }
             )
           }).then(res=> res.json())
-          .then(res => {this.props.updateIdea({...this.state, id: this.props.match.params.id}); return res})
+          .then(res => {
+            var updatedDS = this.state.date_suggestions.filter(ds => ds.date !== "")
+            this.setState({date_suggestions: updatedDS})
+            this.props.updateIdea({...this.state, id: this.props.match.params.id}); return res})
           .then(res=>this.props.history.push(`/ideas/${this.props.match.params.id}`))
     }
   }
@@ -177,12 +193,17 @@ class IdeaForm extends Component {
           <button onClick={this.handleAddDate}>Add Another Date Option</button>
           <br></br>
           Friends:
+          <Card.Group>
         {this.state.invitees.map( i => <FriendItem buttonAction={this.handleRemoveInvitee} key={i.id} friend={i}/>)}
+</Card.Group>
         <br></br>
+        <button onClick={this.handleDelete}>Delete Idea</button>
         <button onClick={this.handleSave}>Save Idea</button>
         </div>
       <h4>Invite Friends</h4>
+      <Card.Group>
         {this.calcNoninvitees().map( nI => <FriendItem key={nI.id} buttonAction={this.handleAddInvitee} friend={nI}/>)}
+      </Card.Group>
       </div>
     )
   }
@@ -192,7 +213,8 @@ class IdeaForm extends Component {
 const mapDispatchToProps = (dispatch) => {
   return ({
     addIdea: (i) => dispatch({type: 'ADD_IDEA', idea: i}),
-    updateIdea: (i) => dispatch({type: 'UPDATE_IDEA', idea: i})
+    updateIdea: (i) => dispatch({type: 'UPDATE_IDEA', idea: i}),
+    removeIdea: (id) => dispatch({type:'REMOVE_IDEA_FROM_STORE', idea_id: id})
   })
 }
 

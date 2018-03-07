@@ -7,7 +7,7 @@ class DateSuggestionItem extends Component {
 
   handleVoteOrUnvote = () => {
       const {voters, id} = this.props.d
-      const {user_id, ideaId, addVote, removeVote} = this.props
+      const {user_id, ideaId, ownerId, addVote, removeVote} = this.props
       //HOW COME I CANT USE PROPS WITHIN THE IF BLOCKS BELOW? HAD TO DECONSTRUCT & DEFINE ABOVE
 
 
@@ -48,7 +48,9 @@ class DateSuggestionItem extends Component {
       <div>
         {this.props.d.date}
         {this.props.d.voters.map( v => <li key={v.id}>{v.first_name} {v.last_name}</li>)}
-        <button onClick={this.handleVoteOrUnvote}>{this.buttonText()}</button>
+        {this.props.ownerId !== this.props.user_id &&
+          <button onClick={this.handleVoteOrUnvote}>{this.buttonText()}</button>
+          }
       </div>
     )
   }
