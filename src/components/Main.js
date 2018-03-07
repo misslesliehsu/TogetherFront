@@ -25,7 +25,7 @@ class Main extends Component {
           <Route path='/events' component={AuthIdeas}/>
           <Route exact path='/friends' component={AuthFriendsPage}/>
           <Route exact path='/profile' component={AuthProfile}/>
-          <Redirect to='/Login'/>
+          <Redirect to='/login'/>
         </Switch>
       </div>
     )

@@ -25,6 +25,7 @@ class LoginSignup extends Component {
   }
 
   handleSubmit = (e) => {
+    //logging in
     if (e.target.name ==='login'){
       fetch(`http://localhost:3001/login`, {
         method: 'POST',
@@ -50,13 +51,17 @@ class LoginSignup extends Component {
         }
       })
     }
+    //signing up
     else {
-      if (this.state.signup_password !== this.state.signup_password_confirmation) {
+      if (this.state.signup_email === '' || this.state.signup_password === '' || this.state.signup_password_confirmation === '' || this.state.first_name === '' || this.state.last_name === '') {
+        window.alert('All fields are required!')
+      }
+      else if (this.state.signup_password != this.state.signup_password_confirmation) {
         try {
           throw new Error('Password & Password Confirmation do not match!');
         }
         catch (e) {
-          console.log(e.name + ': ' + e.message);
+          window.alert(e.name + ': ' + e.message)
         }
       }
       else {

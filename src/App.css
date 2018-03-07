@@ -101,14 +101,21 @@ input {
 }*/
 
 .ideaCard {
-  border-radius: 15%;
+  text-align: center;
+  /*border-radius: 15%;*/
   font-size: 20px;
   padding: 20px;
-  margin-top: 100px;
-  margin-left: 300px;
-  margin-right: 300px;
-  border-style: solid;
-  border-color: #0099cc;
+  margin: 50px;
+  /*border-style: solid;
+  border-color: #0099cc;*/
+}
+
+.ideaCard .ideaData {
+  font-size: 30px;
+}
+
+.ideaCard h1 {
+  font-size: 50px;
 }
 
 .ideaData {
