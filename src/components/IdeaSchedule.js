@@ -105,49 +105,114 @@ class IdeaForm extends Component {
   render() {
     const ideaToSchedule = (this.props.ideas[0] !== "start") ? this.props.ideas.find(i => i.id == this.props.match.params.id) : {date_suggestions: []}
     return(
+
       <div>
         <div className='ideaForm' draggable='true' onDrop={this.handleDrop} onDragOver={this.dragOver} onDragEnd={this.dragEnd}>
-
           EVENT DETAILS
           <br></br><br></br>
-          <form className='ideaFormForm' >
-            Name: <input type='text' name='name' placeholder='Idea Name' value={this.state.name} onChange={this.handleChange}></input>
-          <br></br><br></br>
-            Location: <input type='text' name='location' placeholder='Location' value={this.state.location} onChange={this.handleChange}></input>
+          <form className='ideaFormForm'>
+            Name:
+            <input type='text' name='name' value={this.state.name} onChange={this.handleChange}></input>
             <br></br><br></br>
-            Description: <input type='textArea' name='description' placeholder='Description' value={this.state.description} onChange={this.handleChange}></input>
+            Description: <input type='textArea' name='description'value={this.state.description} onChange={this.handleChange}></input>
+            <br></br><br></br>
+            Location: <input type='text' name='location' value={this.state.location} onChange={this.handleChange}></input>
             <br></br><br></br>
           </form>
-          <p style={{float:'left'}}>Date Suggestions:</p>
-          <br></br>
+          <div>Date Suggestions:
             {ideaToSchedule.date_suggestions.length > 0 ?
               <div style={{marginLeft: '20px'}}>
               {ideaToSchedule.date_suggestions.map(d => <DateSuggestionItem key={d.id} d={d} ideaId={ideaToSchedule.id} ownerId={ideaToSchedule.owner_id}/>)}
               </div>
-           :
-           <div style={{fontSize: '20px'}}>There are no date suggestions yet.</div>
+            :
+            <div style={{fontSize: '20px'}}>There are no date suggestions yet.</div>
             }
-            <br></br><br></br><br></br><br></br>
-            <div style={{float: 'left'}}>Final Date:</div>
-          <input style={{float: 'left'}} type='date' className='dateInputField' onChange={this.handleChange} name={'scheduled_date'} value={this.state.scheduled_date}></input>
-          <br></br><br></br>
-            <br></br><br></br>
+          </div>
 
+          <div style={{float: 'left'}}>Final Date:</div>
+       <input style={{float: 'left'}} type='date' className='dateInputField' onChange={this.handleChange} name={'scheduled_date'} value={this.state.scheduled_date}></input>
+       <br></br><br></br>
+         <br></br><br></br>
+
+
+          <br></br>
+          <hr></hr>
           Invited:
           <br></br><br></br>
-          <Card.Group>
-            {this.state.invitees.map( i => <FriendItem buttonAction={this.handleRemoveInvitee} key={i.id} friend={i}/>)}
-        </Card.Group>
-        <br></br><br></br><br></br>
-        <button onClick={this.handleSchedule}>Book It!</button>
+
+            <Card.Group>
+        {this.state.invitees.map( i => <FriendItem buttonAction={this.handleRemoveInvitee} key={i.id} friend={i}/>)}
+      </Card.Group>
+
+        <br></br>
+          <hr></hr>
+
+        <button style={{marginTop: '50px'}} onClick={this.handleSave}>Save Idea</button><br></br>
+        <h3 style={{fontSize:'20px', textDecoration:'underline'}} onClick={this.handleDelete}>Delete Idea</h3>
         </div>
-      <div className='addMoreFriends'>
-        <h1>Invite More Friends</h1>
-          <Card.Group>
-            {this.calcNoninvitees().map( nI => <FriendItem key={nI.id} buttonAction={this.handleAddInvitee} friend={nI}/>)}
-          </Card.Group>
+        <div className='addMoreFriends'>
+          <h1>Invite More Friends</h1>
+            <Card.Group>
+              {this.calcNoninvitees().map( nI => <FriendItem key={nI.id} buttonAction={this.handleAddInvitee} friend={nI}/>)}
+            </Card.Group>
+        </div>
       </div>
-    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //   <div>
+    //     <div className='ideaForm' draggable='true' onDrop={this.handleDrop} onDragOver={this.dragOver} onDragEnd={this.dragEnd}>
+    //
+    //       EVENT DETAILS
+    //       <br></br><br></br>
+    //       <form className='ideaFormForm' >
+    //         Name: <input type='text' name='name' placeholder='Idea Name' value={this.state.name} onChange={this.handleChange}></input>
+    //       <br></br><br></br>
+    //         Location: <input type='text' name='location' placeholder='Location' value={this.state.location} onChange={this.handleChange}></input>
+    //         <br></br><br></br>
+    //         Description: <input type='textArea' name='description' placeholder='Description' value={this.state.description} onChange={this.handleChange}></input>
+    //         <br></br><br></br>
+    //       </form>
+    //       <p style={{float:'left'}}>Date Suggestions:</p>
+    //       <br></br>
+    //         {ideaToSchedule.date_suggestions.length > 0 ?
+    //           <div style={{marginLeft: '20px'}}>
+    //           {ideaToSchedule.date_suggestions.map(d => <DateSuggestionItem key={d.id} d={d} ideaId={ideaToSchedule.id} ownerId={ideaToSchedule.owner_id}/>)}
+    //           </div>
+    //        :
+    //        <div style={{fontSize: '20px'}}>There are no date suggestions yet.</div>
+    //         }
+    //         <br></br><br></br><br></br><br></br>
+    //         <div style={{float: 'left'}}>Final Date:</div>
+    //       <input style={{float: 'left'}} type='date' className='dateInputField' onChange={this.handleChange} name={'scheduled_date'} value={this.state.scheduled_date}></input>
+    //       <br></br><br></br>
+    //         <br></br><br></br>
+    //
+    //       Invited:
+    //       <br></br><br></br>
+    //       <Card.Group>
+    //         {this.state.invitees.map( i => <FriendItem buttonAction={this.handleRemoveInvitee} key={i.id} friend={i}/>)}
+    //     </Card.Group>
+    //     <br></br><br></br><br></br>
+    //     <button onClick={this.handleSchedule}>Book It!</button>
+    //     </div>
+    //   <div className='addMoreFriends'>
+    //     <h1>Invite More Friends</h1>
+    //       <Card.Group>
+    //         {this.calcNoninvitees().map( nI => <FriendItem key={nI.id} buttonAction={this.handleAddInvitee} friend={nI}/>)}
+    //       </Card.Group>
+    //   </div>
+    // </div>
     )
   }
 }
