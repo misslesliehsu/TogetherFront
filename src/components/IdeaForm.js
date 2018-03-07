@@ -166,6 +166,7 @@ class IdeaForm extends Component {
         <div key={i}>
           <input className='dateInputField' type='date' key={i} onChange={this.handleSetDate} name={i} value={this.state.date_suggestions[i].date}></input>
           <button name={i} onClick={this.handleRemoveDate}>X</button>
+          <br></br>
         </div>
       )
     }
@@ -177,7 +178,7 @@ class IdeaForm extends Component {
     return(
       <div>
         <div className='ideaForm' draggable='true' onDrop={this.handleDrop} onDragOver={this.dragOver} onDragEnd={this.dragEnd}>
-          IDEA DETAILS
+          DEETS, PLEASE
           <br></br><br></br>
           <form className='ideaFormForm'>
             Name:
@@ -188,19 +189,23 @@ class IdeaForm extends Component {
             Description: <input type='textArea' name='description'value={this.state.description} onChange={this.handleChange}></input>
               <br></br><br></br>
           </form>
-          <p style={{float: 'left'}}>Date Suggestions: </p>
+          <div>Date Suggestions: <button style={{fontSize:'15px'}} onClick={this.handleAddDate}>Add Another Date Option</button></div>
               {this.renderSuggestions()}
-          <button onClick={this.handleAddDate}>Add Another Date Option</button>
           <br></br>
+          <hr></hr>
           Friends:
-          <Card.Group>
+          <br></br>
+            <Card.Group>
         {this.state.invitees.map( i => <FriendItem buttonAction={this.handleRemoveInvitee} key={i.id} friend={i}/>)}
-</Card.Group>
+      </Card.Group>
+
         <br></br>
-        <button onClick={this.handleDelete}>Delete Idea</button>
-        <button onClick={this.handleSave}>Save Idea</button>
+          <hr></hr>
+
+        <button style={{marginTop: '50px'}} onClick={this.handleSave}>Save Idea</button><br></br>
+        <button style={{fontSize:'15px'}} onClick={this.handleDelete}>Delete Idea</button>
         </div>
-      <h4>Invite Friends</h4>
+      <h1>Invite More Friends</h1>
       <Card.Group>
         {this.calcNoninvitees().map( nI => <FriendItem key={nI.id} buttonAction={this.handleAddInvitee} friend={nI}/>)}
       </Card.Group>

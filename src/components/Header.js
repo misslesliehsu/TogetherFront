@@ -30,7 +30,7 @@ const header = (props) => {
         <Menu.Item><Link style={{fontSize:'30px'}}class='item' to='/Friends'>Friends</Link></Menu.Item>
           {props.user_id !== 'start' &&
           <Menu.Menu position='right'>
-            <Menu.Item onClick={handleLogOut} style={{fontSize:'30px', marginBottom: '10px'}}>Log Out</Menu.Item>
+            <Menu.Item onClick={handleLogOut} style={{fontSize:'30px', marginBottom: '10px', marginRight: '40px'}}>Log Out</Menu.Item>
           </Menu.Menu>
           }
       </Menu>

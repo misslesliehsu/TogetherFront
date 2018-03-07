@@ -43,7 +43,6 @@ class DateSuggestionItem extends Component {
   }
 
   render() {
-    console.log(this.props)
     return (
       <div>
         {this.props.ownerId !== this.props.user_id &&
