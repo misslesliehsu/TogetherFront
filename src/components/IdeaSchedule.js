@@ -146,9 +146,7 @@ class IdeaForm extends Component {
 
         <br></br>
           <hr></hr>
-
-        <button style={{marginTop: '50px'}} onClick={this.handleSave}>Save Idea</button><br></br>
-        <h3 style={{fontSize:'20px', textDecoration:'underline'}} onClick={this.handleDelete}>Delete Idea</h3>
+          <button onClick={this.handleSchedule}>Book It!</button>
         </div>
         <div className='addMoreFriends'>
           <h1>Invite More Friends</h1>

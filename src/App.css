@@ -170,6 +170,20 @@ input {
   border-color: yellow;
 }
 
+.eventCard {
+  text-align: center;
+  width: 1200px;
+  /*border-radius: 15%;*/
+  padding: 20px;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+
+.eventCard .eventData {
+  font-size: 30px;
+  line-height: 2;
+}
+
 .ideaCard .ideaData {
   font-size: 30px;
   line-height: 2;
@@ -186,7 +200,7 @@ input {
 
 .countOutButton {
   font-size: 20px;
-  background-color: red;
+  color: red;
 }
 
 @keyframes shake {
@@ -239,6 +253,7 @@ input {
   padding: 10px;
   padding-right: 20px;
   border: solid;
+  border-color: white;
   border-radius: 10px;
 
 }

@@ -2,19 +2,23 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 const eventsList = (props) => {
+
+  const handleEventClick = (e) => {
+    props.history.push(`/events/${e.currentTarget.id}`)
+  }
+
   return (
     <div className='eventsList'>
       <h2>Your Scheduled Events</h2>
       <br></br>
       {props.events.map( e =>
-        <div key={e.name} style={{display:'grid', gridTemplateColumns:'1fr 3fr'}}>
+        <div onClick={handleEventClick} key={e.id} id={e.id} style={{display:'grid', gridTemplateColumns:'1fr 3fr'}}>
           <div>
             {e.scheduled_date}
           </div>
           <div>
             {e.name}
             <hr></hr>
-
           </div>
           <hr></hr>
         </div>)}

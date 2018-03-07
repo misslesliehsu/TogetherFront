@@ -14,7 +14,7 @@ class Dashboard extends Component {
     return (
       <div style={{display:'grid', gridTemplateColumns:'2fr 1fr'}}>
         <IdeasList history={this.props.history}/>
-        <EventsList/>
+        <EventsList history={this.props.history}/>
       </div>
     )
   }
