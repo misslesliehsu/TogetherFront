@@ -8,6 +8,7 @@ import LoginSignup from './LoginSignup'
 import Profile from './Profile'
 import EventCard from './EventCard'
 import authorize from '../AuthHOC'
+import IdeaSchedule from './IdeaSchedule'
 
 
 class Main extends Component {
@@ -18,6 +19,7 @@ class Main extends Component {
     const AuthFriendsPage = authorize(FriendsPage)
     const AuthProfile = authorize(Profile)
     const AuthEventCard = authorize(EventCard)
+    const AuthIdeaSchedule = authorize(IdeaSchedule)
 
     return(
       <div>
@@ -27,6 +29,7 @@ class Main extends Component {
           <Route path='/ideas' component={AuthIdeas}/>
           <Route exact path='/friends' component={AuthFriendsPage}/>
           <Route exact path='/profile' component={AuthProfile}/>
+          <Route exact path='/events/:id/schedule' component={AuthIdeaSchedule}/>
           <Route path='/events/:id' component={AuthEventCard}/>
           <Redirect to='/login'/>
         </Switch>

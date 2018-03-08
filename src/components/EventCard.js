@@ -31,8 +31,11 @@ class eventCard extends Component {
     }
   }
 
-  handleRSVP = (e) => {
+  handleEdit = () => {
+    this.props.history.push(`/events/${this.props.match.params.id}/schedule`)
+  }
 
+  handleRSVP = (e) => {
     if (e.target.name === 'yes') {
         this.setState({accepted: true}, () => {
           fetch(`${URL_ROOT}invitations/${this.props.match.params.id}/${this.props.user_id}`, {
@@ -117,21 +120,13 @@ class eventCard extends Component {
                   <CardGroup>
                     {eventScheduled.invitees.map( f => <FriendItem key={f.id} buttonAction='' friend={f}/>)}
                   </CardGroup>
-
             </div>
-            <br></br><br></br>
+              <br></br><br></br>
 
               {this.props.user_id === eventScheduled.owner_id && <button onClick={this.handleEdit}>Edit Idea</button>}
               <br></br><br></br>
-
-
-              {/*this.props.user_id !== eventScheduled.owner_id &&*/}
-              {
-                this.setupRSVP()
-              }
-
+              {this.props.user_id !== eventScheduled.owner_id && this.setupRSVP()}
               <br></br><br></br><br></br>
-
             <div style={{textDecoration: 'underline', float: 'left'}} onClick={this.handleBackToDash}>Back To Dashboard</div><br></br>
           </div>
         }

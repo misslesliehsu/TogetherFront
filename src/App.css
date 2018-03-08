@@ -55,13 +55,28 @@ input {
 }
 
 .togetherLogo:hover {
-  animation: spin 1s;
+  animation: pulse 0.25s;
 }
 
-@keyframes spin {
+@keyframes pulse {
+  0% {
+    font-size: 100px;
+  }
+  25% {
+    font-size: 110px;
+  }
+  50% {
+    font-size: 100px;
+  }
+  100% {
+    font-size: 110px;
+  }
+}
+
+/*@keyframes spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
-}
+}*/
 
 .togetherLogo {
   font-size: 100px;
