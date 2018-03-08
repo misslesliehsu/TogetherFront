@@ -13,17 +13,17 @@ class eventCard extends Component {
     accepted: null
   }
 
-  // componentDidMount() {
-  //   if (this.props.user_id != 'start'){
-  //   fetch(`${URL_ROOT}invitations/${this.props.match.params.id}/${this.props.user_id}`)
-  //   .then(res => res.json())
-  //   .then(console.log)
-  //   // .then(res => this.setState({accepted: res}))
-  //   }
-  // }
+  componentDidMount() {
+    if (this.props.user_id != 'start'){
+    fetch(`${URL_ROOT}invitations/${this.props.match.params.id}/${this.props.user_id}`)
+    .then(res => res.json())
+    .then(res => this.setState({accepted: res.accepted}))
+    }
+  }
+
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.user_id === 'start' && nextProps.user_id != "start") {
+    if (this.props.user_id === 'start' && nextProps.user_id != "start" && nextProps.e) {
       fetch(`${URL_ROOT}invitations/${this.props.match.params.id}/${nextProps.user_id}`)
       .then(res => res.json())
       .then(res => {
@@ -49,6 +49,7 @@ class eventCard extends Component {
                     }
                   )
                 })
+          this.props.updateRSVP(this.props.match.params.id, this.state.accepted)
           })
     }
     else {
@@ -64,6 +65,7 @@ class eventCard extends Component {
                   }
                 )
               })
+        this.props.updateRSVP(this.props.match.params.id, this.state.accepted)
         })
     }
   }
@@ -145,7 +147,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    removeIdeaFromStore: (i_id) => dispatch({type: 'REMOVE_IDEA_FROM_STORE', idea_id: (i_id)})
+    removeIdeaFromStore: (i_id) => dispatch({type: 'REMOVE_IDEA_FROM_STORE', idea_id: (i_id)}),
+    updateRSVP: (idea_id, response) => dispatch({type: 'UPDATE_RSVP', response, idea_id})
   }
 }
 

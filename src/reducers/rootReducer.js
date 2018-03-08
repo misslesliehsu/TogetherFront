@@ -8,7 +8,7 @@
 
 
 
-const ideasReducer = (state = {ideas: ["start"], events: ['start'], friends: ["start"], user:{id:"start"}, nonFriends: ['start']}, action) => {
+const ideasReducer = (state = {ideas: ["start"], invitations: ['start'], events: ['start'], friends: ["start"], user:{id:"start"}, nonFriends: ['start']}, action) => {
   switch (action.type) {
     case "LOAD_NONFRIENDS":
       return {...state, nonFriends: action.nonFriends}
@@ -16,6 +16,8 @@ const ideasReducer = (state = {ideas: ["start"], events: ['start'], friends: ["s
       return {...state, friends: action.friends}
     case "LOAD_IDEAS":
       return {...state, ideas: action.ideas}
+    case "LOAD_INVITATIONS":
+      return {...state, invitations: action.invitations}
     case "ADD_FRIEND":
       var updatedNonFriends = state.nonFriends.filter( nF => {nF.id != action.friend.id})
       return {...state, nonFriends: updatedNonFriends, friends: [...state.friends, action.friend]}
@@ -87,6 +89,16 @@ const ideasReducer = (state = {ideas: ["start"], events: ['start'], friends: ["s
       return {ideas: ["start"], events: ['start'], friends: ["start"], user:{id:"start"}, nonFriends: ['start']}
     case "UPDATE_USER":
       return {...state, user: {...state.user, first_name: action.first_name, last_name: action.last_name, email: action.email}}
+    case "UPDATE_RSVP":
+      const updatedInvitations = state.invitations.map(i => {
+        if (i.idea_id == action.idea_id) {
+          return {...i, accepted: action.response}
+        }
+        else {
+          return i
+        }
+      })
+      return {...state, invitations: updatedInvitations}
     default: return state
   }
 }

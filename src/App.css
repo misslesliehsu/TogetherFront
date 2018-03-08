@@ -170,6 +170,7 @@ input {
   white-space: nowrap;
   text-overflow: ellipsis;
   text-align: center;
+  padding-right: 10px;
 }
 
 .miniIdeaIcon:hover {
@@ -273,7 +274,14 @@ input {
   margin: 20px;
   padding: 5px;
   border-width: 1px;
-  border-color: #3a7691;
+  border-color: white;
+  background-color: #ffffff;
+  width: 150px;
+}
+
+.friendCard div div {
+  font-size: 25px;
+  line-height: 1.5;
 }
 
 .friendArea {
@@ -305,8 +313,9 @@ input {
 
 .profilePic {
   border-radius: 10px;
-  margin: 0 auto;
+  margin: 10px auto;
   position: relative;
+  width: 50%;
 }
 
 .voteCheckbox {
@@ -336,4 +345,31 @@ input {
 .RSVP.Selected {
   border-width: 20px;
   border-color: black;
+}
+
+.RSVPbuttonIn {
+  margin: 0 auto;
+  margin-top: 10px;
+  background-color: green;
+  border: solid;
+  font-size: 15px;
+}
+
+.RSVPbuttonOut {
+  margin: 0 auto;
+  margin-top: 10px;
+  background-color: red;
+  border: solid;
+  font-size: 15px;
+}
+
+.XEventListing {
+  margin: 0 auto;
+  margin-left: 2px;
+  font-size:12px;
+}
+
+.eventListingStar {
+  margin-top: 10px;
+  width: 30px;
 }
