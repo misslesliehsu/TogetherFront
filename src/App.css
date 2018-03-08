@@ -221,6 +221,7 @@ input {
 .eventCard .eventData {
   font-size: 30px;
   line-height: 2;
+  text-align: left;
 }
 
 .ideaCard .ideaData {

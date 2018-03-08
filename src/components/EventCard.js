@@ -17,7 +17,7 @@ class eventCard extends Component {
     if (this.props.user_id != 'start'){
     fetch(`${URL_ROOT}invitations/${this.props.match.params.id}/${this.props.user_id}`)
     .then(res => res.json())
-    .then(res => this.setState({accepted: res.accepted}))
+    .then(res => {res && this.setState({accepted: res.accepted})})
     }
   }
 
@@ -67,6 +67,53 @@ class eventCard extends Component {
               })
         this.props.updateRSVP(this.props.match.params.id, this.state.accepted)
         })
+    }
+  }
+
+  renderRSVPInvitees = () => {
+    // debugger
+    if (this.props.invitations[0] !== 'start' && this.props.ideas[0] !=='start'){
+      let idea = this.props.ideas.filter(i=> i.id == this.props.match.params.id)[0]
+      let invitees = idea.invitees
+      let yess = []
+      let nos = []
+      let unknowns = []
+      invitees.forEach( person => {
+        // debugger
+        let correct = this.props.invitations.find( i=> i.invitee_id == person.id)
+        if (correct) {
+          if (correct.accepted === true) {
+            yess.push(person)
+          }
+          else if (correct.accepted === false) {
+            nos.push(person)
+          }
+          else {
+            unknowns.push(person)
+          }
+        }
+      })
+      return (
+        <div>
+          <h1 style={{float:'left', marginTop: '60px', color: 'green'}}>IN {} </h1>
+          <div style={{width: '500px', display: 'grid', gridTemplateColumns:'1fr 1fr 1fr 1fr 1fr'}}>
+          {yess.length === 0 && <div><br></br><br></br><br></br></div>}
+          {yess.map( f => <FriendItem key={f.id} buttonAction='' friend={f}/>)}
+          </div>
+
+          <h1 style={{float:'left', marginTop: '60px', color: 'red'}}>OUT</h1>
+            <div style={{width: '500px', display: 'grid', gridTemplateColumns:'1fr 1fr 1fr 1fr 1fr'}}>
+          {nos.length === 0 && <div><br></br><br></br><br></br></div>}
+          {nos.map( f => <FriendItem key={f.id} buttonAction='' friend={f}/>)}
+          </div>
+
+          <h1 style={{float:'left', marginTop: '60px'}}>TBD</h1>
+          <div style={{width: '500px', display: 'grid', gridTemplateColumns:'1fr 1fr 1fr 1fr 1fr'}}>
+          {unknowns.length === 0 && <div><br></br><br></br><br></br></div>}
+          {unknowns.map( f => <FriendItem key={f.id} buttonAction='' friend={f}/>)}
+          </div>
+        </div>
+      )
     }
   }
 
@@ -120,11 +167,10 @@ class eventCard extends Component {
                 <li>INVITED:</li>
                   </ul>
                   <CardGroup>
-                    {eventScheduled.invitees.map( f => <FriendItem key={f.id} buttonAction='' friend={f}/>)}
+                    {this.renderRSVPInvitees()}
                   </CardGroup>
             </div>
-              <br></br><br></br>
-
+              <br></br><br></br><br></br>
               {this.props.user_id === eventScheduled.owner_id && <button onClick={this.handleEdit}>Edit Idea</button>}
               <br></br><br></br>
               {this.props.user_id !== eventScheduled.owner_id && this.setupRSVP()}
@@ -141,7 +187,8 @@ class eventCard extends Component {
 const mapStateToProps = (state) => {
   return {
     user_id: state.user.id,
-    ideas: state.ideas
+    ideas: state.ideas,
+    invitations: state.invitations
   }
 }
 

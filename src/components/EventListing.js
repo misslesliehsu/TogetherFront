@@ -8,11 +8,10 @@ class EventListing extends Component {
     this.props.history.push(`/events/${this.props.e.id}`)
   }
 
-  componentDidMount() {
-    console.log('did mount')
-  }
 
   calcRSVP = () => {
+    if (this.props.invitations) {
+      if (this.props.invitations[0] !== 'start' && this.props.e !=='start') {
     const invite = this.props.invitations.find( i => i.idea_id == this.props.e.id)
       switch (invite.accepted) {
         case true:
@@ -46,6 +45,11 @@ class EventListing extends Component {
         default:
           return (<div></div>)
       }
+      }
+    }
+    else {
+      return <div></div>
+    }
   }
 
   shortenedDate = () => {
@@ -64,7 +68,6 @@ class EventListing extends Component {
 
 
     render() {
-      console.log("RENDERING")
       return (
         <div onClick={this.handleEventClick} style={{display:'grid', gridTemplateColumns:'1fr 1fr 4fr 1fr'}}>
           <div>
@@ -77,7 +80,7 @@ class EventListing extends Component {
             {this.props.e.name}
           </div>
           <div>
-            {this.props.e !== 'start' && this.calcRSVP()}
+            {this.calcRSVP()}
           </div>
           <span><hr></hr></span>
           <span><hr></hr></span>
