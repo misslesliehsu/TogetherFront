@@ -16,6 +16,9 @@ body {
   font-size: 1.5em;
 }
 
+.item:hover {
+  color: yellow !important;
+}
 
 input {
     width: 90%;
@@ -196,6 +199,15 @@ input {
   border-color: yellow;
 }
 
+.eventCaption {
+  margin: auto;
+  overflow: hidden;
+  whiteSpace:nowrap;
+  text-overflow: ellipsis;
+  display: block;
+  height: 20px;
+}
+
 .eventCard {
   text-align: center;
   width: 1200px;
@@ -285,7 +297,6 @@ input {
   border: solid;
   border-color: #dbe0e0;
   border-radius: 10px;
-
 }
 
 .profile Segment {

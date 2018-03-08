@@ -22,7 +22,7 @@ const eventsList = (props) => {
           <div style={{margin: 'auto'}}>
             {e.scheduled_date}
           </div>
-          <div style={{margin: 'auto'}}>
+          <div className='eventCaption'>
             {e.name}
           </div>
           <span><hr></hr></span>
