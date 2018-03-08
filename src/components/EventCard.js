@@ -9,23 +9,89 @@ import { CardGroup } from 'semantic-ui-react'
 
 class eventCard extends Component {
 
-  handleCountOut = () => {
-    fetch(`${URL_ROOT}invitations/${this.props.match.params.id}/${this.props.user_id}`, {
-          method: 'delete',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }).then(this.props.removeIdeaFromStore(this.props.match.params.id))
-          .then(this.props.history.push(`/dashboard`))
+  state = {
+    accepted: null
   }
 
-  handleEdit = () => {
-    this.props.history.push(`/ideas/${this.props.match.params.id}/edit`)
+  // componentDidMount() {
+  //   if (this.props.user_id != 'start'){
+  //   fetch(`${URL_ROOT}invitations/${this.props.match.params.id}/${this.props.user_id}`)
+  //   .then(res => res.json())
+  //   .then(console.log)
+  //   // .then(res => this.setState({accepted: res}))
+  //   }
+  // }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.user_id === 'start' && nextProps.user_id != "start") {
+      fetch(`${URL_ROOT}invitations/${this.props.match.params.id}/${nextProps.user_id}`)
+      .then(res => res.json())
+      .then(res => {
+        this.setState({accepted: res.accepted})})
+    }
   }
 
-  handleSchedule = () => {
-    this.props.history.push(`/ideas/${this.props.match.params.id}/schedule`)
+  handleRSVP = (e) => {
+
+    if (e.target.name === 'yes') {
+        this.setState({accepted: true}, () => {
+          fetch(`${URL_ROOT}invitations/${this.props.match.params.id}/${this.props.user_id}`, {
+                  method: 'put',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(
+                    {
+                      response: this.state.accepted
+                    }
+                  )
+                })
+          })
+    }
+    else {
+      this.setState({accepted: false}, () =>     {
+        fetch(`${URL_ROOT}invitations/${this.props.match.params.id}/${this.props.user_id}`, {
+                method: 'put',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(
+                  {
+                    response: this.state.accepted
+                  }
+                )
+              })
+        })
+    }
   }
+
+
+  setupRSVP = () => {
+    switch (this.state.accepted) {
+      case null:
+        return (
+          <div>
+            <button className='RSVP' name='yes' onClick={this.handleRSVP}>I'm In!</button>
+            <button className='RSVP' name='no' onClick={this.handleRSVP}>I'm Out</button>
+          </div>
+        )
+      case false:
+        return (
+          <div>
+            <button className='RSVP' name='yes' onClick={this.handleRSVP}>I'm In!</button>
+            <button className='RSVP Selected' name='no' onClick={this.handleRSVP}>I'm Out</button>
+          </div>
+        )
+      case true:
+        return (
+          <div>
+            <button className='RSVP Selected' name='yes' onClick={this.handleRSVP}>I'm In!</button>
+            <button className='RSVP' name='no' onClick={this.handleRSVP}>I'm Out</button>
+          </div>
+        )
+      }
+  }
+
 
   handleBackToDash = () => {
     this.props.history.push(`/dashboard`)
@@ -58,8 +124,11 @@ class eventCard extends Component {
               {this.props.user_id === eventScheduled.owner_id && <button onClick={this.handleEdit}>Edit Idea</button>}
               <br></br><br></br>
 
-              {this.props.user_id === eventScheduled.owner_id && <button className='scheduleItButton' onClick={this.handleSchedule}>Schedule It!</button>}
-              {this.props.user_id !== eventScheduled.owner_id && <button className='countOutButton' onClick={this.handleCountOut}>Count Me Out</button>}
+
+              {/*this.props.user_id !== eventScheduled.owner_id &&*/}
+              {
+                this.setupRSVP()
+              }
 
               <br></br><br></br><br></br>
 

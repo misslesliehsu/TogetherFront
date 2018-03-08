@@ -38,6 +38,7 @@ class ideaCard extends Component {
       <div>
         {getIdea &&
           <div className='ideaCard'>
+            <img src={require('../blueThought.png')} style={{height: '150px', display:'inline'}}/>
             <h1>{getIdea.name}</h1>
             <div className='ideaData'>
               <ul style={{listStyle: 'none'}}>
@@ -64,7 +65,7 @@ class ideaCard extends Component {
               <br></br><br></br>
 
               {this.props.user_id === getIdea.owner_id && <button className='scheduleItButton' onClick={this.handleSchedule}>Schedule It!</button>}
-              {this.props.user_id !== getIdea.owner_id && <button className='countOutButton' onClick={this.handleCountOut}>Count Me Out</button>}
+              {this.props.user_id !== getIdea.owner_id && <button className='countOutButton' onClick={this.handleCountOut}>Mmm, Count Me Out</button>}
 
               <br></br><br></br><br></br>
 

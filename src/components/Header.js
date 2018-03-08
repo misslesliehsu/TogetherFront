@@ -20,9 +20,9 @@ const header = (props) => {
       <h1 className='togetherLogo'>TOGETHER</h1>
         {props.user_id !== 'start' &&
         <Menu class="menu" size='large' pointing secondary>
-          <Menu.Item><Link style={{fontSize:'30px', color:'white'}}class='item' to='/dashboard'>Dashboard</Link></Menu.Item>
-          <Menu.Item><Link style={{fontSize:'30px', color: 'white'}}class='item' to='/Profile'>Profile</Link></Menu.Item>
-          <Menu.Item><Link style={{fontSize:'30px', color: 'white'}}class='item' to='/Friends'>Friends</Link></Menu.Item>
+          <Menu.Item className='menuItem'><Link className='menuItem' style={{fontSize:'30px', color:'white'}}class='item' to='/dashboard'>Dashboard</Link></Menu.Item>
+          <Menu.Item><Link className='menuItem'style={{fontSize:'30px', color: 'white'}}class='item' to='/Profile'>Profile</Link></Menu.Item>
+          <Menu.Item><Link className='menuItem'style={{fontSize:'30px', color: 'white'}}class='item' to='/Friends'>Friends</Link></Menu.Item>
             {props.user_id !== 'start' &&
             <Menu.Menu position='right'>
               <Menu.Item onClick={handleLogOut} style={{fontSize:'30px', color:'white', marginBottom: '10px', marginRight: '40px'}}>Log Out</Menu.Item>

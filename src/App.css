@@ -45,6 +45,7 @@ input {
 .header {
 }
 
+
 .menu {
   text-shadow:
    -1px -1px 0 #000,
@@ -52,10 +53,20 @@ input {
    -1px 1px 0 #000,
    1px 1px 0 #000;
 }
+
+.togetherLogo:hover {
+  animation: spin 1s;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
 .togetherLogo {
   font-size: 100px;
   float: left;
-  margin-left: 20px;
+  margin-left: 30px;
   margin-right: 25px;
   height: 100px;
   color: white;
@@ -199,6 +210,7 @@ input {
 }
 
 .countOutButton {
+  border-radius: 20px;
   font-size: 20px;
   color: red;
 }
@@ -248,12 +260,15 @@ input {
   padding: 20px;
 }
 
+.ideasList {
+  margin: 20px;
+}
 .eventsList {
   margin: 50px;
   padding: 10px;
   padding-right: 20px;
   border: solid;
-  border-color: white;
+  border-color: #dbe0e0;
   border-radius: 10px;
 
 }
@@ -283,5 +298,16 @@ input {
   margin-top: 100px;
   width: 300px;
   overflow: scroll;
+}
 
+.RSVP {
+  font-size: 40px;
+  margin: 20px;
+  margin-left: 40px;
+  margin-right: 40px;
+}
+
+.RSVP.Selected {
+  border-width: 20px;
+  border-color: black;
 }

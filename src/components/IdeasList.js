@@ -14,7 +14,7 @@ const IdeasList = (props) =>  {
 
 
   return (
-    <div>
+    <div className='ideasList'>
       <br></br><br></br><br></br>
       <button className='createIdeaButton' onClick={handleNewIdea}>Create New Idea</button>
       <br></br><br></br>
