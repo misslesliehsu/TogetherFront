@@ -117,25 +117,23 @@ class IdeaForm extends Component {
             Description: <input type='textArea' name='description'value={this.state.description} onChange={this.handleChange}></input>
             <br></br><br></br>
             Location: <input type='text' name='location' value={this.state.location} onChange={this.handleChange}></input>
-            <br></br><br></br>
+            <br></br><br></br><br></br>
           </form>
-          <div>Date Suggestions:
+          <div style={{textAlign: 'left'}}>Date Suggestions:
+            <br></br><br></br>
             {ideaToSchedule.date_suggestions.length > 0 ?
               <div style={{marginLeft: '20px'}}>
-              {ideaToSchedule.date_suggestions.map(d => <DateSuggestionItem key={d.id} d={d} ideaId={ideaToSchedule.id} ownerId={ideaToSchedule.owner_id}/>)}
+              {ideaToSchedule.date_suggestions.map(d => <div><DateSuggestionItem key={d.id} d={d} ideaId={ideaToSchedule.id} ownerId={ideaToSchedule.owner_id}/><br></br><br></br></div>)}
               </div>
             :
-            <div style={{fontSize: '20px'}}>There are no date suggestions yet.</div>
-            }
-          </div>
+            <div style={{fontSize: '20px'}}>There are no date suggestions yet.<br></br><br></br></div>
 
-          <div style={{float: 'left'}}>Final Date:</div>
+          }
+
+          <div style={{float: 'left', marginTop: '30px'}}>Final Date:</div>
        <input style={{float: 'left'}} type='date' className='dateInputField' onChange={this.handleChange} name={'scheduled_date'} value={this.state.scheduled_date}></input>
-       <br></br><br></br>
-         <br></br><br></br>
-
-
-          <br></br>
+       </div>
+          <br></br><br></br><br></br>
           <hr></hr>
           Invited:
           <br></br><br></br>

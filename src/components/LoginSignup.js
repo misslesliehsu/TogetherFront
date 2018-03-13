@@ -115,7 +115,7 @@ class LoginSignup extends Component {
     }
     else if (this.state.mode === 'signing up') {
       return (
-        <div>
+        <div className='signInLogin'>
           <input type='text' name='signup_email'value={this.state.signup_email} onChange={this.handleChange} placeholder='Email Address'></input>
           <input type='text' name='signup_first_name' value={this.state.signup_first_name} onChange={this.handleChange} placeholder='First Name'></input>
           <input type='text' name='signup_last_name' value={this.state.signup_last_name} onChange={this.handleChange} placeholder='Last Name'></input>
@@ -129,7 +129,7 @@ class LoginSignup extends Component {
     }
     else if (this.state.mode === 'logging in') {
       return (
-        <div>
+        <div className='signInLogin'>
           <input type='text' name='login_email' value={this.state.login_email} onChange={this.handleChange} placeholder='Email Address'></input>
           <input type='password' name='login_password' value={this.state.login_password} onChange={this.handleChange} placeholder='Password'></input>
           <br></br><br></br><button name='login' onClick={this.handleSubmit}>Login</button>
@@ -142,14 +142,13 @@ class LoginSignup extends Component {
 
   render() {
     return (
-      <div style={{backgroundColor: '#52afe5'}}>
-          <br></br><br></br><br></br>
-          <h1>Brainstorm, plan, and schedule events with friends.</h1>
-          <br></br><br></br><br></br>
+      <div style={{backgroundColor: '#52afe5', marginTop:'100px', paddingTop:'40px'}} >
+      <h1 className='togetherLogoLogin'>TOGETHER</h1>
 
-
-        {this.handleSetup()}
-        <br></br><br></br><br></br>
+      <h1 className="banner">Brainstorm, plan, and schedule events with friends.</h1>
+      <br></br><br></br>
+    {this.handleSetup()}
+      <br></br><br></br><br></br>
 
       </div>
     )

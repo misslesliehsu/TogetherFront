@@ -71,7 +71,6 @@ class eventCard extends Component {
   }
 
   renderRSVPInvitees = () => {
-    // debugger
     if (this.props.invitations[0] !== 'start' && this.props.ideas[0] !=='start'){
       let idea = this.props.ideas.filter(i=> i.id == this.props.match.params.id)[0]
       let invitees = idea.invitees
@@ -79,10 +78,11 @@ class eventCard extends Component {
       let nos = []
       let unknowns = []
       invitees.forEach( person => {
-        // debugger
+        debugger
         let correct = this.props.invitations.find( i=> i.invitee_id == person.id)
         if (correct) {
-          if (correct.accepted === true) {
+          console.log(correct.accepted)
+          if (correct.accepted == true) {
             yess.push(person)
           }
           else if (correct.accepted === false) {
@@ -151,6 +151,7 @@ class eventCard extends Component {
 
   //why can't i define eventScheduled outside a function, on its own?
   render() {
+    console.log(this.props)
     let eventScheduled = this.props.ideas.find( i => i.id == this.props.match.params.id)
     return (
       <div>

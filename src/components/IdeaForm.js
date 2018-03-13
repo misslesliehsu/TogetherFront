@@ -187,20 +187,23 @@ class IdeaForm extends Component {
             Description: <input type='textArea' name='description'value={this.state.description} onChange={this.handleChange}></input>
             <br></br><br></br>
             Location: <input type='text' name='location' value={this.state.location} onChange={this.handleChange}></input>
-            <br></br><br></br>
+          <br></br><br></br><br></br>
           </form>
-          <div>Date Suggestions: <button style={{fontSize:'20px'}} onClick={this.handleAddDate}>Add Another Date Option</button></div>
+          <div style={{textAlign:'left'}}>Date Suggestions: <button style={{fontSize:'20px'}} onClick={this.handleAddDate}>Add Another Date Option</button></div>
               {this.renderSuggestions()}
           <br></br>
           <hr></hr>
           Invited:
           <br></br><br></br>
 
-            <Card.Group>
-        {this.state.invitees.map( i => <FriendItem buttonAction={this.handleRemoveInvitee} key={i.id} friend={i}/>)}
-      </Card.Group>
+          <Card.Group>
+            <br></br>
+            {this.state.invitees.length === 0 && <div>There are no invitees yet!<br></br><br></br></div>}
+            {this.state.invitees.map( i => <FriendItem buttonAction={this.handleRemoveInvitee} key={i.id} friend={i}/>)}
+            <br></br>
+          </Card.Group>
 
-        <br></br>
+        <br></br><br></br>
           <hr></hr>
 
         <button style={{marginTop: '50px'}} onClick={this.handleSave}>Save Idea</button><br></br><br></br>
