@@ -39,5 +39,11 @@ export function loadData(user_id) {
       dispatch({type: 'LOAD_FRIENDS', friends: res.friends})
       dispatch({type: 'LOAD_NONFRIENDS', nonFriends: res.nonFriends})
     })
+
+    fetch(`${URL_ROOT}invitations/${user_id}`)
+    .then(res=> res.json())
+    .then(res => {
+      dispatch({type: 'LOAD_INVITATIONS', invitations: res})
+    })
   }
 }

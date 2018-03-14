@@ -21,19 +21,50 @@ class eventCard extends Component {
   //   // .then(res => this.setState({accepted: res}))
   //   }
   // }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props.user_id === 'start' && nextProps.user_id != "start") {
-      fetch(`${URL_ROOT}invitations/${this.props.match.params.id}/${nextProps.user_id}`)
-      .then(res => res.json())
-      .then(res => {
-        this.setState({accepted: res.accepted})})
-    }
-  }
+  //
+  // componentWillReceiveProps(nextProps) {
+  //   if (this.props.user_id === 'start' && nextProps.user_id != "start") {
+  //     fetch(`${URL_ROOT}invitations/${this.props.match.params.id}/${nextProps.user_id}`)
+  //     .then(res => res.json())
+  //     .then(res => {
+  //       this.setState({accepted: res.accepted})})
+  //   }
+  // }
 
   handleEdit = () => {
     this.props.history.push(`/events/${this.props.match.params.id}/schedule`)
   }
+
+  showRSVPs = () => {
+    const invites = this.props.invitations.filter(i => i.idea_id == this.props.match.params.id)
+    const yes = invites.filter(i => i.accepted == true)
+    const no = invites.filter(i=> i.accepted == false)
+    const tbd = invites.filter(i => !yes.includes(i) && !no.includes(i))
+    const yes_people = yes.map(y => this.props.friends.find(x => x.id == y.invitee_id))
+    const no_people = no.map(n => this.props.friends.find(x=> x.id == n.invitee_id))
+    const tbd_people = tbd.map(t => this.props.friends.find(x => x.id == t.invitee_id))
+
+    return (
+      <div>
+        <h1 style={{float:'left', color: 'green'}}>IN</h1>
+          <CardGroup>
+            {yes_people.map( x => <FriendItem friend={x}/>)}
+          </CardGroup>
+          <br></br>
+        <h1 style={{float:'left', color: 'red'}}>OUT</h1>
+          <CardGroup>
+            {no_people.map( x => <FriendItem friend={x}/>)}
+        </CardGroup>
+        <br></br>
+        <h1 style={{float:'left'}}>TBD</h1>
+          <CardGroup>
+            {tbd_people.map( x => <FriendItem friend={x}/>)}
+          </CardGroup>
+          <br></br>
+      </div>
+    )
+  }
+
 
   handleRSVP = (e) => {
     if (e.target.name === 'yes') {
@@ -117,14 +148,13 @@ class eventCard extends Component {
                 <li>DATE: {eventScheduled.scheduled_date}</li>
                 <li>INVITED:</li>
                   </ul>
-                  <CardGroup>
-                    {eventScheduled.invitees.map( f => <FriendItem key={f.id} buttonAction='' friend={f}/>)}
-                  </CardGroup>
             </div>
               <br></br><br></br>
-
+              {this.props.user_id === eventScheduled.owner_id && this.showRSVPs()}
+              <br></br><br></br>
               {this.props.user_id === eventScheduled.owner_id && <button onClick={this.handleEdit}>Edit Idea</button>}
               <br></br><br></br>
+              RSVP:
               {this.props.user_id !== eventScheduled.owner_id && this.setupRSVP()}
               <br></br><br></br><br></br>
             <div style={{textDecoration: 'underline', float: 'left'}} onClick={this.handleBackToDash}>Back To Dashboard</div><br></br>
@@ -139,7 +169,9 @@ class eventCard extends Component {
 const mapStateToProps = (state) => {
   return {
     user_id: state.user.id,
-    ideas: state.ideas
+    ideas: state.ideas,
+    invitations: state.invitations,
+    friends: state.friends
   }
 }
 

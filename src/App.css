@@ -2,13 +2,65 @@ html * {
   font-family: 'Boogaloo', cursive;
 }
 
+button:hover {
+  background-color:yellow !important;
+}
+
+input {
+  background-color: #e0e0eb !important
+}
 
 body {
   background-color: #42c8f4;
   /*background-image: url("Background2.jpg");*/
   background-size: 100%;
-
 }
+
+
+.banner {
+  color:white;
+  font-size: 40px;
+  text-shadow:
+   -1px -1px 0 #000,
+   1px -1px 0 #000,
+   -1px 1px 0 #000,
+   1px 1px 0 #000;
+}
+
+
+.togetherLogoLogin {
+  animation: open infinite 1s;
+  font-size: 100px;
+  margin-left: 30px;
+  margin-right: 25px;
+  height: 100px;
+  color: white;
+  text-shadow:
+   -1px -1px 0 #000,
+   1px -1px 0 #000,
+   -1px 1px 0 #000,
+   1px 1px 0 #000;
+}
+
+@keyframes open {
+  0% {
+    font-size: 100px;
+  }
+  20% {
+    font-size: 120px;
+    color:yellow;
+  }
+  30% {
+    font-size: 100px
+  }
+  40% {
+    font-size: 120px;
+  }
+  100% {
+    font-size: 100px;
+  }
+}
+
 
 .App {
   text-align: center;
@@ -30,14 +82,12 @@ input {
   color:  #0099cc;
   padding: 10px;
 }
-
 .headerLeft {
   left:0;
   top: 0;
   position: absolute;
   padding: 20px;
 }
-
 .headerRight {
   right: 0;
   top: 0;
@@ -121,6 +171,11 @@ input {
   height:40px;
 }
 
+.signInLogin input {
+  height:40px;
+  background-color: white !important
+}
+
 /*.ardImage {
   opacity: .5;
   margin: 0 auto;
@@ -165,11 +220,12 @@ input {
   display: block;
   width: 300px;
   height: 50px;
-  font-size: 30px;
+  font-size: 26px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   text-align: center;
+  padding-right: 10px;
 }
 
 .miniIdeaIcon:hover {
@@ -200,12 +256,14 @@ input {
 }
 
 .eventCaption {
-  margin: auto;
+  margin: 5px;
+  margin-top: 10px;
   overflow: hidden;
   whiteSpace:nowrap;
   text-overflow: ellipsis;
   display: block;
   height: 20px;
+  font-size: 20px;
 }
 
 .eventCard {
@@ -220,6 +278,7 @@ input {
 .eventCard .eventData {
   font-size: 30px;
   line-height: 2;
+  text-align: left;
 }
 
 .ideaCard .ideaData {
@@ -273,7 +332,14 @@ input {
   margin: 20px;
   padding: 5px;
   border-width: 1px;
-  border-color: #3a7691;
+  border-color: white;
+  background-color: #ffffff;
+  width: 150px;
+}
+
+.friendCard div div {
+  font-size: 25px;
+  line-height: 1.5;
 }
 
 .friendArea {
@@ -283,17 +349,22 @@ input {
 .searchBar {
   border-radius: 25px;
   border: solid;
+  border-color: white;
   margin: 50px;
   padding: 20px;
 }
 
+.searchBar input {
+  height: 40px;
+}
 .ideasList {
   margin: 20px;
 }
 .eventsList {
-  margin: 50px;
+  margin: 50px auto;
   padding: 10px;
   padding-right: 20px;
+  margin-right: 15px;
   border: solid;
   border-color: #dbe0e0;
   border-radius: 10px;
@@ -305,8 +376,9 @@ input {
 
 .profilePic {
   border-radius: 10px;
-  margin: 0 auto;
+  margin: 10px auto;
   position: relative;
+  width: 50%;
 }
 
 .voteCheckbox {
@@ -336,4 +408,31 @@ input {
 .RSVP.Selected {
   border-width: 20px;
   border-color: black;
+}
+
+.RSVPbuttonIn {
+  margin: 0 auto;
+  margin-top: 10px;
+  background-color: green;
+  border: solid;
+  font-size: 15px;
+}
+
+.RSVPbuttonOut {
+  margin: 0 auto;
+  margin-top: 10px;
+  background-color: red;
+  border: solid;
+  font-size: 15px;
+}
+
+.XEventListing {
+  margin: 0 auto;
+  margin-left: 2px;
+  font-size:12px;
+}
+
+.eventListingStar {
+  margin-top: 10px;
+  width: 30px;
 }

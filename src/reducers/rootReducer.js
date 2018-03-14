@@ -16,6 +16,8 @@ const ideasReducer = (state = {ideas: ["start"], events: ['start'], friends: ["s
       return {...state, friends: action.friends}
     case "LOAD_IDEAS":
       return {...state, ideas: action.ideas}
+    case "LOAD_INVITATIONS":
+      return {...state, invitations: action.invitations}
     case "ADD_FRIEND":
       var updatedNonFriends = state.nonFriends.filter( nF => {nF.id != action.friend.id})
       return {...state, nonFriends: updatedNonFriends, friends: [...state.friends, action.friend]}

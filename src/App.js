@@ -6,6 +6,7 @@ import URL_ROOT from './URL'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { getCurrentUser, loadData } from './actions'
+import GoogleOAuth from './components/GoogleOAuth'
 
 
 
@@ -29,6 +30,7 @@ class App extends Component {
       <div className="App">
         <Header history={this.props.history}/>
         <Main/>
+        <GoogleOAuth/>
       </div>
     );
   }
