@@ -4,6 +4,9 @@ import { connect } from 'react-redux'
 import FriendItem from './FriendItem'
 import DateSuggestionItem from './DateSuggestionItem'
 import { CardGroup } from 'semantic-ui-react'
+import GoogleAuth from './GoogleOAuth'
+
+
 
 //NEED TO CHECK WHY NOT UPDATED RIGHT AWAY, AFTER EDIT
 
@@ -64,11 +67,25 @@ class eventCard extends Component {
       </div>
     )
   }
-
-
   handleRSVP = (e) => {
-    if (e.target.name === 'yes') {
-        this.setState({accepted: true}, () => {
+      if (e.target.name === 'yes') {
+          this.setState({accepted: true}, () => {
+            fetch(`${URL_ROOT}invitations/${this.props.match.params.id}/${this.props.user_id}`, {
+                    method: 'put',
+                    headers: {
+                      'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(
+                      {
+                        response: this.state.accepted
+                      }
+                    )
+                  })
+            this.props.updateRSVP(this.props.match.params.id, this.state.accepted)
+            })
+      }
+      else {
+        this.setState({accepted: false}, () =>     {
           fetch(`${URL_ROOT}invitations/${this.props.match.params.id}/${this.props.user_id}`, {
                   method: 'put',
                   headers: {
@@ -80,24 +97,10 @@ class eventCard extends Component {
                     }
                   )
                 })
+          this.props.updateRSVP(this.props.match.params.id, this.state.accepted)
           })
+      }
     }
-    else {
-      this.setState({accepted: false}, () =>     {
-        fetch(`${URL_ROOT}invitations/${this.props.match.params.id}/${this.props.user_id}`, {
-                method: 'put',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(
-                  {
-                    response: this.state.accepted
-                  }
-                )
-              })
-        })
-    }
-  }
 
 
   setupRSVP = () => {
@@ -126,6 +129,28 @@ class eventCard extends Component {
       }
   }
 
+  handleEventCreation(e) {
+
+     var request = window.gapi.client.request({
+     'method': 'POST',
+     'path': "https://www.googleapis.com/calendar/v3/calendars/primary/events",
+     'headers': {
+           'Content-Type': 'application/json'
+         },
+     'body': {
+       summary: e.name,
+       start: {dateTime: e.scheduled_date},
+       end: {dateTime: e.scheduled_date}
+     }
+   })
+   .then(function(response) {
+   console.log(response.result)
+   }, function(reason) {
+   console.log('Error: ' + reason.result.error.message)
+   })
+
+ }
+
 
   handleBackToDash = () => {
     this.props.history.push(`/dashboard`)
@@ -134,6 +159,7 @@ class eventCard extends Component {
   //why can't i define eventScheduled outside a function, on its own?
   render() {
     let eventScheduled = this.props.ideas.find( i => i.id == this.props.match.params.id)
+    debugger
     return (
       <div>
         <br></br><br></br>
@@ -160,6 +186,8 @@ class eventCard extends Component {
             <div style={{textDecoration: 'underline', float: 'left'}} onClick={this.handleBackToDash}>Back To Dashboard</div><br></br>
           </div>
         }
+        <GoogleAuth/>
+        <button onClick={() => {this.handleEventCreation(eventScheduled)}}>SCHEDULEHERE</button>
       </div>
     )
   }
@@ -177,7 +205,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    removeIdeaFromStore: (i_id) => dispatch({type: 'REMOVE_IDEA_FROM_STORE', idea_id: (i_id)})
+    updateRSVP: (idea_id, response) => dispatch({type: 'UPDATE_RSVP', response, idea_id})
   }
 }
 

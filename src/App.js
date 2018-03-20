@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
+import './DateTime.css'
 import Header from './components/Header'
 import Main from './components/Main'
 import URL_ROOT from './URL'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { getCurrentUser, loadData } from './actions'
-import GoogleOAuth from './components/GoogleOAuth'
 
 
 
@@ -30,7 +30,6 @@ class App extends Component {
       <div className="App">
         <Header history={this.props.history}/>
         <Main/>
-        <GoogleOAuth/>
       </div>
     );
   }

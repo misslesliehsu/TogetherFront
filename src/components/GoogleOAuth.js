@@ -5,71 +5,79 @@ export default class GoogleOAuth extends Component {
   state = {
     googleAuth: null,
     gapiReady: false,
+    eventScheduled: null,
     authorizeState: '',
     signoutState: ''
   }
 
-  componentDidMount() {
+
+  loadApi() {
+      this.setState({eventScheduled: this.props.event})
+      const script = document.createElement("script")
+      script.src = "https://apis.google.com/js/client.js"
+
+      script.onload = () => {
+        window.gapi.load('client:auth2', this.initClient)}
+      document.body.appendChild(script)
+  }
+
+
+  initClient() {
     window.gapi.auth2.init({
             'apiKey': "AIzaSyB37beo2-akUWQB0Bnnb1MHr-BjoXoeC5g",
             'clientId': '677208611130-k2h5h3ql7hljj978rfsajviujkfku8ng.apps.googleusercontent.com',
             'scope': 'https://www.googleapis.com/auth/calendar',
             'discoveryDocs': ['https://www.googleapis.com/discovery/v1/calendar/v3/rest']
-        }).then(this.setState({googleAuth: window.gapi.auth2.getAuthInstance(), gapiReady: true}))
-        .then(function () {
+        })
+      .then(function () {
           // Listen for sign-in state changes.
-          window.gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+          window.gapi.auth2.getAuthInstance().isSignedIn.listen(this.updateSigninStatus)
           // Handle the initial sign-in state.
-          updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-        });
-
-
-   updateSigninStatus(isSignedIn) {
-    if (isSignedIn) {
-      this.state.authorizeState = 'none';
-      this.state.signoutState = 'block';
-      makeApiCall();
-    } else {
-      authorizeButton.style.display = 'block';
-      signoutButton.style.display = 'none';
-    }
+          this.updateSigninStatus(window.gapi.auth2.getAuthInstance().isSignedIn.get())
+        })
   }
+
+  componentDidMount() {
+      this.loadApi()
+  }
+
+
+    updateSigninStatus(isSignedIn) {
+     if (isSignedIn) {
+       this.setState({authorizeState: 'none', signoutState: 'block'})
+       console.log('signedIn')
+       // this.makeApiCall();
+     } else {
+       this.setState({authorizeState: 'block', signoutState: 'none'})
+     }
+   }
+
 
    handleAuthClick(event) {
-    gapi.auth2.getAuthInstance().signIn();
-  }
+    window.gapi.auth2.getAuthInstance().signIn();
+    }
 
-   handleSignoutClick(event) {
-    gapi.auth2.getAuthInstance().signOut();
-  }
-  // Load the API and make an API call.  Display the results on the screen.
-
-   makeApiCall() {
-    gapi.client.people.people.get({
-      'resourceName': 'people/me',
-      'requestMask.includeField': 'person.names'
-    }).then(function(resp) {
-      var name = resp.result.names[0].givenName;
-      this.setState({ name })
-    });
-  }
-
+    handleSignoutClick(event) {
+      window.gapi.auth2.getAuthInstance().signOut();
+   }
 
 
 
   render() {
-    if (this.state.gapiReady) {
       return (
-        <h1>GAPI is loaded and ready to use.</h1>
-        <button onClick={this.handleAuthClick} style={{display:{this.state.authorizeState}}}>Authorize</button>
-        <button onClick={this.handleSignoutClick} style={{display:{this.state.signoutState}}}>Sign Out</button>
-        )
-    }
-    else {
-      return (
-        <div>NOT YET</div>
+        <div>
+          HEYO
+          <button id='authorize-button' onClick={this.handleAuthClick}>
+              authorizeButton
+          </button>
+          <button id='signout-button' onClick={this.handleSignoutClick}>
+              signoutButton
+          </button>
+          <button onClick={this.handleEventCreation}>
+            Make an calendarEvent!
+          </button>
+        </div>
       )
-    }
   }
 
 

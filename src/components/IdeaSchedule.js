@@ -5,6 +5,8 @@ import URL_ROOT from '../URL.js'
 import { withRouter } from 'react-router-dom'
 import DateSuggestionItem from './DateSuggestionItem'
 import { Card } from 'semantic-ui-react'
+import Datetime from 'react-datetime'
+
 
 class IdeaForm extends Component {
 
@@ -15,6 +17,7 @@ class IdeaForm extends Component {
       date_suggestions: [{date: '', id: null, voters: [] }],
       invitees: [],
       owner_id: '',
+      scheduled_date_friendly: '',
       scheduled_date: ''
   }
 
@@ -51,6 +54,12 @@ class IdeaForm extends Component {
     return this.props.friends.filter(f => !this.state.invitees.includes(f))
   }
 
+  handleFinalDate = (e) => {
+    let scheduled_date = e.format() //RC3339
+    let scheduled_date_friendly = e.format("dddd, MMMM Do YYYY, h:mm A")
+    this.setState({scheduled_date, scheduled_date_friendly})
+  }
+
   handleChange = (e) => {
     this.setState(
       {[e.target.name]: e.target.value}
@@ -59,7 +68,7 @@ class IdeaForm extends Component {
 
   handleSchedule = (e) => {
     e.preventDefault()
-    if (this.state.scheduled_date === '') {
+    if (this.state.scheduled_date_friendly === '') {
       window.alert("Must have a Final Date!")
     }
     else {
@@ -130,8 +139,9 @@ class IdeaForm extends Component {
           </div>
 
           <div style={{float: 'left'}}>Final Date:</div>
-       <input style={{float: 'left'}} type='date' className='dateInputField' onChange={this.handleChange} name={'scheduled_date'} value={this.state.scheduled_date}></input>
-       <br></br><br></br>
+              <Datetime inputProps={{ placeholder: 'Click to pick a date & time'}}
+              onChange={this.handleFinalDate} value={this.state.scheduled_date_friendly}/>
+          <br></br><br></br>
          <br></br><br></br>
 
 
@@ -192,7 +202,7 @@ class IdeaForm extends Component {
     //         }
     //         <br></br><br></br><br></br><br></br>
     //         <div style={{float: 'left'}}>Final Date:</div>
-    //       <input style={{float: 'left'}} type='date' className='dateInputField' onChange={this.handleChange} name={'scheduled_date'} value={this.state.scheduled_date}></input>
+    //       <input style={{float: 'left'}} type='date' className='dateInputField' onChange={this.handleChange} name={'scheduled_date_friendly'} value={this.state.scheduled_date_friendly}></input>
     //       <br></br><br></br>
     //         <br></br><br></br>
     //

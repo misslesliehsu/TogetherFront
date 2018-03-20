@@ -8,6 +8,9 @@ const eventsList = (props) => {
     props.history.push(`/events/${e.currentTarget.id}`)
   }
 
+  console.log("should be re-rendering EventListings")
+  console.log(props.events)
+
   return (
     <div className='eventsList'>
       <h2>Your Scheduled Events</h2>
@@ -16,7 +19,7 @@ const eventsList = (props) => {
       {props.events.length === 0 && <h3>"No events scheduled yet!"</h3>}
 
       {props.events.map( e =>
-        <EventListing e={e}/>)}
+        <EventListing e={e} history={props.history}/>)}
     </div>
   )
 }

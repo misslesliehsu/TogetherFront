@@ -80,15 +80,27 @@ const ideasReducer = (state = {ideas: ["start"], events: ['start'], friends: ["s
       )
       return {...state, ideas: updatedIdeas}
     case "REMOVE_IDEA_FROM_STORE":
-
       var updatedIdeas = state.ideas.filter( i => i.id != action.idea_id)
       return {...state, ideas: updatedIdeas}
+    case "REMOVE_INVITATION_FROM_STORE":
+      var updatedInvitations = state.invitations.filter(i => i.id != action.invite_id)
+      return {...state, invitations: updatedInvitations}
     case "LOGIN":
       return {...state, user: action.user}
     case "LOGOUT":
       return {ideas: ["start"], events: ['start'], friends: ["start"], user:{id:"start"}, nonFriends: ['start']}
     case "UPDATE_USER":
       return {...state, user: {...state.user, first_name: action.first_name, last_name: action.last_name, email: action.email}}
+    case "UPDATE_RSVP":
+          const updatedInvitations = state.invitations.map(i => {
+            if (i.idea_id == action.idea_id) {
+              return {...i, accepted: action.response}
+            }
+            else {
+              return i
+            }
+          })
+          return {...state, invitations: updatedInvitations}
     default: return state
   }
 }

@@ -1,11 +1,26 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import URL_ROOT from '../URL'
 
 class EventListing extends Component {
 
 
-  handleEventClick = () => {
-    this.props.history.push(`/events/${this.props.e.id}`)
+  handleEventClick = (e) => {
+    if (e.target.id != 'removeListing') {
+      this.props.history.push(`/events/${this.props.e.id}`)
+    }
+  }
+
+
+  handleRemoveListing = () => {
+    const invite = this.props.invitations.find( i => i.idea_id == this.props.e.id)
+    fetch(`${URL_ROOT}invitations/${this.props.e.id}/${this.props.user_id}`, {
+          method: 'delete',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }).then(this.props.removeIdeaFromStore(this.props.e.id))
+          .then(this.props.removeInvitationFromStore(invite.id))
   }
 
 
@@ -27,7 +42,7 @@ class EventListing extends Component {
               <button className="RSVPbuttonOut">
                 OUT
               </button>
-              <button className='XEventListing'>X</button>
+              <button id="removeListing" className='XEventListing' onClick={this.handleRemoveListing}>X</button>
             </div>
             )
         case null:
@@ -99,5 +114,13 @@ const mapStateToProps = (state) => {
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    removeIdeaFromStore: (i_id) => dispatch({type: 'REMOVE_IDEA_FROM_STORE', idea_id: (i_id)}),
+    removeInvitationFromStore: (invite_id) => dispatch({type: 'REMOVE_INVITATION_FROM_STORE', invite_id: (invite_id)})
+  }
 
-export default connect(mapStateToProps, null)(EventListing)
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(EventListing)

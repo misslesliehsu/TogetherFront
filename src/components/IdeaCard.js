@@ -47,13 +47,13 @@ class ideaCard extends Component {
                 <li>DATE SUGGESTIONS:</li>
                   {getIdea.date_suggestions.length > 0 ?
                     <div style={{marginLeft: '20px'}}>
-                    {getIdea.date_suggestions.map(d => <DateSuggestionItem key={d.id} d={d} ideaId={getIdea.id} ownerId={getIdea.owner_id}/>)}
+                      {getIdea.date_suggestions.map(d => <DateSuggestionItem key={d.id} d={d} ideaId={getIdea.id} ownerId={getIdea.owner_id}/>)}
                     </div>
                  :
                  <div style={{fontSize: '20px'}}>There are no date suggestions yet.</div>
                   }
                   <li>INVITED:</li>
-                  </ul>
+              </ul>
                   <CardGroup>
                     {getIdea.invitees.map( f => <FriendItem key={f.id} buttonAction='' friend={f}/>)}
                   </CardGroup>

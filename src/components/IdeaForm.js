@@ -4,6 +4,8 @@ import FriendItem from './FriendItem'
 import URL_ROOT from '../URL.js'
 import { withRouter } from 'react-router-dom'
 import { Card } from 'semantic-ui-react'
+import Datetime from 'react-datetime'
+
 
 class IdeaForm extends Component {
 
@@ -14,7 +16,8 @@ class IdeaForm extends Component {
       date_suggestions: [{date: '', id: null, voters: [] }],
       invitees: [],
       owner_id: '',
-      scheduled_date: ''
+      scheduled_date: '',
+      i: null
   }
 
 
@@ -128,9 +131,10 @@ class IdeaForm extends Component {
 
 
   handleSetDate = (e) => {
-    let i = parseInt(e.target.name, 10)
+    let i = this.state.i
     let date_suggestions = this.state.date_suggestions
-    date_suggestions[i] = {date: e.target.value, voters: [], id: null}
+    date_suggestions[i] = {date: e.format("dddd, MMMM Do YYYY, h:mm A"), voters: [], id: null}
+    // date_suggestions[i] = {date: e.format("yyyy-MM-dd'T'HH:mm:ssXXX"), voters: [], id: null}
     this.setState({date_suggestions})
   }
 
@@ -164,7 +168,8 @@ class IdeaForm extends Component {
     for (let i = 0; i < this.state.date_suggestions.length; i++) {
       suggestions.push(
         <div key={i}>
-          <input className='dateInputField' type='date' key={i} onChange={this.handleSetDate} name={i} value={this.state.date_suggestions[i].date}></input>
+          <Datetime className={i} inputProps={{ placeholder: 'Click to pick a date & time'}}
+          onChange={(e) => {this.setState({i: i}, () => {this.handleSetDate(e)})}} value={this.state.date_suggestions[i].date}/>
           <button name={i} onClick={this.handleRemoveDate}>X</button>
           <br></br>
         </div>
@@ -175,6 +180,7 @@ class IdeaForm extends Component {
 
 
   render() {
+
     return(
       <div>
         <div className='ideaForm' draggable='true' onDrop={this.handleDrop} onDragOver={this.dragOver} onDragEnd={this.dragEnd}>
