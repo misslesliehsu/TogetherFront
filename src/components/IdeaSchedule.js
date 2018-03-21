@@ -8,13 +8,13 @@ import { Card } from 'semantic-ui-react'
 import Datetime from 'react-datetime'
 
 
-class IdeaForm extends Component {
+class IdeaScheduleForm extends Component {
 
   state = {
       name: '',
       location: '',
       description: '',
-      date_suggestions: [{date: '', id: null, voters: [] }],
+      date_suggestions: [{date: '', friendly_date: '', id: null, voters: [] }],
       invitees: [],
       owner_id: '',
       scheduled_date_friendly: '',
@@ -68,7 +68,7 @@ class IdeaForm extends Component {
 
   handleSchedule = (e) => {
     e.preventDefault()
-    if (this.state.scheduled_date_friendly === '') {
+    if (this.state.scheduled_date === '') {
       window.alert("Must have a Final Date!")
     }
     else {
@@ -84,7 +84,8 @@ class IdeaForm extends Component {
                   location: this.state.location,
                   owner_id: this.state.user_id,
                   description: this.state.description,
-                  scheduled_date: this.state.scheduled_date
+                  scheduled_date: this.state.scheduled_date,
+                  scheduled_date_friendly: this.state.scheduled_date_friendly
                 },
                 date_suggestions: this.state.date_suggestions,
                 invitees: this.state.invitees
@@ -241,4 +242,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(IdeaForm))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(IdeaScheduleForm))

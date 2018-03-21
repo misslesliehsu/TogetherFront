@@ -9,7 +9,6 @@ import { withRouter } from 'react-router-dom'
 import { getCurrentUser, loadData } from './actions'
 
 
-
 class App extends Component {
 
   componentDidMount() {

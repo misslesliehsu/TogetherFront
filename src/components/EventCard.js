@@ -4,7 +4,9 @@ import { connect } from 'react-redux'
 import FriendItem from './FriendItem'
 import DateSuggestionItem from './DateSuggestionItem'
 import { CardGroup } from 'semantic-ui-react'
-import GoogleAuth from './GoogleOAuth'
+import GoogleAuth from '../GoogleAuth'
+import GoogleOAuth from './GoogleOAuth'
+
 
 
 
@@ -13,7 +15,8 @@ import GoogleAuth from './GoogleOAuth'
 class eventCard extends Component {
 
   state = {
-    accepted: null
+    accepted: null,
+    showSignInButton: false
   }
 
   // componentDidMount() {
@@ -33,6 +36,11 @@ class eventCard extends Component {
   //       this.setState({accepted: res.accepted})})
   //   }
   // }
+  //
+  // componentDidMount() {
+  //   GoogleAuth.loadApi
+  // }
+
 
   handleEdit = () => {
     this.props.history.push(`/events/${this.props.match.params.id}/schedule`)
@@ -130,7 +138,7 @@ class eventCard extends Component {
   }
 
   handleEventCreation(e) {
-
+    let to_schedule = e
      var request = window.gapi.client.request({
      'method': 'POST',
      'path': "https://www.googleapis.com/calendar/v3/calendars/primary/events",
@@ -147,9 +155,12 @@ class eventCard extends Component {
    console.log(response.result)
    }, function(reason) {
    console.log('Error: ' + reason.result.error.message)
-   })
-
- }
+   if (reason.result.error.message === "Login Required") {
+     window.alert("Sign in first, then try again!")
+     window.gapi.auth2.getAuthInstance().signIn();
+      }
+    })
+  }
 
 
   handleBackToDash = () => {
@@ -159,19 +170,19 @@ class eventCard extends Component {
   //why can't i define eventScheduled outside a function, on its own?
   render() {
     let eventScheduled = this.props.ideas.find( i => i.id == this.props.match.params.id)
-    debugger
     return (
       <div>
         <br></br><br></br>
         <img src={require('../calendar.png')} style={{height: '200px'}}/>
         {eventScheduled &&
           <div className='eventCard'>
+            <button onClick={() => {this.handleEventCreation(eventScheduled)}}>Add To Google Calendar</button>
             <h1 style={{fontSize: '40px'}}>{eventScheduled.name}</h1>
             <div className='eventData'>
               <ul style={{listStyle: 'none'}}>
                 <li>DESCRIPTION: {eventScheduled.description}</li>
                 <li>WHERE: {eventScheduled.location}</li>
-                <li>DATE: {eventScheduled.scheduled_date}</li>
+                <li>DATE: {eventScheduled.scheduled_date_friendly}</li>
                 <li>INVITED:</li>
                   </ul>
             </div>
@@ -186,8 +197,8 @@ class eventCard extends Component {
             <div style={{textDecoration: 'underline', float: 'left'}} onClick={this.handleBackToDash}>Back To Dashboard</div><br></br>
           </div>
         }
-        <GoogleAuth/>
-        <button onClick={() => {this.handleEventCreation(eventScheduled)}}>SCHEDULEHERE</button>
+        <br></br><br></br> <br></br><br></br>
+        <GoogleOAuth/>
       </div>
     )
   }

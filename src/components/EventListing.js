@@ -29,7 +29,8 @@ class EventListing extends Component {
       if (this.props.invitations[0] !== 'start' && this.props.e !=='start') {
     const invite = this.props.invitations.find( i => i.idea_id == this.props.e.id)
       // debugger
-      switch (invite.accepted) {
+    if (invite)
+      {switch (invite.accepted) {
         case true:
           return (
             <button className="RSVPbuttonIn">
@@ -65,7 +66,7 @@ class EventListing extends Component {
     }
     else {
       return <div></div>
-    }
+    }}
   }
 
   shortenedDate = () => {

@@ -29,12 +29,12 @@ export default class GoogleOAuth extends Component {
             'scope': 'https://www.googleapis.com/auth/calendar',
             'discoveryDocs': ['https://www.googleapis.com/discovery/v1/calendar/v3/rest']
         })
-      .then(function () {
-          // Listen for sign-in state changes.
-          window.gapi.auth2.getAuthInstance().isSignedIn.listen(this.updateSigninStatus)
-          // Handle the initial sign-in state.
-          this.updateSigninStatus(window.gapi.auth2.getAuthInstance().isSignedIn.get())
-        })
+      // .then(function () {
+      //     // Listen for sign-in state changes.
+      //     window.gapi.auth2.getAuthInstance().isSignedIn.listen(this.updateSigninStatus)
+      //     // Handle the initial sign-in state.
+      //     this.updateSigninStatus(window.gapi.auth2.getAuthInstance().isSignedIn.get())
+      //   })
   }
 
   componentDidMount() {
@@ -42,40 +42,32 @@ export default class GoogleOAuth extends Component {
   }
 
 
-    updateSigninStatus(isSignedIn) {
-     if (isSignedIn) {
-       this.setState({authorizeState: 'none', signoutState: 'block'})
-       console.log('signedIn')
-       // this.makeApiCall();
-     } else {
-       this.setState({authorizeState: 'block', signoutState: 'none'})
-     }
-   }
+   //  updateSigninStatus(isSignedIn) {
+   //   if (isSignedIn) {
+   //     this.setState({authorizeState: 'none', signoutState: 'block'})
+   //     console.log('signedIn')
+   //     // this.makeApiCall();
+   //   } else {
+   //     this.setState({authorizeState: 'block', signoutState: 'none'})
+   //   }
+   // }
 
 
    handleAuthClick(event) {
     window.gapi.auth2.getAuthInstance().signIn();
-    }
 
-    handleSignoutClick(event) {
-      window.gapi.auth2.getAuthInstance().signOut();
-   }
+  }
+
+   //
+   //  handleSignoutClick(event) {
+   //    window.gapi.auth2.getAuthInstance().signOut();
+   // }
 
 
 
   render() {
       return (
         <div>
-          HEYO
-          <button id='authorize-button' onClick={this.handleAuthClick}>
-              authorizeButton
-          </button>
-          <button id='signout-button' onClick={this.handleSignoutClick}>
-              signoutButton
-          </button>
-          <button onClick={this.handleEventCreation}>
-            Make an calendarEvent!
-          </button>
         </div>
       )
   }

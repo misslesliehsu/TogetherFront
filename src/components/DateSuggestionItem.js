@@ -48,7 +48,7 @@ class DateSuggestionItem extends Component {
         {this.props.ownerId !== this.props.user_id &&
           <input className='voteCheckbox' type='checkbox' checked={this.buttonText()} onClick={this.handleVoteOrUnvote}></input>
           }
-          {this.props.d.date}:
+          {this.props.d.friendly_date}:
         {this.props.d.voters.map( v =>
             <img className='voterPhoto' src={v.profile_pic}></img>
           )}

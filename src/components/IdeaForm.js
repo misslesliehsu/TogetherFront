@@ -13,10 +13,11 @@ class IdeaForm extends Component {
       name: '',
       location: '',
       description: '',
-      date_suggestions: [{date: '', id: null, voters: [] }],
+      date_suggestions: [{date: '', friendly_date: '', id: null, voters: [] }],
       invitees: [],
       owner_id: '',
       scheduled_date: '',
+      scheduled_date_friendly: '',
       i: null
   }
 
@@ -85,7 +86,8 @@ class IdeaForm extends Component {
                   location: this.state.location,
                   owner_id: this.props.user_id,
                   description: this.state.description,
-                  scheduled_date: this.state.scheduled_date
+                  scheduled_date: this.state.scheduled_date,
+                  scheduled_date_friendly: this.state.scheduled_date_friendly
                 },
                 date_suggestions: this.state.date_suggestions,
                 invitees: this.state.invitees
@@ -116,7 +118,8 @@ class IdeaForm extends Component {
                 },
                 date_suggestions: this.state.date_suggestions,
                 invitees: this.state.invitees,
-                scheduled_date: this.state.scheduled_date
+                scheduled_date: this.state.scheduled_date,
+                scheduled_date_friendly: this.state.scheduled_date_friendly
               }
             )
           }).then(res=> res.json())
@@ -133,14 +136,12 @@ class IdeaForm extends Component {
   handleSetDate = (e) => {
     let i = this.state.i
     let date_suggestions = this.state.date_suggestions
-    date_suggestions[i] = {date: e.format("dddd, MMMM Do YYYY, h:mm A"), voters: [], id: null}
-    // date_suggestions[i] = {date: e.format("yyyy-MM-dd'T'HH:mm:ssXXX"), voters: [], id: null}
+    date_suggestions[i] = {date: e.format(), friendly_date: e.format("dddd, MMMM Do YYYY, h:mm A"), voters: [], id: null}
     this.setState({date_suggestions})
   }
 
-
   handleAddDate = () => {
-    this.setState({date_suggestions: [...this.state.date_suggestions, {date: '', id: null, voters: [] }]})
+    this.setState({date_suggestions: [...this.state.date_suggestions, {date: '', friendly_date: '', id: null, voters: [] }]})
   }
 
   handleDrop = (e) => {
@@ -168,8 +169,8 @@ class IdeaForm extends Component {
     for (let i = 0; i < this.state.date_suggestions.length; i++) {
       suggestions.push(
         <div key={i}>
-          <Datetime className={i} inputProps={{ placeholder: 'Click to pick a date & time'}}
-          onChange={(e) => {this.setState({i: i}, () => {this.handleSetDate(e)})}} value={this.state.date_suggestions[i].date}/>
+          <Datetime inputProps={{className: "dateInputField",  placeholder: 'Click to pick a date & time'}}
+          onChange={(e) => {this.setState({i: i}, () => {this.handleSetDate(e)})}} />
           <button name={i} onClick={this.handleRemoveDate}>X</button>
           <br></br>
         </div>
