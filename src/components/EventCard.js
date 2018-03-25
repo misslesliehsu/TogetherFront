@@ -9,38 +9,11 @@ import GoogleOAuth from './GoogleOAuth'
 
 
 
-
-//NEED TO CHECK WHY NOT UPDATED RIGHT AWAY, AFTER EDIT
-
 class eventCard extends Component {
 
   state = {
     accepted: null,
-    showSignInButton: false
   }
-
-  // componentDidMount() {
-  //   if (this.props.user_id != 'start'){
-  //   fetch(`${URL_ROOT}invitations/${this.props.match.params.id}/${this.props.user_id}`)
-  //   .then(res => res.json())
-  //   .then(console.log)
-  //   // .then(res => this.setState({accepted: res}))
-  //   }
-  // }
-  //
-  // componentWillReceiveProps(nextProps) {
-  //   if (!this.props.invitations && nextProps.invitations) {
-  //     fetch(`${URL_ROOT}invitations/${this.props.match.params.id}/${nextProps.user_id}`)
-  //     .then(res => res.json())
-  //     .then(res => {
-  //       this.setState({accepted: res.accepted})})
-  //   }
-  // }
-  // //
-  // // componentDidMount() {
-  // //   GoogleAuth.loadApi
-  // // }
-
 
   handleEdit = () => {
     this.props.history.push(`/events/${this.props.match.params.id}/schedule`)
@@ -198,7 +171,6 @@ class eventCard extends Component {
     }
   }
 
-  //why can't i define eventScheduled outside a function, on its own?
   render() {
     let eventScheduled = this.props.ideas.find( i => i.id == this.props.match.params.id)
     return (
