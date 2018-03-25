@@ -1,4 +1,27 @@
-This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
+TOGETHER
+
+TOGETHER is a social app that helps friends more easily brainstorm and schedule events.
+
+This repository is the FRONT end.  The BACK end can be found here: https://github.com/misslesliehsu/TogetherBackEnd
+
+The following are the core functionality components of TOGETHER -- users can:
+- Login/Signup, protected with jwt authentication
+- Create ideas, invite friends, and define multiple date suggestions
+- "Vote" on date suggestions of ideas
+- Turn ideas into scheduled events, with final dates
+- RSVP to events
+- Track invitees and their RSVPs
+- Export events to Google Calendar
+
+The front end was developed using Javascript, using the React and Redux frameworks.
+
+Outside modules include:
+- react-datetime -- to facilitate more user-friendly selection of dates
+- Moment.js -- a react-datetime dependency
+- very minimal use of semantic ui for visual organization
+
+Additionally, TOGETHER hooks into the Google Calendar API; 
+
 
 Below you will find some information on how to perform common tasks.<br>
 You can find the most recent version of this guide [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
@@ -300,7 +323,7 @@ In the WebStorm menu `Run` select `Edit Configurations...`. Then click `+` and s
 
 Start your app by running `npm start`, then press `^D` on macOS or `F9` on Windows and Linux or click the green debug icon to start debugging in WebStorm.
 
-The same way you can debug your application in IntelliJ IDEA Ultimate, PhpStorm, PyCharm Pro, and RubyMine. 
+The same way you can debug your application in IntelliJ IDEA Ultimate, PhpStorm, PyCharm Pro, and RubyMine.
 
 ## Formatting Code Automatically
 
@@ -1989,7 +2012,7 @@ If you’re using [Apache HTTP Server](https://httpd.apache.org/), you need to c
     RewriteRule ^ index.html [QSA,L]
 ```
 
-It will get copied to the `build` folder when you run `npm run build`. 
+It will get copied to the `build` folder when you run `npm run build`.
 
 If you’re using [Apache Tomcat](http://tomcat.apache.org/), you need to follow [this Stack Overflow answer](https://stackoverflow.com/a/41249464/4878474).
 
@@ -2419,7 +2442,7 @@ To resolve this:
 1. Open an issue on the dependency's issue tracker and ask that the package be published pre-compiled.
   * Note: Create React App can consume both CommonJS and ES modules. For Node.js compatibility, it is recommended that the main entry point is CommonJS. However, they can optionally provide an ES module entry point with the `module` field in `package.json`. Note that **even if a library provides an ES Modules version, it should still precompile other ES6 features to ES5 if it intends to support older browsers**.
 
-2. Fork the package and publish a corrected version yourself. 
+2. Fork the package and publish a corrected version yourself.
 
 3. If the dependency is small enough, copy it to your `src/` folder and treat it as application code.
 
