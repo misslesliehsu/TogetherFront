@@ -12,9 +12,11 @@ class Dashboard extends Component {
 
   render() {
     return (
-      <div style={{display:'grid', gridTemplateColumns:'2fr 1fr'}}>
-        <IdeasList history={this.props.history}/>
-        <EventsList history={this.props.history}/>
+      <div>
+        <div style={{display:'grid', gridTemplateColumns:'70% auto'}}>
+          <IdeasList history={this.props.history}/>
+          <EventsList history={this.props.history}/>
+        </div>
       </div>
     )
   }

@@ -29,7 +29,6 @@ body {
 
 
 .togetherLogoLogin {
-  animation: open infinite 1s;
   font-size: 100px;
   margin-left: 30px;
   margin-right: 25px;
@@ -219,8 +218,8 @@ input {
 .miniIdeaCaption {
   display: block;
   width: 300px;
-  height: 50px;
-  font-size: 26px;
+  height: 60px;
+  font-size: 24px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -361,10 +360,10 @@ input {
   margin: 20px;
 }
 .eventsList {
-  margin: 50px auto;
+  margin-top: 50px;
+  margin-left: 50px;
+  margin-right: 50px;
   padding: 10px;
-  padding-right: 20px;
-  margin-right: 15px;
   border: solid;
   border-color: #dbe0e0;
   border-radius: 10px;
@@ -415,7 +414,7 @@ input {
   margin-top: 10px;
   background-color: green;
   border: solid;
-  font-size: 15px;
+  font-size: 12px;
 }
 
 .RSVPbuttonOut {
@@ -423,7 +422,7 @@ input {
   margin-top: 10px;
   background-color: red;
   border: solid;
-  font-size: 15px;
+  font-size: 12px;
 }
 
 .XEventListing {

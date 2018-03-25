@@ -49,23 +49,24 @@ class ProfilePage extends Component {
   render() {
     return (
       <div>
-        <p>Your Profile</p>
+        <br></br><br></br>
         {this.state.editting === false ?
 
-          <div className='Profile'>
+          <div style={{fontSize: '30px'}} className='Profile'>
             <p>First name: {this.props.user.first_name}</p>
             <p>Last name: {this.props.user.last_name}</p>
             <p>Email address: {this.props.user.email}</p>
           </div>
           :
+            <div style={{width: '600px',fontSize:'30px', margin:'0 auto'}}>
+              <input style={{height:'50px'}} value={this.state.first_name} name='first_name'onChange={this.handleChange} placeholder='First Name'/>
+              <br></br>
+              <input style={{height:'50px'}} value={this.state.last_name} name='last_name'onChange={this.handleChange} placeholder='Last Name'/>
+              <br></br>
+              <input style={{height:'50px'}} value={this.state.email} name='email' onChange={this.handleChange} placeholder='Email'/>
+              <br></br>
+            </div>
 
-          <Form>
-           <Form.Group widths='equal'>
-             <Form.Input fluid label='First name' value={this.state.first_name} name='first_name'onChange={this.handleChange}/>
-             <Form.Input fluid label='Last name' value={this.state.last_name} name='last_name'onChange={this.handleChange}/>
-             <Form.Input fluid label='Email' value={this.state.email} name='email' onChange={this.handleChange}/>
-           </Form.Group>
-         </Form>
       }
       <br></br><br></br>
       <button onClick={this.handleClick}>{this.state.button}</button><br></br>

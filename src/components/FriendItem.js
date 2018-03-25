@@ -7,18 +7,19 @@ const friendItem = (props) => {
     e.dataTransfer.setData('friend', friend)
   }
 
-
   return (
-    <div>
+    <div style={{float:'center', marginLeft:'60px'}}>
       {props.buttonAction ?
       <div className='friendCard' onClick={() => props.buttonAction(props.friend)}>
         <img className='profilePic' src={props.friend.profile_pic}></img><br></br>
         {props.friend.first_name + " " + props.friend.last_name}
       </div>
       :
-      <div className='friendCard' >
-        <img className='profilePic' src={props.friend.profile_pic}></img><br></br>
-        {props.friend.first_name + " " + props.friend.last_name}
+      <div className='friendCard'>
+        <img className='profilePic' src={props.friend.profile_pic} style={{marginLeft:'35px'}}></img><br></br>
+          <div style={{lineHeight:'25px', marginLeft:'30px', marginBottom:'10px'}}>
+            {props.friend.first_name + " " + props.friend.last_name}
+          </div>
       </div>
     }
     </div>

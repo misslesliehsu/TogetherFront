@@ -18,7 +18,8 @@ class IdeaScheduleForm extends Component {
       invitees: [],
       owner_id: '',
       scheduled_date_friendly: '',
-      scheduled_date: ''
+      scheduled_date: '',
+      custom: ''
   }
 
 
@@ -54,16 +55,16 @@ class IdeaScheduleForm extends Component {
     return this.props.friends.filter(f => !this.state.invitees.includes(f))
   }
 
-  handleFinalDate = (e) => {
-    let scheduled_date = e.format() //RC3339
-    let scheduled_date_friendly = e.format("dddd, MMMM Do YYYY, h:mm A")
-    this.setState({scheduled_date, scheduled_date_friendly})
-  }
-
   handleChange = (e) => {
     this.setState(
       {[e.target.name]: e.target.value}
     )
+  }
+
+  handleSetFinalDate = (e) => {
+    let scheduled_date = e.format() //RC3339
+    let scheduled_date_friendly = e.format("dddd, MMMM Do YYYY, h:mm A")
+    this.setState({scheduled_date, scheduled_date_friendly})
   }
 
   handleSchedule = (e) => {
@@ -98,6 +99,8 @@ class IdeaScheduleForm extends Component {
   }
   // what do i do with the errors here - should not save & should not go to show page
 
+
+//none of the drag/drop is used
   handleDrop = (e) => {
     const invitee = JSON.parse(e.dataTransfer.getData('friend'))
     this.props.addInvitee(invitee)
@@ -111,53 +114,105 @@ class IdeaScheduleForm extends Component {
     e.preventDefault()
   }
 
+  handleDelete = () => {
+    fetch(`${URL_ROOT}users/${this.props.user_id}/ideas/${this.props.match.params.id}`, {
+      method: 'delete',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(this.props.removeIdea(this.props.match.params.id))
+    .then(this.props.history.push('/dashboard'))
+  }
+
+  renderSuggestions = () => {
+    const ideaToSchedule = (this.props.ideas[0] !== "start") ? this.props.ideas.find(i => i.id == this.props.match.params.id) : {date_suggestions: []}
+
+    return (
+      ideaToSchedule.date_suggestions.length > 0 ?
+        <div>
+          {ideaToSchedule.date_suggestions.map(d =>
+            <div style={{display:'grid', gridTemplateColumns:'50px auto'}}>
+            <button style={{fontSize:'15px', padding:'0', height:'30px'}} onClick={() => {this.setState({scheduled_date: d.date, scheduled_date_friendly: d.friendly_date, custom:true})}}>pick date</button>
+            <DateSuggestionItem key={d.id} d={d} ideaId={ideaToSchedule.id} ownerId={ideaToSchedule.owner_id}/>
+            <br></br>
+            </div>)}
+        </div>
+     :
+     <div style={{fontSize: '20px'}}>There are no date suggestions yet.</div>
+
+    )
+  }
 
   render() {
     const ideaToSchedule = (this.props.ideas[0] !== "start") ? this.props.ideas.find(i => i.id == this.props.match.params.id) : {date_suggestions: []}
     return(
-
       <div>
         <div className='ideaForm' draggable='true' onDrop={this.handleDrop} onDragOver={this.dragOver} onDragEnd={this.dragEnd}>
           EVENT DETAILS
           <br></br><br></br>
           <form className='ideaFormForm'>
-            Name:
-            <input type='text' name='name' value={this.state.name} onChange={this.handleChange}></input>
-            <br></br><br></br>
-            Description: <input type='textArea' name='description'value={this.state.description} onChange={this.handleChange}></input>
-            <br></br><br></br>
-            Location: <input type='text' name='location' value={this.state.location} onChange={this.handleChange}></input>
-            <br></br><br></br>
-          </form>
-          <div>Date Suggestions:
-            {ideaToSchedule.date_suggestions.length > 0 ?
-              <div style={{marginLeft: '20px'}}>
-              {ideaToSchedule.date_suggestions.map(d => <DateSuggestionItem key={d.id} d={d} ideaId={ideaToSchedule.id} ownerId={ideaToSchedule.owner_id}/>)}
+            <div style={{display: 'grid', gridTemplateColumns:'1fr 5fr'}}>
+              <div style={{paddingTop: '5px', float:'right', lineHeight:'52px'}}>
+                Name:
+                <br></br>
+                Description:
+                <br></br>
+                Location:
+                <br></br>
               </div>
-            :
-            <div style={{fontSize: '20px'}}>There are no date suggestions yet.</div>
-            }
+              <div>
+                <input type='text' name='name' value={this.state.name} onChange={this.handleChange}></input>
+                <br></br><br></br>
+                <input type='textArea' name='description'value={this.state.description} onChange={this.handleChange}></input>
+                <br></br><br></br>
+                <input style={{marginBottom: '10px'}} type='text' name='location' value={this.state.location} onChange={this.handleChange}></input>
+                <br></br><br></br>
+              </div>
+            </div>
+          </form>
+          <div style={{textAlign: 'left', marginLeft: '12px'}}>Date Suggestions: </div>
+
+          <br></br><br></br><br></br>
+          {this.renderSuggestions()}
+          <br></br><br></br>
+
+          <div>
+            <div style={{float: 'left', marginTop: '25px', marginLeft:'60px'}}>Final Date:</div>
+            <div  style={{marginLeft: '233px'}}>
+              <div style={{float:'left', fontSize:'20px'}}>
+                {this.state.custom === true ?
+                  <div style={{width:'600px'}}>
+                    <div style={{marginTop:'25px', fontSize:'25px', float:'left'}}>{this.state.scheduled_date_friendly}</div>
+                    <button style={{marginTop:'20px'}} onClick={() => {this.setState({custom:false})}}>...or select a new date</button>
+                  </div>
+                  :
+                  <Datetime inputProps={{className: "dateInputField", placeholder: 'Click to pick a date & time'}}
+                  onChange={this.handleSetFinalDate}/>
+
+                }
+
+              </div>
+            </div>
           </div>
 
-          <div style={{float: 'left'}}>Final Date:</div>
-              <Datetime inputProps={{ placeholder: 'Click to pick a date & time'}}
-              onChange={this.handleFinalDate} value={this.state.scheduled_date_friendly}/>
           <br></br><br></br>
-         <br></br><br></br>
+          <br></br><br></br>
 
 
           <br></br>
           <hr></hr>
           Invited:
           <br></br><br></br>
-
+            {this.state.invitees.length === 0 && <div style={{textAlign:'center', fontSize:'20px'}}>There are no invitees yet!<br></br><br></br></div>}
             <Card.Group>
-        {this.state.invitees.map( i => <FriendItem buttonAction={this.handleRemoveInvitee} key={i.id} friend={i}/>)}
-      </Card.Group>
-
-        <br></br>
+              {this.state.invitees.map( i => <FriendItem buttonAction={this.handleRemoveInvitee} key={i.id} friend={i}/>)}
+          </Card.Group>
+          <br></br><br></br>
           <hr></hr>
-          <button onClick={this.handleSchedule}>Book It!</button>
+          <br></br>
+          <button onClick={this.handleSchedule}>Book It!</button><br></br>
+          <button style={{fontSize:'12px'}} onClick={this.handleDelete}>Delete Idea</button>
+
         </div>
         <div className='addMoreFriends'>
           <h1>Invite More Friends</h1>
@@ -230,7 +285,8 @@ class IdeaScheduleForm extends Component {
 const mapDispatchToProps = (dispatch) => {
   return ({
     addIdea: (i) => dispatch({type: 'ADD_IDEA', idea: i}),
-    updateIdea: (i) => dispatch({type: 'UPDATE_IDEA', idea: i})
+    updateIdea: (i) => dispatch({type: 'UPDATE_IDEA', idea: i}),
+    removeIdea: (id) => dispatch({type:'REMOVE_IDEA_FROM_STORE', idea_id: id})
   })
 }
 

@@ -31,8 +31,28 @@ class ideaCard extends Component {
     this.props.history.push(`/dashboard`)
   }
 
+  handleInviteeList = () => {
+    let getIdea = this.props.ideas.find( i => i.id == this.props.match.params.id)
+    let filtered = getIdea.invitees.filter(i => i.id != this.props.user_id)
+    return filtered.map( f => <FriendItem key={f.id} buttonAction='' friend={f}/>)
+
+  }
+
+  handleHostName = () => {
+    let getIdea = this.props.ideas.find( i => i.id == this.props.match.params.id)
+    let all_people = this.props.nonFriends.concat(this.props.friends)
+    if (this.props.user) {
+      return (
+        getIdea.owner_id == this.props.user_id ?
+        "You" : all_people.find(f => f.id == getIdea.owner_id).first_name
+      )
+    }
+  }
+
+
   //why can't i define getIdea outside a function, on its own?
   render() {
+    console.log(this.props.user)
     let getIdea = this.props.ideas.find( i => i.id == this.props.match.params.id)
     return (
       <div>
@@ -42,6 +62,7 @@ class ideaCard extends Component {
             <h1>{getIdea.name}</h1>
             <div className='ideaData'>
               <ul style={{listStyle: 'none'}}>
+                <li>HOSTED BY: {this.handleHostName()}</li>
                 <li>DESCRIPTION: {getIdea.description}</li>
                 <li>WHERE: {getIdea.location}</li>
                 <li>DATE SUGGESTIONS:</li>
@@ -55,7 +76,7 @@ class ideaCard extends Component {
                   <li>INVITED:</li>
               </ul>
                   <CardGroup>
-                    {getIdea.invitees.map( f => <FriendItem key={f.id} buttonAction='' friend={f}/>)}
+                    {this.handleInviteeList()}
                   </CardGroup>
 
             </div>
@@ -82,7 +103,10 @@ class ideaCard extends Component {
 const mapStateToProps = (state) => {
   return {
     user_id: state.user.id,
-    ideas: state.ideas
+    ideas: state.ideas,
+    user: state.user,
+    friends: state.friends,
+    nonFriends: state.nonFriends
   }
 }
 

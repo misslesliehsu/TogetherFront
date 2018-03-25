@@ -1,8 +1,8 @@
 import URL_ROOT from '../URL'
 
-export function login(u) {
+export function login(u, user_name) {
   return dispatch => {
-  dispatch({type: "LOGIN", user:u})
+  dispatch({type: "LOGIN", user:u, user_name: user_name})
   }
 }
 
@@ -17,7 +17,7 @@ export function getCurrentUser() {
     }).then(res => res.json())
     .then(res => {
       if (res) {
-        dispatch({type: "LOGIN", user: res.user})
+        dispatch({type: "LOGIN", user: res.user, user_name: res.user_name})
       }
       else {
         dispatch({type:'LOGOUT'})

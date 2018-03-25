@@ -27,73 +27,63 @@ class EventListing extends Component {
   calcRSVP = () => {
     if (this.props.invitations) {
       if (this.props.invitations[0] !== 'start' && this.props.e !=='start') {
-    const invite = this.props.invitations.find( i => i.idea_id == this.props.e.id)
-      // debugger
-    if (invite)
-      {switch (invite.accepted) {
-        case true:
-          return (
-            <button className="RSVPbuttonIn">
-              IN
-            </button>
-            )
-        case false:
-          return (
-            <div>
-              <button className="RSVPbuttonOut">
-                OUT
-              </button>
-              <button id="removeListing" className='XEventListing' onClick={this.handleRemoveListing}>X</button>
-            </div>
-            )
-        case null:
-          if (this.props.e.owner_id == this.props.user_id) {
+    const invite = this.props.invitations.find( i => i.idea_id == this.props.e.id && i.invitee_id == this.props.user_id)
+    if (this.props.e.owner_id == this.props.user_id) {
+      return (
+        <img className='eventListingStar' src={require ('../star.png')}></img>
+      )
+    }
+      if (invite) {
+        switch (invite.accepted) {
+          case true:
             return (
-              <img className='eventListingStar' src={require ('../star.png')}></img>
-            )
-          }
-          else {
+              <button className="RSVPbuttonIn">
+                IN
+              </button>
+              )
+          case false:
+            return (
+              <div>
+                <button className="RSVPbuttonOut">
+                  OUT
+                </button>
+                <button style={{fontSize:'8px', margin:'0'}} id="removeListing" className='XEventListing'onClick={this.handleRemoveListing}>X</button>
+              </div>
+              )
+          case null:
             return (
               <button className="RSVPbutton">
                 RSVP
               </button>
             )
-          }
-        default:
-          return (<div></div>)
+          default:
+            return (<div></div>)
+        }
       }
-      }
-    }
     else {
       return <div></div>
-    }}
+    }
   }
+}
+}
 
   shortenedDate = () => {
-    if (this.props.e.scheduled_date) {
-      const x = this.props.e.scheduled_date.slice(5)
-      if (x[0] == '0') {
-        const y = x.slice(1)
-        return y
-      }
-      else {
-      return x
-      }
-    }
-    else { }
+    let x = new Date(this.props.e.scheduled_date)
+    x = x.toString()
+    return x.substring(0,10)
   }
 
 
     render() {
       return (
-        <div className='eventListArea' onClick={this.handleEventClick} style={{display:'grid', gridTemplateColumns:'1fr 1fr 4fr 1fr'}}>
+        <div onClick={this.handleEventClick} style={{display:'grid', gridTemplateColumns:'0.5fr 2fr 4fr 1.5fr'}}>
           <div>
-            <img src={require('../calendar.png')} style={{height: '40px'}}/>
+            <img src={require('../calendar.png')} style={{height: '20px', marginTop:'10px', marginRight:'0'}}/>
           </div>
-          <div style={{margin: 'auto'}}>
+          <div style={{margin: 'auto', fontSize:'15px', marginRight:'10px'}}>
             {this.shortenedDate()}
           </div>
-          <div className='eventCaption'>
+          <div className='eventCaption' style={{marginLeft:'10px'}}>
             {this.props.e.name}
           </div>
           <div>

@@ -29,17 +29,17 @@ class eventCard extends Component {
   // }
   //
   // componentWillReceiveProps(nextProps) {
-  //   if (this.props.user_id === 'start' && nextProps.user_id != "start") {
+  //   if (!this.props.invitations && nextProps.invitations) {
   //     fetch(`${URL_ROOT}invitations/${this.props.match.params.id}/${nextProps.user_id}`)
   //     .then(res => res.json())
   //     .then(res => {
   //       this.setState({accepted: res.accepted})})
   //   }
   // }
-  //
-  // componentDidMount() {
-  //   GoogleAuth.loadApi
-  // }
+  // //
+  // // componentDidMount() {
+  // //   GoogleAuth.loadApi
+  // // }
 
 
   handleEdit = () => {
@@ -47,34 +47,46 @@ class eventCard extends Component {
   }
 
   showRSVPs = () => {
+    const all_people = this.props.friends.concat(this.props.nonFriends)
     const invites = this.props.invitations.filter(i => i.idea_id == this.props.match.params.id)
     const yes = invites.filter(i => i.accepted == true)
     const no = invites.filter(i=> i.accepted == false)
     const tbd = invites.filter(i => !yes.includes(i) && !no.includes(i))
-    const yes_people = yes.map(y => this.props.friends.find(x => x.id == y.invitee_id))
-    const no_people = no.map(n => this.props.friends.find(x=> x.id == n.invitee_id))
-    const tbd_people = tbd.map(t => this.props.friends.find(x => x.id == t.invitee_id))
-
+    const yes_people = yes.map(y => all_people.find(x => x.id == y.invitee_id))
+    const no_people = no.map(n => all_people.find(x=> x.id == n.invitee_id))
+    const tbd_people = tbd.map(t => all_people.find(x => x.id == t.invitee_id))
     return (
-      <div>
-        <h1 style={{float:'left', color: 'green'}}>IN</h1>
-          <CardGroup>
-            {yes_people.map( x => <FriendItem friend={x}/>)}
-          </CardGroup>
-          <br></br>
-        <h1 style={{float:'left', color: 'red'}}>OUT</h1>
-          <CardGroup>
-            {no_people.map( x => <FriendItem friend={x}/>)}
-        </CardGroup>
-        <br></br>
-        <h1 style={{float:'left'}}>TBD</h1>
+    <div style={{display:'grid', gridAutoRows: 'minmax(200px, auto)', marginLeft:'35px'}}>
+
+      <div style={{display:'grid', gridTemplateColumns:'20px auto'}}>
+          <h1 style={{color: 'green'}}>IN:</h1>
+            <CardGroup>
+              {yes_people.map( x => <FriendItem friend={x}/>)}
+                <hr></hr><hr></hr>
+            </CardGroup>
+      </div>
+
+      <div style={{display:'grid', gridTemplateColumns:'20px auto'}}>
+          <h1 style={{color: 'red'}}>OUT:</h1>
+            <CardGroup>
+              {no_people.map( x => <FriendItem friend={x}/>)}
+            </CardGroup>
+            <hr></hr><hr></hr>
+
+      </div>
+
+      <div style={{display:'grid', gridTemplateColumns:'20px auto'}}>
+        <h1>TBD:</h1>
           <CardGroup>
             {tbd_people.map( x => <FriendItem friend={x}/>)}
           </CardGroup>
-          <br></br>
+            <hr></hr><hr></hr>
       </div>
+
+    </div>
     )
   }
+
   handleRSVP = (e) => {
       if (e.target.name === 'yes') {
           this.setState({accepted: true}, () => {
@@ -89,7 +101,7 @@ class eventCard extends Component {
                       }
                     )
                   })
-            this.props.updateRSVP(this.props.match.params.id, this.state.accepted)
+                  this.props.updateRSVP(this.props.match.params.id, this.state.accepted)
             })
       }
       else {
@@ -112,7 +124,8 @@ class eventCard extends Component {
 
 
   setupRSVP = () => {
-    switch (this.state.accepted) {
+    let invitation = this.props.invitations.find(i => i.idea_id == this.props.match.params.id && i.invitee_id == this.props.user_id)
+    switch (invitation.accepted) {
       case null:
         return (
           <div>
@@ -152,19 +165,37 @@ class eventCard extends Component {
      }
    })
    .then(function(response) {
-   console.log(response.result)
+   if (response.result.kind) {
+     window.alert("Google Calendar event created!")
+   }
    }, function(reason) {
+  console.log(reason.result)
    console.log('Error: ' + reason.result.error.message)
    if (reason.result.error.message === "Login Required") {
      window.alert("Sign in first, then try again!")
      window.gapi.auth2.getAuthInstance().signIn();
       }
+    else {
+      window.alert("Google calendar event created!")
+    }
     })
+
   }
 
 
   handleBackToDash = () => {
     this.props.history.push(`/dashboard`)
+  }
+
+  handleHostName = () => {
+    let getIdea = this.props.ideas.find( i => i.id == this.props.match.params.id)
+    let all_people = this.props.nonFriends.concat(this.props.friends)
+    if (this.props.user_id !== 'start') {
+      return (
+        getIdea.owner_id == this.props.user_id ?
+        "You" : all_people.find(f => f.id == getIdea.owner_id).first_name
+      )
+    }
   }
 
   //why can't i define eventScheduled outside a function, on its own?
@@ -180,19 +211,23 @@ class eventCard extends Component {
             <h1 style={{fontSize: '40px'}}>{eventScheduled.name}</h1>
             <div className='eventData'>
               <ul style={{listStyle: 'none'}}>
+                <li>HOSTED BY: {this.handleHostName()}</li>
                 <li>DESCRIPTION: {eventScheduled.description}</li>
                 <li>WHERE: {eventScheduled.location}</li>
                 <li>DATE: {eventScheduled.scheduled_date_friendly}</li>
                 <li>INVITED:</li>
-                  </ul>
+              </ul>
             </div>
               <br></br><br></br>
-              {this.props.user_id === eventScheduled.owner_id && this.showRSVPs()}
-              <br></br><br></br>
+              <div>
+                {this.showRSVPs()}
+              </div>
+              <br></br><br></br><br></br>
               {this.props.user_id === eventScheduled.owner_id && <button onClick={this.handleEdit}>Edit Idea</button>}
               <br></br><br></br>
-              RSVP:
-              {this.props.user_id !== eventScheduled.owner_id && this.setupRSVP()}
+              {this.props.user_id !== eventScheduled.owner_id &&
+                this.setupRSVP()
+              }
               <br></br><br></br><br></br>
             <div style={{textDecoration: 'underline', float: 'left'}} onClick={this.handleBackToDash}>Back To Dashboard</div><br></br>
           </div>
@@ -210,7 +245,8 @@ const mapStateToProps = (state) => {
     user_id: state.user.id,
     ideas: state.ideas,
     invitations: state.invitations,
-    friends: state.friends
+    friends: state.friends,
+    nonFriends: state.nonFriends
   }
 }
 

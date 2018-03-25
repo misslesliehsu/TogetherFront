@@ -44,15 +44,26 @@ class DateSuggestionItem extends Component {
 
   render() {
     return (
-      <div>
-        {this.props.ownerId !== this.props.user_id &&
-          <input className='voteCheckbox' type='checkbox' checked={this.buttonText()} onClick={this.handleVoteOrUnvote}></input>
-          }
+      <div style={{display:'grid', width: '1200px', gridTemplateColumns:'1fr 5fr 15fr'}}>
+        {this.props.ownerId !== this.props.user_id ?
+          <div>
+          <input className='voteCheckbox' type='checkbox' style={{fontSize:'2px'}} checked={this.buttonText()} onClick={this.handleVoteOrUnvote}></input>
+          </div>
+          :
+          <div></div>
+        }
+        <div style={{fontSize:'20px', marginTop:'10px'}}>
           {this.props.d.friendly_date}:
-        {this.props.d.voters.map( v =>
-            <img className='voterPhoto' src={v.profile_pic}></img>
-          )}
-        {this.props.d.voters.length > 0 && "(" + this.props.d.voters.length + ")"}
+        </div>
+        <div style={{textAlign:'left'}}>
+              {this.props.d.voters.length > 0 ?
+                  this.props.d.voters.map( v =>
+                      <img className='voterPhoto' src={v.profile_pic}></img>
+                  )
+                 :
+                 <div style={{fontSize:'20px', marginLeft: '20px',marginTop:'10px'}}>No voters yet.</div>
+                }
+        </div>
       </div>
     )
   }

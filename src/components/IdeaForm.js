@@ -59,6 +59,14 @@ class IdeaForm extends Component {
       {[e.target.name]: e.target.value}
     )
   }
+
+  handleSetDate = (e) => {
+    let i = this.state.i
+    let date_suggestions = this.state.date_suggestions
+    date_suggestions[i] = {date: e.format(), friendly_date: e.format("dddd, MMMM Do YYYY, h:mm A"), voters: [], id: null}
+    this.setState({date_suggestions})
+  }
+
   handleDelete = () => {
     fetch(`${URL_ROOT}users/${this.props.user_id}/ideas/${this.props.match.params.id}`, {
       method: 'delete',
@@ -133,20 +141,9 @@ class IdeaForm extends Component {
   // what do i do with the errors here - should not save & should not go to show page
 
 
-  handleSetDate = (e) => {
-    let i = this.state.i
-    let date_suggestions = this.state.date_suggestions
-    date_suggestions[i] = {date: e.format(), friendly_date: e.format("dddd, MMMM Do YYYY, h:mm A"), voters: [], id: null}
-    this.setState({date_suggestions})
-  }
 
   handleAddDate = () => {
     this.setState({date_suggestions: [...this.state.date_suggestions, {date: '', friendly_date: '', id: null, voters: [] }]})
-  }
-
-  handleDrop = (e) => {
-    const invitee = JSON.parse(e.dataTransfer.getData('friend'))
-    this.props.addInvitee(invitee)
   }
 
   handleRemoveDate = (e) => {
@@ -154,6 +151,12 @@ class IdeaForm extends Component {
     const updated = this.state.date_suggestions
     updated.splice(e.target.name, 1)
     this.setState({date_suggestions: updated})
+  }
+
+  //none of the drag/drop is used
+  handleDrop = (e) => {
+    const invitee = JSON.parse(e.dataTransfer.getData('friend'))
+    this.props.addInvitee(invitee)
   }
 
   dragOver = (e) => {
@@ -164,58 +167,86 @@ class IdeaForm extends Component {
     e.preventDefault()
   }
 
+  handleDateFormat(i) {
+    if (this.state.date_suggestions[i].date === ''){
+      let now = new Date
+      now.setHours(12)
+      now.setMinutes(0)
+      return now
+    }
+    else {return new Date (this.state.date_suggestions[i].date)}
+  }
+
   renderSuggestions = () => {
+
     let suggestions = []
     for (let i = 0; i < this.state.date_suggestions.length; i++) {
       suggestions.push(
-        <div key={i}>
-          <Datetime inputProps={{className: "dateInputField",  placeholder: 'Click to pick a date & time'}}
-          onChange={(e) => {this.setState({i: i}, () => {this.handleSetDate(e)})}} />
-          <button name={i} onClick={this.handleRemoveDate}>X</button>
-          <br></br>
+        <div key={i} style={{marginLeft: '233px'}}>
+          <div style={{float:'left', fontSize:'20px'}}>
+            <Datetime inputProps={{className: "dateInputField", placeholder: 'Click to set an option'}}
+            onChange={(e) => {this.setState({i: i}, () => {this.handleSetDate(e)})}} value={this.handleDateFormat(i)} />
+          </div>
+          <button style={{marginTop: '20px', float: 'left'}} name={i} onClick={this.handleRemoveDate}>X</button>
+          <br></br><br></br><br></br>
         </div>
       )
     }
-    return (suggestions)
+    return (
+      suggestions
+    )
   }
 
 
   render() {
-
     return(
       <div>
-        <div className='ideaForm' draggable='true' onDrop={this.handleDrop} onDragOver={this.dragOver} onDragEnd={this.dragEnd}>
+        <div className='ideaForm'>
           DEETS, PLEASE
           <br></br><br></br>
           <form className='ideaFormForm'>
-            Name:
-            <input type='text' name='name' value={this.state.name} onChange={this.handleChange}></input>
-            <br></br><br></br>
-            Description: <input type='textArea' name='description'value={this.state.description} onChange={this.handleChange}></input>
-            <br></br><br></br>
-            Location: <input type='text' name='location' value={this.state.location} onChange={this.handleChange}></input>
-            <br></br><br></br>
+            <div style={{display: 'grid', gridTemplateColumns:'1fr 5fr'}}>
+              <div style={{paddingTop: '5px', float:'right', lineHeight:'52px'}}>
+                Name:
+                <br></br>
+                Description:
+                <br></br>
+                Location:
+                <br></br>
+              </div>
+              <div>
+                <input type='text' name='name' value={this.state.name} onChange={this.handleChange}></input>
+                <br></br><br></br>
+                <input type='textArea' name='description'value={this.state.description} onChange={this.handleChange}></input>
+                <br></br><br></br>
+                <input style={{marginBottom: '10px'}} type='text' name='location' value={this.state.location} onChange={this.handleChange}></input>
+                <br></br><br></br>
+              </div>
+            </div>
           </form>
-          <div>Date Suggestions: <button style={{fontSize:'20px'}} onClick={this.handleAddDate}>Add Another Date Option</button></div>
+          <div style={{textAlign: 'left', marginLeft: '12px'}}>Date Suggestions: </div>
               {this.renderSuggestions()}
-          <br></br>
+              <br></br><br></br><br></br>
+              <button style={{marginLeft: '245px', fontSize:'20px', float: 'left'}} onClick={this.handleAddDate}>Add Another Date Option</button>
+              <br></br><br></br>
           <hr></hr>
           Invited:
           <br></br><br></br>
-
+            {this.state.invitees.length === 0 && <div style={{textAlign:'center', fontSize:'20px'}}>There are no invitees yet!<br></br><br></br></div>}
             <Card.Group>
-        {this.state.invitees.map( i => <FriendItem buttonAction={this.handleRemoveInvitee} key={i.id} friend={i}/>)}
-      </Card.Group>
-
-        <br></br>
+              {this.state.invitees.map( i => <FriendItem buttonAction={this.handleRemoveInvitee} key={i.id} friend={i}/>)}
+          </Card.Group>
+          <br></br><br></br>
           <hr></hr>
-
+          <br></br>
         <button style={{marginTop: '50px'}} onClick={this.handleSave}>Save Idea</button><br></br><br></br>
         <div style={{textDecoration: 'underline'}}>Cancel</div><br></br>
 
         <h3 style={{fontSize:'20px', textDecoration:'underline'}} onClick={this.handleDelete}>Delete Idea</h3>
         </div>
+
         <div className='addMoreFriends'>
+          <br></br>
           <h1>Invite More Friends</h1>
             <Card.Group>
               {this.calcNoninvitees().map( nI => <FriendItem key={nI.id} buttonAction={this.handleAddInvitee} friend={nI}/>)}

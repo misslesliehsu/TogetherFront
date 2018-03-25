@@ -16,7 +16,8 @@ const IdeasList = (props) =>  {
   return (
     <div className='ideasList'>
       <br></br><br></br><br></br>
-      <button className='createIdeaButton' onClick={handleNewIdea}>Create New Idea</button>
+      {props.user_id !== 'start' &&
+      <button style={{marginTop:'10px'}} className='createIdeaButton' onClick={handleNewIdea}>Create New Idea</button>}
       <br></br><br></br>
       <div style={{display:'grid', gridTemplateColumns: '1fr 1fr 1fr'}}>
       {props.ideas.map( i =>
@@ -39,7 +40,8 @@ const IdeasList = (props) =>  {
 const mapStateToProps = (state) => {
   return {
     ideas: state.ideas.filter( i => i.scheduled_date === ''),
-    user_id: state.user.id
+    user_id: state.user.id,
+    name: state.user.first_name
   }
 }
 

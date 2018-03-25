@@ -93,7 +93,7 @@ const ideasReducer = (state = {ideas: ["start"], events: ['start'], friends: ["s
       return {...state, user: {...state.user, first_name: action.first_name, last_name: action.last_name, email: action.email}}
     case "UPDATE_RSVP":
           const updatedInvitations = state.invitations.map(i => {
-            if (i.idea_id == action.idea_id) {
+            if (i.idea_id == action.idea_id && i.invitee_id == state.user.id) {
               return {...i, accepted: action.response}
             }
             else {

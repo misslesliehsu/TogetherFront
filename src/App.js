@@ -27,7 +27,9 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Header history={this.props.history}/>
+        {this.props.user_id !== 'start' &&
+            <Header history={this.props.history}/>
+         }
         <Main/>
       </div>
     );
