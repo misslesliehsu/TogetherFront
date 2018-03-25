@@ -47,10 +47,12 @@ Front:
 - GoogleOAuth is a non-visual component rendered within EventCard.js
 
 Back:
+
 The backend uses a RESTful structure.  The auth and application controllers manage jwt authentication; the rest are namespaced controllers based on model. There are two serializers for date_suggestions and ideas.
 
 
 TO RUN THE APPLICATION:
+
 Front:
 - Run npm install
 - Run npm start
@@ -60,6 +62,9 @@ Back:
 - Run rails db:migrate
 - Run rails db:seed (if you want to start with dummy data friends and ideas)
 - Run rails s -p 3001
+
+
+
 
 
 
