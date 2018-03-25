@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import FriendItem from './FriendItem'
 import DateSuggestionItem from './DateSuggestionItem'
 import { CardGroup } from 'semantic-ui-react'
-import GoogleAuth from '../GoogleAuth'
 import GoogleOAuth from './GoogleOAuth'
 
 

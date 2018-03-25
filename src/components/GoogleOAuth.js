@@ -2,17 +2,8 @@ import React, { Component } from 'react'
 
 export default class GoogleOAuth extends Component {
 
-  state = {
-    googleAuth: null,
-    gapiReady: false,
-    eventScheduled: null,
-    authorizeState: '',
-    signoutState: ''
-  }
-
 
   loadApi() {
-      this.setState({eventScheduled: this.props.event})
       const script = document.createElement("script")
       script.src = "https://apis.google.com/js/client.js"
 
@@ -34,12 +25,6 @@ export default class GoogleOAuth extends Component {
 
   componentDidMount() {
       this.loadApi()
-  }
-
-
-   handleAuthClick(event) {
-    window.gapi.auth2.getAuthInstance().signIn();
-
   }
 
 
