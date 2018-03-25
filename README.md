@@ -1,3 +1,24 @@
+
+* Ruby version
+
+* System dependencies
+
+* Configuration
+
+* Database creation
+
+* Database initialization
+
+* How to run the test suite
+
+* Services (job queues, cache servers, search engines, etc.)
+
+* Deployment instructions
+
+* ...
+
+
+
 TOGETHER
 
 
@@ -17,6 +38,8 @@ The following are the core functionality components of TOGETHER -- users can:
 - Export events to Google Calendar
 
 DEVELOPMENT / FRAMEWORKS:
+
+Front end:
 The front end was developed using Javascript, using the React and Redux frameworks.
 
 Outside modules include:
@@ -26,13 +49,41 @@ Outside modules include:
 
 Additionally, TOGETHER hooks into the Google Calendar API, loading a client-side library (see the GoogleOAuth component)
 
+Back end:
+The back end was built on Ruby on Rails, linking to a postgres database.
+Outside gems include:
+- bcrypt, for password authentication
+- jwt, for user authentication
+- serializer, for cleaner data delivery to the front-end
+- faker, for dummy seed data
+
 ORGANIZATION:
+
+Front:
 - Index.js loads the App.js, which, if a user is logged in, loads data from the backend.  
 - App.js loads Main.js, which manages most of the application's routing to various components.
 - The styling is held across two css files, one main file (App.css) and one within the react-datetime library (DateTime.css).
 - There is only one reducer (rootReducer.js)
 - Aside from login actions held within the actions folder, all other actions are defined within components.
 - GoogleOAuth is a non-visual component rendered within EventCard.js
+
+Back:
+The backend uses a RESTful structure.  The auth and application controllers manage jwt authentication; the rest are namespaced controllers based on model. There are two serializers for date_suggestions and ideas.
+
+
+TO RUN THE APPLICATION:
+Front:
+- Run npm install
+- Run npm start
+
+Back:
+- Run bundle install
+- Run rails db:migrate
+- Run rails db:seed (if you want to start with dummy data friends and ideas)
+- Run rails s -p 3001
+
+
+
 
 Copyright <2018> <Leslie Hsu>
 
