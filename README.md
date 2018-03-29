@@ -18,7 +18,7 @@ The following are the core functionality components of TOGETHER -- users can:
 
 DEVELOPMENT / FRAMEWORKS:
 
-Front end:
+Front-end:
 The front end was developed using Javascript, using the React and Redux frameworks.
 
 Outside modules include:
@@ -28,7 +28,7 @@ Outside modules include:
 
 Additionally, TOGETHER hooks into the Google Calendar API, loading a client-side library (see the GoogleOAuth component)
 
-Back end:
+Back-end:
 The back end was built on Ruby on Rails, linking to a postgres database.
 Outside gems include:
 - bcrypt, for password authentication
@@ -38,7 +38,7 @@ Outside gems include:
 
 ORGANIZATION:
 
-Front:
+Front-end:
 - Index.js loads the App.js, which, if a user is logged in, loads data from the backend.  
 - App.js loads Main.js, which manages most of the application's routing to various components.
 - The styling is held across two css files, one main file (App.css) and one within the react-datetime library (DateTime.css).
@@ -46,18 +46,18 @@ Front:
 - Aside from login actions held within the actions folder, all other actions are defined within components.
 - GoogleOAuth is a non-visual component rendered within EventCard.js
 
-Back:
+Back-end:
 
 The backend uses a RESTful structure.  The auth and application controllers manage jwt authentication; the rest are namespaced controllers based on model. There are two serializers for date_suggestions and ideas.
 
 
 TO RUN THE APPLICATION:
 
-Front:
+Front-end:
 - Run npm install
 - Run npm start
 
-Back:
+Back-end:
 - Run bundle install
 - Run rails db:migrate
 - Run rails db:seed (if you want to start with dummy data friends and ideas)
@@ -69,7 +69,7 @@ Back:
 
 
 
-Copyright <2018> <Leslie Hsu>
+Copyright 2018 Leslie Hsu
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
